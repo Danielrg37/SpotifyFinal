@@ -11,6 +11,8 @@ function VistaPerfil() {
     const [token, setToken] = useState(null);
     const [isRequestDone, setIsRequestDone] = useState(false);
     const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
+    
 
     useEffect(() => {
         if (!isRequestDone) {
@@ -54,6 +56,11 @@ function VistaPerfil() {
         }
     }, [token]);
 
+
+    
+    
+
+
     console.log("La petición se ha realizado.");
     console.log(`Bearer ${token}`);
 
@@ -64,9 +71,6 @@ function VistaPerfil() {
     console.log(userData); // muestra toda la información del usuario
     console.log(userData.display_name); // muestra el nombre de usuario
    
-
-
-
 
     return (
 
