@@ -1,0 +1,18 @@
+ 
+ Filas para listas de elementos
+ 
+ <div className="row mt-3">
+        <h1>Top X</h1>
+        <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
+          {[...Array(20)].map((_, index) => (
+            <div key={index} className="d-inline-block mx-2">
+              <img src="https://via.placeholder.com/150x150" alt={`Artista ${index}`} className="img-fluid rounded-circle" />
+              <p>Artista {index}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+
+
+ 

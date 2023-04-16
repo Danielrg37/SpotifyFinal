@@ -1,0 +1,23 @@
+
+.green-color{
+    background-color: #1DB954; /* color verde de Spotify */
+    border-color: #1DB954;
+  }
+
+.fernando{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 40vh;
+    width: 40vh;
+}
+
+body {
+  background-color: #222;
+}
+
+#containers_info{
+  background-color: gray;
+}
