@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@emotion/styled": "^11.10.6",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/material": "^5.11.16",
     "bi": "^0.0.1",
     "bootstrap": "^5.1.3",

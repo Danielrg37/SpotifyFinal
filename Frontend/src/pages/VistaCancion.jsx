@@ -1,13 +1,12 @@
-
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/vista_artista.css';
+import './css/vista_cancion.css';
 import { useNavigate } from 'react-router-dom';
 
-function VistaArtista() {
+function VistaCancion() {
   
     return (
         
@@ -30,25 +29,26 @@ function VistaArtista() {
                 </div>
                 <div className="col-8">
                     <h1>Nombre Artista/Artistas</h1>
+                    <h2>Nombre Canción</h2>
                     <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
                 </div>
             </div>
             <div class="row mt-3">
     <div class="col-md-4 text-center">
-      <h4>Veces reproducido</h4>
+      <h4>Veces reproducida</h4>
+      <p>Placeholder</p>
+    </div>
+    <div class="col-md-4 text-center">
+      <h4>Duración</h4>
       <p>Placeholder</p>
     </div>
     <div class="col-md-4 text-center">
       <h4>Tiempo total de reproducción</h4>
       <p>Placeholder horas</p>
     </div>
-    <div class="col-md-4 text-center">
-      <h4>Última vez escuchado</h4>
-      <p>Placeholder</p>
-    </div>
   </div>
   <div class="row mt-3">
-    <h1>Canciones más famosas</h1>
+    <h1>Aparece en</h1>
     <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
                 {[...Array(8)].map((_, index) => (
                     <div key={index} className="d-inline-block mx-2">
@@ -65,6 +65,7 @@ function VistaArtista() {
     <thead>
       <tr>
         <th>Imagen</th>
+        <th>Artista</th>
         <th>Canción</th>
         <th>Hora</th>
       </tr>
@@ -73,6 +74,7 @@ function VistaArtista() {
       {[...Array(10)].map((_, i) => (
         <tr key={i}>
           <td><img src="https://via.placeholder.com/50x50" alt="Imagen de la canción"></img></td>
+          <td>Artista</td>
           <td>Canción</td>
           <td>3:24</td>
         </tr>
@@ -80,8 +82,6 @@ function VistaArtista() {
     </tbody>
   </table>
 </div>
-
-    
 
     
             <footer>
@@ -93,4 +93,4 @@ function VistaArtista() {
     );
 }
 
-export default VistaArtista;
+export default VistaCancion;
