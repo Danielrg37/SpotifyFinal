@@ -8,9 +8,9 @@ import './css/vista_artista.css';
 import { useNavigate } from 'react-router-dom';
 
 function VistaArtista() {
-  
+
     return (
-        
+
         <div className="container">
             <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
                 <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -26,7 +26,7 @@ function VistaArtista() {
 
             <div className="row">
                 <div className="col-4">
-                    <img src="https://via.placeholder.com/300x300" alt="Artista 1" className="img-fluid" />
+                    <img src="https://via.placeholder.com/300x300" alt="Artista 1" className="img-fluid rounded-circle" />
                 </div>
                 <div className="col-8">
                     <h1>Nombre Artista/Artistas</h1>
@@ -34,62 +34,98 @@ function VistaArtista() {
                 </div>
             </div>
             <div class="row mt-3">
-    <div class="col-md-4 text-center">
-      <h4>Veces reproducido</h4>
-      <p>Placeholder</p>
-    </div>
-    <div class="col-md-4 text-center">
-      <h4>Tiempo total de reproducción</h4>
-      <p>Placeholder horas</p>
-    </div>
-    <div class="col-md-4 text-center">
-      <h4>Última vez escuchado</h4>
-      <p>Placeholder</p>
-    </div>
-  </div>
-  <div class="row mt-3">
-    <h1>Canciones más famosas</h1>
-    <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
-                {[...Array(8)].map((_, index) => (
-                    <div key={index} className="d-inline-block mx-2">
-                        <img src="https://via.placeholder.com/150x150" alt={`Canción ${index}`} className="img-fluid" />
-                        <p>Canción {index}</p>
-                    </div>
-                ))}
+                <div class="col-md-4 text-center" id="datos">
+                    <h4>Veces reproducido</h4>
+                    <p>Placeholder</p>
+                </div>
+                <div class="col-md-4 text-center" id="datos">
+                    <h4>Tiempo total de reproducción</h4>
+                    <p>Placeholder horas</p>
+                </div>
+                <div class="col-md-4 text-center" id="datos">
+                    <h4>Última vez escuchado</h4>
+                    <p>Placeholder</p>
+                </div>
             </div>
-    </div>
+            <div class="row mt-3">
+                <h1>Canciones más famosas</h1>
+                <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
+                    {[...Array(8)].map((_, index) => (
+                        <div key={index} className="d-inline-block mx-2">
+                            <img src="https://via.placeholder.com/150x150" alt={`Canción ${index}`} className="img-fluid" />
+                            <p>Canción {index}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
 
-    <div class="row mt-5">
-  <h2>Mi historial de reproducciones</h2>
-  <table class="table table-responsive">
-    <thead>
-      <tr>
-        <th>Imagen</th>
-        <th>Canción</th>
-        <th>Hora</th>
-      </tr>
-    </thead>
-    <tbody>
-      {[...Array(10)].map((_, i) => (
-        <tr key={i}>
-          <td><img src="https://via.placeholder.com/50x50" alt="Imagen de la canción"></img></td>
-          <td>Canción</td>
-          <td>3:24</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+            <div className="row mt-3">
+                <div>
+                    <div class="row">
+                        <div class="col-md-6 text-center bg-gray" style={{ backgroundColor: '#18181C' }}>
+                            <h1 style={{ textAlign: "left" }}>Eventos</h1>
 
-    
+                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Evento 1</h4>
+                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Evento 2</h4>
+                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Evento 3</h4>
+                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Evento 4</h4>
+                            <p style={{ borderBottom: '1px solid white', marginBottom: "20px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                        </div>
+                        <div class="col-md-6 text-center bg-gray" style={{ backgroundColor: '#18181C' }}>
+                            <h1 style={{ textAlign: "left" }}>Noticias</h1>
 
-    
+                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 1</h4>
+                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 2</h4>
+                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 3</h4>
+                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 4</h4>
+                            <p style={{ borderBottom: '1px solid white', marginBottom: "20px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12" style={{ border: '2px solid green' }}>
+                    <h2>Mi historial de reproducciones</h2>
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Canción</th>
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {[...Array(10)].map((_, i) => (
+                                <tr key={i}>
+                                    <td><img src="https://via.placeholder.com/50x50" alt="Imagen de la canción"></img></td>
+                                    <td>Canción</td>
+                                    <td>3:24</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+
+
             <footer>
                 <p class="float-end"><a href="#">Back to top</a></p>
                 <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
 
             </footer>
-            </div>
+        </div>
     );
 }
 
