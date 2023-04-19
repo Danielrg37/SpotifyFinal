@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
-    backgroundColor: 'white',
+    backgroundColor: 'white', 
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: 'gray',
     },
@@ -18,47 +18,54 @@ const useStyles = makeStyles((theme) => ({
   },
   option: {
     backgroundColor: 'white',
-    color: 'black',
-  },
-  getLabel: {
-    padding: theme.spacing(1),
-    backgroundColor: '#1DB954',
-    color: 'white',
-    fontWeight: 'bold',
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
+    color: 'black', 
   },
 }));
 
 export default function SearchBar() {
   const classes = useStyles();
   const [value, setValue] = useState(null);
+  const [options, setOptions] = useState([]);
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+
+    fetch(`https://api.spotify.com/v1/search?type=artist&q=${event.target.value}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const results = data.artists.items.map((artist) => artist.name);
+        setOptions(results);
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
-    <div style={{ display: 'flex', maxWidth: 400 }}>
-      <div className={classes.getLabel}>GET</div>
-      <Autocomplete
-        id="search-bar"
-        options={[]}
-        getOptionLabel={(option) => option}
-        style={{ width: '100%' }}
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            placeholder="Search for an artist..."
-            variant="outlined"
-            InputProps={{
-              ...params.InputProps,
-              classes: { root: classes.inputRoot },
-            }}
-          />
-        )}
-        classes={{ option: classes.option }}
-      />
-    </div>
+    <Autocomplete
+      id="search-bar"
+      options={options}
+      getOptionLabel={(option) => option}
+      style={{ width: '100%', maxWidth: 400 }}
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+      }}
+      onInputChange={handleChange}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          variant="outlined"
+          InputProps={{
+            ...params.InputProps,
+            classes: { root: classes.inputRoot },
+          }}
+        />
+      )}
+      classes={{ option: classes.option }} 
+    />
   );
 }
