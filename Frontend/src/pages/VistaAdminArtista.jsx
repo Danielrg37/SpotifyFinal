@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/vista_artista.css';
 import { useNavigate } from 'react-router-dom';
 
-function VistaArtista() {
+function VistaAdminArtista() {
 
     return (
 
@@ -46,11 +46,12 @@ function VistaArtista() {
 
             <footer>
                 <p class="float-end"><a href="#">Back to top</a></p>
-                <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
+                <p>Placeholder <a href="#">Placeholder</a> ï¿½ <a href="#"></a></p>
 
             </footer>
+        </div>
         </div>
     );
 }
 
-export default VistaArtista;
+export default VistaAdminArtista;

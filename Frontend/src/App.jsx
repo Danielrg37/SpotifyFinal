@@ -8,7 +8,10 @@ import VistaCancion from './pages/VistaCancion'
 import VistaArtista from './pages/VistaArtista'
 import SearchBar from './pages/BarraBusqueda'
 import CancionLista from './pages/CancionLista'
+import VistaDisco from './pages/VistaDisco'
 import ArtistaLista from './pages/ArtistaLista'
+import Admin from './pages/VistaAdmin'
+import VistaAdminArtista from './pages/VistaAdminArtista'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -27,6 +30,10 @@ function App() {
           <Route path = '/artista' element={<VistaArtista />} />
           <Route path = '/playlistC' element={<CancionLista />} />
           <Route path = '/playlistA' element={<ArtistaLista />} />
+          <Route path = '/disco' element={<VistaDisco />} />
+          <Route path = '/admin' element={<Admin />} />
+          <Route path = '/adminArtista' element={<VistaAdminArtista />} />
+
         </Routes>
       </Router>
     </div>

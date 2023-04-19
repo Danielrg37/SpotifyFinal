@@ -9,20 +9,62 @@ import { useNavigate } from 'react-router-dom';
 
 function VistaDisco({ albumId, accessToken }) {
 
-    const [albumData, setAlbumData] = useState({});
+    const [token, setToken] = useState(null);
+    const [isRequestDone, setIsRequestDone] = useState(false);
+    const [disco, setDisco] = useState([]);
+    const [cancionesDisco, setCancionesDisco] = useState([]);
+   
+  
+    useEffect(() => {
+      if (!isRequestDone) {
+        fetch("https://accounts.spotify.com/api/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: "grant_type=client_credentials&client_id=ff923ecf1dad4ad3b0d5e8e5ec0deaf7&client_secret=40bd84518a9c4ddbab686f0de9e55ca9"
+        })
+        .then(response => response.json())
+        .then(data => {
+          setToken(data.access_token);
+          setIsRequestDone(true);
+        })
+        .catch(error => console.error(error));
+      }   
+    }, [isRequestDone]);
+  
+    useEffect(() => {
+      if (token) {
+        
+        fetch("https://api.spotify.com/v1/albums/2XS5McKf3zdJWpcZ4OkZPZ?si=I3oRbc7lRBKWH1bZUgw0Iw", {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        .then(response => response.json())
+        
+        .then (data => setDisco([data]))
+        .catch(error => console.error(error));
+        }
+    }, [token]);
 
     useEffect(() => {
-        fetch(`https://api.spotify.com/v1/albums/${albumId}`, {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            }
-        })
-            .then(response => response.json())
-            .then(data => setAlbumData(data))
-            .catch(error => console.error(error));
-    }, [albumId, accessToken]);
+        if (token) {
+            fetch("https://api.spotify.com/v1/albums/2XS5McKf3zdJWpcZ4OkZPZ/tracks?si=I3oRbc7lRBKWH1bZUgw0Iw", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => setCancionesDisco(data.items))
+                .catch(error => console.error(error));
+        }
+    }, [token]);
 
-    
+    console.log(disco);
+    console.log(cancionesDisco);
+
+
     return (
 
         <div className="container">
@@ -43,7 +85,7 @@ function VistaDisco({ albumId, accessToken }) {
                     <img src="https://via.placeholder.com/300x300" alt="Artista 1" className="img-fluid rounded-circle" />
                 </div>
                 <div className="col-8">
-                    <h1>Nombre Disco</h1>
+                    <h1>{disco.name}</h1>
                     <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
                 </div>
             </div>
@@ -53,24 +95,23 @@ function VistaDisco({ albumId, accessToken }) {
                     <p>Placeholder</p>
                 </div>
                 <div class="col-md-4 text-center" id="datos">
-                    <h4>Tiempo total de reproducción</h4>
+                    <h4>Tiempo total de reproducciï¿½n</h4>
                     <p>Placeholder horas</p>
                 </div>
                 <div class="col-md-4 text-center" id="datos">
-                    <h4>Última vez escuchado</h4>
+                    <h4>Ãšltima vez escuchado</h4>
                     <p>Placeholder</p>
                 </div>
             </div>
             <div class="row mt-3">
                 <h1>Canciones que pertenecen al disco</h1>
                 <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
-                    {[...Array(8)].map((_, index) => (
-                        <div key={index} className="d-inline-block mx-2">
-                            <img src="https://via.placeholder.com/150x150" alt={`Canción ${index}`} className="img-fluid" />
-                            <p>Canción {index}</p>
-                        </div>
-                    ))}
-                </div>
+                    {cancionesDisco.map((cancion, index) => (
+                         <div key={index} className="d-inline-block mx-2">
+                         <img src={cancion?.images?.[1]?.url} alt={`CanciÃ³n ${index}`} className="img-fluid" width={250} height={250} />
+                         <p>{cancion.name}</p>
+                       </div>
+                   ))}
             </div>
 
             <div class="row mt-5">
@@ -80,15 +121,15 @@ function VistaDisco({ albumId, accessToken }) {
                         <thead>
                             <tr>
                                 <th>Imagen</th>
-                                <th>Canción</th>
+                                <th>CanciÃ³n</th>
                                 <th>Hora</th>
                             </tr>
                         </thead>
                         <tbody>
                             {[...Array(10)].map((_, i) => (
                                 <tr key={i}>
-                                    <td><img src="https://via.placeholder.com/50x50" alt="Imagen de la canción"></img></td>
-                                    <td>Canción</td>
+                                    <td><img src="https://via.placeholder.com/50x50" alt="Imagen de la canciï¿½n"></img></td>
+                                    <td>CanciÃ³n</td>
                                     <td>3:24</td>
                                 </tr>
                             ))}
@@ -104,11 +145,13 @@ function VistaDisco({ albumId, accessToken }) {
 
             <footer>
                 <p class="float-end"><a href="#">Back to top</a></p>
-                <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
+                <p>Placeholder <a href="#">Placeholder</a> ï¿½ <a href="#"></a></p>
 
             </footer>
         </div>
+        </div>
     );
+
 }
 
 export default VistaDisco;
@@ -120,7 +163,7 @@ export default VistaDisco;
 //        <img src={albumData.images?.[0].url} alt={`Cover art for ${albumData.name}`} />
 //        <p>{albumData.release_date}</p>
 //        <p>{albumData.total_tracks} tracks</p>
-//        {/* Aquí puedes mostrar cualquier otra información que desees */}
+//        {/* Aquï¿½ puedes mostrar cualquier otra informaciï¿½n que desees */}
 //    </div>
 //);
 //}
