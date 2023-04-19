@@ -4,3 +4,9 @@
                          <p>{cancion.name}</p>
                        </div>
                    ))}
+
+
+  const [token, setToken] = useState(null);
+    const [isRequestDone, setIsRequestDone] = useState(false);
+    const [disco, setDisco] = useState([]);
+    const [cancionesDisco, setCancionesDisco] = useState([]);
