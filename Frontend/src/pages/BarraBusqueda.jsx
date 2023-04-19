@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 const options = ['Opción 1', 'Opción 2', 'Opción 3'];
 
-export default function SearchBar() {
+export function SearchBar() {
   const classes = useStyles();
   const [value, setValue] = useState(null);
 

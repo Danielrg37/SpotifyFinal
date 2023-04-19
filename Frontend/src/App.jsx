@@ -6,12 +6,12 @@ import Login from './pages/Login'
 import Perfil from './pages/VistaPerfil'
 import VistaCancion from './pages/VistaCancion'
 import VistaArtista from './pages/VistaArtista'
-import SearchBar from './pages/BarraBusqueda'
 import CancionLista from './pages/CancionLista'
 import VistaDisco from './pages/VistaDisco'
 import ArtistaLista from './pages/ArtistaLista'
 import Admin from './pages/VistaAdmin'
-import VistaAdminArtista from './pages/VistaAdminArtista'
+import SpotifyLogin from './pages/SpotifyLogin'
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -20,7 +20,6 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path = '*' element={<Home />} />
           <Route path = '/home' element={<Home />} />
           <Route path = '/registro' element={<Registro />} />
           <Route path = '/login' element={<Login />} />
@@ -32,7 +31,8 @@ function App() {
           <Route path = '/playlistA' element={<ArtistaLista />} />
           <Route path = '/disco' element={<VistaDisco />} />
           <Route path = '/admin' element={<Admin />} />
-          <Route path = '/adminArtista' element={<VistaAdminArtista />} />
+          <Route path = '/login2' element={<SpotifyLogin />} />
+         
 
         </Routes>
       </Router>

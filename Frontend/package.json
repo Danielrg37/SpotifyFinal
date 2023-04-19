@@ -15,6 +15,7 @@
     "@mui/material": "^5.11.16",
     "bi": "^0.0.1",
     "bootstrap": "^5.1.3",
+    "js-sha256": "^0.9.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0-beta.1",
     "react-dom": "^18.2.0",

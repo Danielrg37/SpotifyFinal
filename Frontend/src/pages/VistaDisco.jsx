@@ -43,7 +43,7 @@ function VistaDisco({ albumId, accessToken }) {
         })
         .then(response => response.json())
         
-        .then (data => setDisco([data]))
+        .then (data => setDisco(data))
         .catch(error => console.error(error));
         }
     }, [token]);
@@ -63,8 +63,9 @@ function VistaDisco({ albumId, accessToken }) {
 
     console.log(disco);
     console.log(cancionesDisco);
+   
 
-
+    const imagen = disco?.images?.[1]?.url;
     return (
 
         <div className="container">
@@ -82,7 +83,7 @@ function VistaDisco({ albumId, accessToken }) {
 
             <div className="row">
                 <div className="col-4">
-                    <img src="https://via.placeholder.com/300x300" alt="Artista 1" className="img-fluid rounded-circle" />
+                    <img src={disco?.images?.[1]?.url} alt="Artista 1" className="img-fluid" />
                 </div>
                 <div className="col-8">
                     <h1>{disco.name}</h1>
@@ -95,7 +96,7 @@ function VistaDisco({ albumId, accessToken }) {
                     <p>Placeholder</p>
                 </div>
                 <div class="col-md-4 text-center" id="datos">
-                    <h4>Tiempo total de reproducci�n</h4>
+                    <h4>Tiempo total de reproducción</h4>
                     <p>Placeholder horas</p>
                 </div>
                 <div class="col-md-4 text-center" id="datos">
@@ -106,9 +107,10 @@ function VistaDisco({ albumId, accessToken }) {
             <div class="row mt-3">
                 <h1>Canciones que pertenecen al disco</h1>
                 <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
+                    
                     {cancionesDisco.map((cancion, index) => (
                          <div key={index} className="d-inline-block mx-2">
-                         <img src={cancion?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
+                         <img src="https://via.placeholder.com/150x150" alt="Imagen de la canci�n" className="img-fluid rounded-circle" />
                          <p>{cancion.name}</p>
                        </div>
                    ))}

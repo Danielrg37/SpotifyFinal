@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SearchBar from "./BarraBusqueda";
+
 
 function CancionLista() {
   const navigate = useNavigate(); // Agrega esta línea para utilizar el hook de navegación

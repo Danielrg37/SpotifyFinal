@@ -9,28 +9,29 @@ import { useNavigate } from 'react-router-dom';
 function VistaPerfil() {
     const [artistInfo, setArtistInfo] = useState(null);
     const [token, setToken] = useState(null);
-    const [isRequestDone, setIsRequestDone] = useState(false);
     const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
-    
+    const [topArtistas, setTopArtistas] = useState(null);
 
     useEffect(() => {
-        if (!isRequestDone) {
-            fetch("https://accounts.spotify.com/api/token", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: "grant_type=client_credentials&client_id=ff923ecf1dad4ad3b0d5e8e5ec0deaf7&client_secret=40bd84518a9c4ddbab686f0de9e55ca9"
-            })
-                .then(response => response.json())
-                .then(data => {
-                    setToken(data.access_token);
-                    setIsRequestDone(true);
-                });
-        }
-    }, [isRequestDone]);
+        const token = localStorage.getItem('token');
+        setToken(token);
+      }, []);
 
+      useEffect(() => {
+        if (token) {
+            fetch("https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=20", { 
+                headers: { 
+                    "Authorization": `Bearer ${token}` } 
+                }) 
+                .then(response => response.json()) 
+                .then(data => console.log(data)) 
+                .catch(error => console.error(error));
+        }
+    }, [token]);
+
+      
+    
     useEffect(() => {
         if (token) {
             fetch("https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb", {
@@ -70,7 +71,7 @@ function VistaPerfil() {
 
     console.log(userData); // muestra toda la información del usuario
     console.log(userData.display_name); // muestra el nombre de usuario
-   
+    console.log(topArtistas);
 
     return (
 
@@ -98,7 +99,7 @@ function VistaPerfil() {
             </div>
             <div className="row mt-3">
                 <div className="col">
-                    <h1>Top X</h1>
+                    <h1>Top Canciones</h1>
                 </div>
                 <div className="col-auto">
                     <Button> {'>'} </Button>
@@ -110,10 +111,7 @@ function VistaPerfil() {
             <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
                 {[...Array(20)].map((_, index) => (
                     <div key={index} className="d-inline-block mx-2">
-                        <Link to={{
-                            pathname: "/cancion",
-                            state: { token: token }
-                        }}>
+                       <Link to="/cancion">
                             <img src="https://via.placeholder.com/150x150" alt={`Canción ${index}`} className="img-fluid rounded-circle" />
                         </Link>
                         <p>Canción {index}</p>
@@ -123,7 +121,7 @@ function VistaPerfil() {
 
             <div className="row mt-5">
                 <div className="col">
-                    <h1>Top X</h1>
+                    <h1>Top Artistas</h1>
                 </div>
                 <div className="col-auto">
                     <Button> {'>'} </Button>
@@ -143,6 +141,29 @@ function VistaPerfil() {
                     </div>
                 ))}
             </div>
+
+            <div className="row mt-3">
+                <div className="col">
+                    <h1>Top Discos</h1>
+                </div>
+                <div className="col-auto">
+                    <Button> {'>'} </Button>
+                </div>
+                <div className="col-auto">
+                    <Button> {'<'} </Button>
+                </div>
+            </div>
+            <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
+                {[...Array(20)].map((_, index) => (
+                    <div key={index} className="d-inline-block mx-2">
+                        <Link to="/disco">
+                            <img src="https://via.placeholder.com/150x150" alt={`Canción ${index}`} className="img-fluid rounded-circle" />
+                        </Link>
+                        <p>Canción {index}</p>
+                    </div>
+                ))}
+            </div>
+
 
 
             <div class="row mt-5">
