@@ -52,3 +52,14 @@ export default function SearchBar() {
     />
   );
 }
+
+
+ useEffect(() => {
+    const fetchEvents = async () => {
+      const url = `https://api.songkick.com/api/3.0/artists/${artistId}/calendar.json?apikey=API_KEY`;
+      const response = await fetch(url);
+      const data = await response.json();
+      setEvents(data.resultsPage.results.event);
+    };
+    fetchEvents();
+  }, [artistId]);
