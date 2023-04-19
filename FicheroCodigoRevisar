@@ -43,7 +43,10 @@ function VistaPerfil() {
 
     
     
-
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  setToken(token);
+}, []);
 
     console.log("La petición se ha realizado.");
     console.log(`Bearer ${token}`);
