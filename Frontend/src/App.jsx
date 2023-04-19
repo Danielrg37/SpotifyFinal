@@ -34,7 +34,7 @@ function App() {
           <Route path = '/login2' element={<SpotifyLogin />} />
          <Route path = '/cancion/:id' element={<VistaCancion />} />
           <Route path = '/artista/:id' element={<VistaArtista />} />
-
+          <Route path = '/disco/:id' element={<VistaDisco />} />
         </Routes>
       </Router>
     </div>
