@@ -1,97 +1,66 @@
+import { useState, useEffect } from 'react';
+
 const clientId = 'ff923ecf1dad4ad3b0d5e8e5ec0deaf7';
 const redirectUri = 'http://localhost:5173';
 
-// Generate a random code verifier
-function generateRandomString(length) {
-    let text = '';
-    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+function Login() {
+  const [authCode, setAuthCode] = useState(null);
 
-    for (let i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
+  useEffect(() => {
+  
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const code = urlSearchParams.get('code');
+    if (code) {
+      setAuthCode(code);
     }
+  }, []);
 
-    return text;
-}
+  const handleLogin = () => {
+  
+    const state = Math.random().toString(36).substring(2);
+    sessionStorage.setItem('spotify_auth_state', state);
 
-let codeVerifier = generateRandomString(43);
+    
+    const codeVerifier = Math.random().toString(36).substring(2);
+    sessionStorage.setItem('spotify_code_verifier', codeVerifier);
+    const sha256 = require('js-sha256');
+    const codeChallenge = sha256(codeVerifier);
 
-// Hash the code verifier with SHA256 and base64-encode the result
-async function generateCodeChallenge(codeVerifier) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(codeVerifier);
-    const digest = await window.crypto.subtle.digest('SHA-256', data);
-    const base64Challenge = btoa(String.fromCharCode(...new Uint8Array(digest)))
-        .replace(/=/g, '')
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_');
-    return base64Challenge;
-}
+  
+    const authorizationUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&state=${state}&code_challenge=${codeChallenge}&code_challenge_method=S256&scope=user-read-private`;
 
-// Store the code verifier in local storage for later use
-localStorage.setItem('codeVerifier', codeVerifier);
+    window.location.href = authorizationUrl;
+  };
 
-// Generate the code challenge and add the authorization request parameters to the URL
-async function authorize() {
-    const codeChallenge = await generateCodeChallenge(codeVerifier);
-    const state = generateRandomString(16);
-    const scope = 'user-read-private user-read-email';
+  useEffect(() => {
+    if (authCode) {
+    
+      const state = sessionStorage.getItem('spotify_auth_state');
+      const codeVerifier = sessionStorage.getItem('spotify_code_verifier');
 
-    const params = new URLSearchParams({
-        response_type: 'code',
-        client_id: clientId,
-        redirect_uri: redirectUri,
-        code_challenge_method: 'S256',
-        code_challenge: codeChallenge,
-        state,
-        scope,
-    });
-
-    const authorizationUrl = `https://accounts.spotify.com/authorize?${params}`;
-
-    // Redirect the user to the Spotify authorization page
-    window.location = authorizationUrl;
-}
-
-// Parse the authorization code from the URL and exchange it for an access token
-async function getAccessToken() {
-    let accessToken = localStorage.getItem('accessToken');
-    let expirationTime = localStorage.getItem('expirationTime');
-
-    // If the access token is not stored or has expired, get a new one
-    if (!accessToken || Date.now() >= expirationTime) {
-        const code = new URLSearchParams(window.location.search).get('code');
-        const storedCodeVerifier = localStorage.getItem('codeVerifier');
-
-        const params = new URLSearchParams({
-            grant_type: 'authorization_code',
-            code,
-            redirect_uri: redirectUri,
-            client_id: clientId,
-            code_verifier: storedCodeVerifier,
-        });
-
-        const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: params,
-        });
-
-        const tokenJson = await tokenResponse.json();
-        accessToken = tokenJson.access_token;
-
-        // Set the expiration time to 1 hour from now
-        expirationTime = Date.now() + 3600000;
-
-        // Store the access token and expiration time in local storage
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('expirationTime', expirationTime);
+      // Exchange the authorization code for an access token
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `grant_type=authorization_code&code=${authCode}&redirect_uri=${REDIRECT_URI}&client_id=${CLIENT_ID}&code_verifier=${codeVerifier}`,
+      };
+      fetch('https://accounts.spotify.com/api/token', requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          // Guardo token
+          localStorage.setItem('spotify_access_token', data.access_token);
+        })
+        .catch((error) => console.log(error));
     }
+  }, [authCode]);
 
-    // Use the access token to make API requests to Spotify
-    return accessToken;
+  return (
+    <div>
+      <button onClick={handleLogin}>Log in with Spotify</button>
+    </div>
+  );
 }
 
-// Call the authorize function when the user clicks a button or takes some other action to initiate the authorization flow
-authorize();
+export default Login;
