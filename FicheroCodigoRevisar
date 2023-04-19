@@ -1,65 +1,56 @@
-import React, { useState } from 'react';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/vista_perfil.css';
+import { useNavigate } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
-  inputRoot: {
-    backgroundColor: 'white', // Cambiar el color de fondo a blanco
-    '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'gray',
-    },
-    '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'gray',
-    },
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#1DB954',
-    },
-  },
-  option: {
-    backgroundColor: 'white', // Cambiar el color de fondo de las opciones a negro
-    color: 'black', // Cambiar el color del texto a blanco
-  },
-}));
+function VistaPerfil() {
+    const [artistInfo, setArtistInfo] = useState(null);
+    const [token, setToken] = useState(null);
+    const [isRequestDone, setIsRequestDone] = useState(false);
+    const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
 
-const options = ['Opción 1', 'Opción 2', 'Opción 3'];
+    setToken(localStorage.getItem('token'));
+    
+    useEffect(() => {
+        if (token) {
+            fetch("https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => setArtistInfo(data));
+        }
+    }, [token]);
 
-export default function SearchBar() {
-  const classes = useStyles();
-  const [value, setValue] = useState(null);
-
-  return (
-    <Autocomplete
-      id="search-bar"
-      options={options}
-      getOptionLabel={(option) => option}
-      style={{ width: '100%', maxWidth: 400 }}
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          variant="outlined"
-          InputProps={{
-            ...params.InputProps,
-            classes: { root: classes.inputRoot },
-          }}
-        />
-      )}
-      classes={{ option: classes.option }} // Agregar la clase "option" a las opciones
-    />
-  );
-}
+    useEffect(() => {
+        if (token) {
+            fetch('https://api.spotify.com/v1/users/King_KS', {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+                .then(response => response.json())
+                .then(data => setUserData(data));
+        }
+    }, [token]);
 
 
- useEffect(() => {
-    const fetchEvents = async () => {
-      const url = `https://api.songkick.com/api/3.0/artists/${artistId}/calendar.json?apikey=API_KEY`;
-      const response = await fetch(url);
-      const data = await response.json();
-      setEvents(data.resultsPage.results.event);
-    };
-    fetchEvents();
-  }, [artistId]);
+    
+    
+
+
+    console.log("La petición se ha realizado.");
+    console.log(`Bearer ${token}`);
+
+    if (!artistInfo || !userData) {
+        return <div>Loading...</div>;
+    }
+
+    console.log(userData); // muestra toda la información del usuario
+    console.log(userData.display_name); // muestra el nombre de usuario
