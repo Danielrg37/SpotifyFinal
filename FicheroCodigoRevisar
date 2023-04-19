@@ -1,0 +1,6 @@
+  {cancionesDisco.map((cancion, index) => (
+                         <div key={index} className="d-inline-block mx-2">
+                         <img src={cancion?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
+                         <p>{cancion.name}</p>
+                       </div>
+                   ))}
