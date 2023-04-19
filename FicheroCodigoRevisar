@@ -1,12 +1,54 @@
-{cancionesDisco.map((cancion, index) => (
-  <div key={index} className="d-inline-block mx-2">
-    <img src={discos.find(disco => disco.id === cancion.album.id)?.images[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
-    <p>{cancion.name}</p>
-  </div>
-))}
-
-
-  const [token, setToken] = useState(null);
+ const [token, setToken] = useState(null);
     const [isRequestDone, setIsRequestDone] = useState(false);
     const [disco, setDisco] = useState([]);
     const [cancionesDisco, setCancionesDisco] = useState([]);
+   
+  
+    useEffect(() => {
+      if (!isRequestDone) {
+        fetch("https://accounts.spotify.com/api/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: "grant_type=client_credentials&client_id=ff923ecf1dad4ad3b0d5e8e5ec0deaf7&client_secret=40bd84518a9c4ddbab686f0de9e55ca9"
+        })
+        .then(response => response.json())
+        .then(data => {
+          setToken(data.access_token);
+          setIsRequestDone(true);
+        })
+        .catch(error => console.error(error));
+      }   
+    }, [isRequestDone]);
+  
+    useEffect(() => {
+      if (token) {
+        
+        fetch("https://api.spotify.com/v1/albums/2XS5McKf3zdJWpcZ4OkZPZ?si=I3oRbc7lRBKWH1bZUgw0Iw", {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        .then(response => response.json())
+        
+        .then (data => setDisco([data]))
+        .catch(error => console.error(error));
+        }
+    }, [token]);
+
+    useEffect(() => {
+        if (token) {
+            fetch("https://api.spotify.com/v1/albums/2XS5McKf3zdJWpcZ4OkZPZ/tracks?si=I3oRbc7lRBKWH1bZUgw0Iw", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => setCancionesDisco(data.items))
+                .catch(error => console.error(error));
+        }
+    }, [token]);
+
+    console.log(disco);
+    console.log(cancionesDisco);
