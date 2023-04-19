@@ -11,27 +11,16 @@ function VistaPerfil() {
     const [token, setToken] = useState(null);
     const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
-    const [topArtistas, setTopArtistas] = useState(null);
+    const [topArtistas, setTopArtistas] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         setToken(token);
-      }, []);
+    }, []);
 
-      useEffect(() => {
-        if (token) {
-            fetch("https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=20", { 
-                headers: { 
-                    "Authorization": `Bearer ${token}` } 
-                }) 
-                .then(response => response.json()) 
-                .then(data => console.log(data)) 
-                .catch(error => console.error(error));
-        }
-    }, [token]);
 
-      
-    
+
+
     useEffect(() => {
         if (token) {
             fetch("https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb", {
@@ -47,30 +36,45 @@ function VistaPerfil() {
 
     useEffect(() => {
         if (token) {
-            fetch('https://api.spotify.com/v1/users/King_KS', {
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            })
-                .then(response => response.json())
-                .then(data => setUserData(data));
+            fetch('https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=20',
+                {
+                    method: "GET", headers:
+                    {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => response.json())
+            .then(data => {
+                setTopArtistas(data);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
+            });
+        }
+    }, [token]);
+
+    useEffect(() => {
+        if (token) {
+            fetch('https://api.spotify.com/v1/me',
+                {
+                    method: "GET", headers:
+                    {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => response.json())
+            .then(data => {
+                console.log(data); // Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
+            });
         }
     }, [token]);
 
 
-    
-    
+
+
 
 
     console.log("La petición se ha realizado.");
     console.log(`Bearer ${token}`);
 
-    if (!artistInfo || !userData) {
-        return <div>Loading...</div>;
-    }
+  
 
     console.log(userData); // muestra toda la información del usuario
-    console.log(userData.display_name); // muestra el nombre de usuario
     console.log(topArtistas);
 
     return (
@@ -93,7 +97,7 @@ function VistaPerfil() {
                     <img src={userData?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" />
                 </div>
                 <div className="col-8">
-                    <h2>{userData.display_name}</h2>
+                    <h2>A</h2>
                     <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
                 </div>
             </div>
@@ -109,10 +113,10 @@ function VistaPerfil() {
                 </div>
             </div>
             <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
-                {[...Array(20)].map((_, index) => (
+                {topArtistas.map((artista, index) => (
                     <div key={index} className="d-inline-block mx-2">
-                       <Link to="/cancion">
-                            <img src="https://via.placeholder.com/150x150" alt={`Canción ${index}`} className="img-fluid rounded-circle" />
+                        <Link to="/cancion">
+                            <img src={artista?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" />
                         </Link>
                         <p>Canción {index}</p>
                     </div>
