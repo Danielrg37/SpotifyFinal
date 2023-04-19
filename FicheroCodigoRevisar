@@ -57,3 +57,20 @@ useEffect(() => {
 
     console.log(userData); // muestra toda la información del usuario
     console.log(userData.display_name); // muestra el nombre de usuario
+
+
+useEffect(() => {
+        if (token) {
+            fetch("https://api.spotify.com/me/top/artists", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => setTopArtistas(data));
+        }
+    }, [token]);
+
+
