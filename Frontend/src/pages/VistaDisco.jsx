@@ -44,7 +44,8 @@ function VistaDisco({ albumId, accessToken }) {
             .then(response => response.json())
             .then(data => setAlbumData(data))
             .catch(error => console.error(error));
-    }, [albumId, accessToken]);
+    }
+    }, [token]);
 
     
     return (
@@ -132,7 +133,7 @@ function VistaDisco({ albumId, accessToken }) {
 
             </footer>
         </div>
-        </div>
+        
     );
 
 }
