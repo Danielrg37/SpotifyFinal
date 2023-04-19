@@ -32,7 +32,8 @@ function App() {
           <Route path = '/disco' element={<VistaDisco />} />
           <Route path = '/admin' element={<Admin />} />
           <Route path = '/login2' element={<SpotifyLogin />} />
-         
+         <Route path = '/cancion/:id' element={<VistaCancion />} />
+          <Route path = '/artista/:id' element={<VistaArtista />} />
 
         </Routes>
       </Router>

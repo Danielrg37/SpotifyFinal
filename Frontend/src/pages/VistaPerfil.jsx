@@ -12,15 +12,65 @@ function VistaPerfil() {
     const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
     const [topArtistas, setTopArtistas] = useState([]);
+    const [topCanciones, setTopCanciones] = useState([]);
+    const [historial, setHistorial] = useState([]);
+
+
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         setToken(token);
     }, []);
 
+    
+    useEffect(() => {
+        if (token) {
+            fetch('https://api.spotify.com/v1/me',
+                {
+                    method: "GET", headers:
+                    {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    setUserData(data);
+                     // Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
+                });
+        }
+    }, [token]);
 
+    useEffect(() => {
+        if (token) {
+            fetch('https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=20',
+                {
+                    method: "GET", headers:
+                    {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => response.json())
+                .then(data => {
+                    setTopArtistas(data.items);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
+                });
+        }
+    }, [token]);
 
+    useEffect(() => {
+        if (token) {
+            fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=20',
+                {
+                    method: "GET", headers:
+                    {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => response.json())
+                .then(data => {
+                    setTopCanciones(data.items);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
+                });
+        }
+    }, [token]);
 
+    
     useEffect(() => {
         if (token) {
             fetch("https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb", {
@@ -34,48 +84,35 @@ function VistaPerfil() {
         }
     }, [token]);
 
+   
     useEffect(() => {
         if (token) {
-            fetch('https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=20',
-                {
-                    method: "GET", headers:
-                    {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then(response => response.json())
-            .then(data => {
-                setTopArtistas(data);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
+          fetch("https://api.spotify.com/v1/me/player/recently-played?limit=50", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              setHistorial(data.items);
             });
         }
-    }, [token]);
-
-    useEffect(() => {
-        if (token) {
-            fetch('https://api.spotify.com/v1/me',
-                {
-                    method: "GET", headers:
-                    {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then(response => response.json())
-            .then(data => {
-                console.log(data); // Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
-            });
-        }
-    }, [token]);
+      }, [token]);
 
 
 
 
-
+      const nombreUser = userData?.display_name;
 
     console.log("La petición se ha realizado.");
     console.log(`Bearer ${token}`);
 
-  
+
 
     console.log(userData); // muestra toda la información del usuario
     console.log(topArtistas);
+    console.log(topCanciones);
 
     return (
 
@@ -94,10 +131,10 @@ function VistaPerfil() {
 
             <div className="row">
                 <div className="col-4">
-                    <img src={userData?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" />
+                    <img src={userData?.images?.[0]?.url} alt="Artista 1" className="img-fluid rounded-circle" />
                 </div>
                 <div className="col-8">
-                    <h2>A</h2>
+                    <h2>{nombreUser}</h2>
                     <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
                 </div>
             </div>
@@ -113,14 +150,16 @@ function VistaPerfil() {
                 </div>
             </div>
             <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
-                {topArtistas.map((artista, index) => (
+
+                {topCanciones.map((cancion, index) => (
                     <div key={index} className="d-inline-block mx-2">
-                        <Link to="/cancion">
-                            <img src={artista?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" />
+                     <Link to={`/cancion/${cancion.id}`}>
+                        {cancion.album && cancion.album.images && <img src={cancion.album.images[1]?.url} className="img-fluid" style={{width: '250px', height: '250px'}} />}
                         </Link>
-                        <p>Canción {index}</p>
+                        <p>{cancion.name}</p>
                     </div>
                 ))}
+
             </div>
 
             <div className="row mt-5">
@@ -135,74 +174,53 @@ function VistaPerfil() {
                 </div>
             </div>
             <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
-                {[...Array(20)].map((_, index) => (
+            {topArtistas.map((artista, index) => (
                     <div key={index} className="d-inline-block mx-2">
-                        <Link to="/artista">
-                            <img src="https://via.placeholder.com/150x150" alt={`Canción ${index}`} className="img-fluid rounded-circle" />
+                         <Link to={`/artista/${artista.id}`}>
+                            {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" style={{width: '150px', height: '150px'}} />}
                         </Link>
-                        <p>Artista {index}</p>
-
+                        <p>{artista.name}</p>
                     </div>
                 ))}
             </div>
+      
 
-            <div className="row mt-3">
-                <div className="col">
-                    <h1>Top Discos</h1>
-                </div>
-                <div className="col-auto">
-                    <Button> {'>'} </Button>
-                </div>
-                <div className="col-auto">
-                    <Button> {'<'} </Button>
-                </div>
-            </div>
-            <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
-                {[...Array(20)].map((_, index) => (
-                    <div key={index} className="d-inline-block mx-2">
-                        <Link to="/disco">
-                            <img src="https://via.placeholder.com/150x150" alt={`Canción ${index}`} className="img-fluid rounded-circle" />
-                        </Link>
-                        <p>Canción {index}</p>
-                    </div>
-                ))}
-            </div>
-
-
-
-            <div class="row mt-5">
-                <div class="col-12 ml-2" style={{ border: '2px solid green' }}>
-                    <h2>Mi historial de reproducciones</h2>
-                    <table class="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th>Imagen</th>
-                                <th>Canción</th>
-                                <th>Hora</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {[...Array(10)].map((_, i) => (
-                                <tr key={i}>
-                                    <td><img src="https://via.placeholder.com/50x50" alt="Imagen de la canción"></img></td>
-                                    <td>Canción</td>
-                                    <td>3:24</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-
-
-
-
-            </div>
+            <div className="row mt-5">
+      <div className="col-12 ml-2">
+        <h2>Mi historial de reproducciones</h2>
+        <table className="table table-responsive">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Canción</th>
+              <th>Hora</th>
+            </tr>
+          </thead>
+          <tbody>
+            {historial.map((item, index) => (
+              <tr key={index}>
+                <td>
+                  <img
+                    src={item.track.album.images[0].url}
+                    alt={`Imagen de ${item.track.name}`}
+                    style={{ width: 50, height: 50 }}
+                  />
+                </td>
+                <td>{item.track.name}</td>
+                <td>{new Date(item.played_at).toLocaleTimeString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
             <footer>
                 <p class="float-end"><a href="#">Back to top</a></p>
                 <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
 
             </footer>
         </div>
+     
     );
 }
 

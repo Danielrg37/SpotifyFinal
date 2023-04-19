@@ -6,8 +6,75 @@ import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/vista_artista.css';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 function VistaArtista() {
+
+
+    const [artista, setArtista] = useState({});
+    const [albums, setAlbums] = useState([]);
+    const [canciones, setCanciones] = useState([]);
+
+
+    const token = localStorage.getItem('token');
+    const { id } = useParams();
+
+
+    useEffect(() => {
+        if (token) {
+            fetch(`https://api.spotify.com/v1/artists/${id}/albums?album_type=album&si=c14fd7cce6ec4d59`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setAlbums(data.items);
+                });
+        }
+    }, [token]);
+
+    useEffect(() => {
+        if (token) {
+            fetch(`https://api.spotify.com/v1/artists/${id}/top-tracks?market=ES`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setCanciones(data.tracks);
+                });
+        }
+    }, [token]);
+
+
+
+    useEffect(() => {
+        if (token) {
+            fetch(`https://api.spotify.com/v1/artists/${id}?si=c14fd7cce6ec4d59`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setArtista(data);
+                });
+        }
+    }, [token]);
+
+
+    console.log(albums);
+    console.log(artista);
+    console.log(canciones);
+    
+  
+
+
+
+
+
 
     return (
 
@@ -26,10 +93,10 @@ function VistaArtista() {
 
             <div className="row">
                 <div className="col-4">
-                    <img src="https://via.placeholder.com/300x300" alt="Artista 1" className="img-fluid rounded-circle" />
+                    <img src={artista?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" />
                 </div>
                 <div className="col-8">
-                    <h1>Nombre Artista/Artistas</h1>
+                    <h1>{artista.name}</h1>
                     <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
                 </div>
             </div>
@@ -47,13 +114,26 @@ function VistaArtista() {
                     <p>Placeholder</p>
                 </div>
             </div>
+
             <div class="row mt-3">
                 <h1>Canciones más famosas</h1>
                 <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
-                    {[...Array(8)].map((_, index) => (
+                    {canciones.length > 0 && canciones.map((cancion, index) => (
                         <div key={index} className="d-inline-block mx-2">
-                            <img src="https://via.placeholder.com/150x150" alt={`Canción ${index}`} className="img-fluid" />
-                            <p>Canción {index}</p>
+                            <img src={cancion?.album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
+                            <p>{cancion.name}</p>
+                            </div>
+                    ))}
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <h1>Discos</h1>
+                <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
+                    {albums.length > 0 && albums.map((album, index) => (
+                        <div key={index} className="d-inline-block mx-2">
+                            <img src={album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
+                            <p>{album.name}</p>
                         </div>
                     ))}
                 </div>

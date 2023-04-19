@@ -2,36 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/vista_cancion.css';
+import { useParams } from 'react-router-dom';
 
 function VistaCancion() {
-    const [token, setToken] = useState(null);
-    const [isRequestDone, setIsRequestDone] = useState(false);
+  
+  
     const [cancion, setCancion] = useState({});
     const [albums, setAlbums] = useState([]);
     
 
-  
-    useEffect(() => {
-      if (!isRequestDone) {
-        fetch("https://accounts.spotify.com/api/token", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: "grant_type=client_credentials&client_id=ff923ecf1dad4ad3b0d5e8e5ec0deaf7&client_secret=40bd84518a9c4ddbab686f0de9e55ca9"
-        })
-        .then(response => response.json())
-        .then(data => {
-          setToken(data.access_token);
-          setIsRequestDone(true);
-        })
-        .catch(error => console.error(error));
-      }   
-    }, [isRequestDone]);
+    const token = localStorage.getItem('token');
+    const { id } = useParams();
+
   
     useEffect(() => {
       if (token) {
-        fetch("https://api.spotify.com/v1/tracks/5PHEToa3yWlCiagig8MFE9?si=c14fd7cce6ec4d59", {
+        fetch(`https://api.spotify.com/v1/tracks/${id}?si=c14fd7cce6ec4d59`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
