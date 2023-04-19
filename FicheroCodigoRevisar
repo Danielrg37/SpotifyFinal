@@ -1,0 +1,76 @@
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/vista_perfil.css';
+import { useNavigate } from 'react-router-dom';
+
+function VistaPerfil() {
+    const [artistInfo, setArtistInfo] = useState(null);
+    const [token, setToken] = useState(null);
+    const [isRequestDone, setIsRequestDone] = useState(false);
+    const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
+
+    setToken(localStorage.getItem('token'));
+    
+    useEffect(() => {
+        if (token) {
+            fetch("https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => setArtistInfo(data));
+        }
+    }, [token]);
+
+    useEffect(() => {
+        if (token) {
+            fetch('https://api.spotify.com/v1/users/King_KS', {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+                .then(response => response.json())
+                .then(data => setUserData(data));
+        }
+    }, [token]);
+
+
+    
+    
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  setToken(token);
+}, []);
+
+    console.log("La petición se ha realizado.");
+    console.log(`Bearer ${token}`);
+
+    if (!artistInfo || !userData) {
+        return <div>Loading...</div>;
+    }
+
+    console.log(userData); // muestra toda la información del usuario
+    console.log(userData.display_name); // muestra el nombre de usuario
+
+
+useEffect(() => {
+        if (token) {
+            fetch("https://api.spotify.com/me/top/artists", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => setTopArtistas(data));
+        }
+    }, [token]);
+
+

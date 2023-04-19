@@ -41,31 +41,12 @@ function VistaDisco({ albumId, accessToken }) {
             'Authorization': `Bearer ${token}`
           }
         })
-        .then(response => response.json())
-        
-        .then (data => setDisco(data))
-        .catch(error => console.error(error));
-        }
-    }, [token]);
+            .then(response => response.json())
+            .then(data => setAlbumData(data))
+            .catch(error => console.error(error));
+    }, [albumId, accessToken]);
 
-    useEffect(() => {
-        if (token) {
-            fetch("https://api.spotify.com/v1/albums/2XS5McKf3zdJWpcZ4OkZPZ/tracks?si=I3oRbc7lRBKWH1bZUgw0Iw", {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            })
-                .then(response => response.json())
-                .then(data => setCancionesDisco(data.items))
-                .catch(error => console.error(error));
-        }
-    }, [token]);
-
-    console.log(disco);
-    console.log(cancionesDisco);
-   
-
-    const imagen = disco?.images?.[1]?.url;
+    
     return (
 
         <div className="container">
@@ -107,13 +88,13 @@ function VistaDisco({ albumId, accessToken }) {
             <div class="row mt-3">
                 <h1>Canciones que pertenecen al disco</h1>
                 <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
-                    
-                    {cancionesDisco.map((cancion, index) => (
-                         <div key={index} className="d-inline-block mx-2">
-                         <img src="https://via.placeholder.com/150x150" alt="Imagen de la canci�n" className="img-fluid rounded-circle" />
-                         <p>{cancion.name}</p>
-                       </div>
-                   ))}
+                    {[...Array(8)].map((_, index) => (
+                        <div key={index} className="d-inline-block mx-2">
+                            <img src="https://via.placeholder.com/150x150" alt={`Canci�n ${index}`} className="img-fluid" />
+                            <p>Canci�n {index}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
 
             <div class="row mt-5">
@@ -147,7 +128,7 @@ function VistaDisco({ albumId, accessToken }) {
 
             <footer>
                 <p class="float-end"><a href="#">Back to top</a></p>
-                <p>Placeholder <a href="#">Placeholder</a> � <a href="#"></a></p>
+                <p>Placeholder <a href="#">Placeholder</a> <a href="#"></a></p>
 
             </footer>
         </div>
@@ -159,13 +140,15 @@ function VistaDisco({ albumId, accessToken }) {
 export default VistaDisco;
 
 
+
+// Código prueba, no hacer caso
 //return (
 //    <div>
 //        <h1>{albumData.name}</h1>
 //        <img src={albumData.images?.[0].url} alt={`Cover art for ${albumData.name}`} />
 //        <p>{albumData.release_date}</p>
 //        <p>{albumData.total_tracks} tracks</p>
-//        {/* Aqu� puedes mostrar cualquier otra informaci�n que desees */}
+//      
 //    </div>
 //);
 //}
