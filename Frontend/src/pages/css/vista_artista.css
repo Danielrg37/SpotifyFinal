@@ -1,0 +1,74 @@
+
+  
+  .fotos-container img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .fotos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 10px;
+  }
+
+  .imagen-0 {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .imagen-3 {
+    grid-column: span 2;
+  }
+
+  .imagen-4 {
+    grid-row: span 2;
+  }
+
+
+  .artista-container {
+    background-color: #121212;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+  }
+
+.canciones-container {
+  background-color:   #F7F7F7;
+  border-radius: 20px;
+  padding: 20px;
+  color: #121212;
+}
+  
+.canciones-container p {
+  color: #121212;
+}
+
+.canciones-container h1 {
+  color: #121212;
+}
+
+
+
+
+.info-container{
+  background-color:    #F7F7F7;
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+}
+
+.info-container tr, th, td, h2{
+  color: #121212;
+}
+
+.noticias-container {
+    background-color: #121212;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+  }
+
+
+
+
