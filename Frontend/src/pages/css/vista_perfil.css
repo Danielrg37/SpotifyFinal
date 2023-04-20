@@ -12,9 +12,10 @@
 
 .gradient-container {
     background: #222;
-    background: linear-gradient(to right, #222, #666);
+    background: linear-gradient(to bottom, #222, #666);
     height: 300px;
     overflow-x: scroll;
+    overflow-y: hidden;
     white-space: nowrap;
 }
 
@@ -43,4 +44,22 @@ body {
     height: 100%;
     object-fit: cover;
 
+}
+
+h2{
+    color: white;
+}
+
+.perfil-container {
+    background-color: #121212;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+  }
+
+#tabla{
+    background-color: #121212;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
 }

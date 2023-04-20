@@ -93,8 +93,9 @@ function VistaDisco() {
         <div key={index} className="d-inline-block mx-2">
             <Link to={`/cancion/${cancion.id}`}>
                 <img src={disco?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width="250" height="250" />
-            </Link>
+          
             <p>{cancion.name}</p>
+            </Link>
         </div>
     ))}
 </div>

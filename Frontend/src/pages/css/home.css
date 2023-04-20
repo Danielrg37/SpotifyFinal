@@ -1,3 +1,10 @@
+/* Importar font en CSS */
+@import url('https://fonts.googleapis.com/css?family=Proxima+Nova');
+
+*{
+  font-family: "Proxima Nova", sans-serif;
+}
+
 
 .green-color{
     background-color: #1DB954; /* color verde de Spotify */
@@ -21,3 +28,4 @@ body {
 #containers_info{
   background-color: gray;
 }
+

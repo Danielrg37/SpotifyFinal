@@ -132,16 +132,11 @@ function VistaCancion() {
       </div>
       <div class="row mt-3">
         <div class="col-md-4 text-center">
-          <h4>Veces reproducida</h4>
-          <p>Placeholder</p>
         </div>
         <div class="col-md-4 text-center">
-          <h4>Duración</h4>
-          <p>Duración: {milisegundosAMinutosSegundos(cancion.duration_ms)}</p>
+          <h3>Duración: {milisegundosAMinutosSegundos(cancion.duration_ms)}</h3>
         </div>
         <div class="col-md-4 text-center">
-          <h4>Tiempo total de reproducción</h4>
-          <p>Placeholder horas</p>
         </div>
       </div>
       </div>

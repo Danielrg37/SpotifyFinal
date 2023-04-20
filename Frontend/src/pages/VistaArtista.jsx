@@ -1,6 +1,9 @@
 
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { Container } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import cheerio from 'cheerio';
+
 
 function VistaArtista() {
 
@@ -20,12 +24,12 @@ function VistaArtista() {
     const [imagenes, setImagenes] = useState([]);
 
 
-   
+
     const token = localStorage.getItem('token');
     const { id } = useParams();
 
 
-   
+
 
 
 
@@ -72,7 +76,7 @@ function VistaArtista() {
                 });
         }
     }, [token]);
-   
+
 
     console.log(artista.name)
 
@@ -80,7 +84,7 @@ function VistaArtista() {
     useEffect(() => {
         async function fetchImages() {
             const url = `https://www.last.fm/music/${artista.name}/+images`;
-            
+
             //send HTTP request using fetch
             const response = await fetch(url, {
                 headers: {
@@ -88,11 +92,11 @@ function VistaArtista() {
                     'Accept-Language': 'en-US,en;q=0.9'
                 }
             });
-            
+
             //parse HTML response using Cheerio
             const html = await response.text();
             const $ = cheerio.load(html);
-            
+
             //get all image URLs and add them to an array
             const images = [];
             $('.image-list-item img').each((i, element) => {
@@ -100,11 +104,11 @@ function VistaArtista() {
 
                 images.push(imageUrl.replace('avatar170s', 'avatar1920s')); // actualizar la url de la imagen
             });
-    
+
             //set state with array of image URLs
             setImagenes(images);
         }
-    
+
         //invoke async function to fetch images
         fetchImages();
     }, [artista.name]);
@@ -138,92 +142,102 @@ function VistaArtista() {
             </header>
 
             <div className='artista-container'>
-            <div className="row">
-                <div className="col-4">
-                    <img src={artista?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" />
+                <div className="row">
+                    <div className="col-4">
+                        <img src={artista?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" />
+                    </div>
+                    <div className="col-8">
+                        <h1>{artista.name}</h1>
+                        <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
+                    </div>
                 </div>
-                <div className="col-8">
-                    <h1>{artista.name}</h1>
-                    <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
+                <div class="row mt-3">
+                    <div class="col-md-4 text-center" id="datos">
+                        <h4>Veces reproducido</h4>
+                        <p>Placeholder</p>
+                    </div>
+                    <div class="col-md-4 text-center" id="datos">
+                        <h4>Tiempo total de reproducción</h4>
+                        <p>Placeholder horas</p>
+                    </div>
+                    <div class="col-md-4 text-center" id="datos">
+                        <h4>Última vez escuchado</h4>
+                        <p>Placeholder</p>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-4 text-center" id="datos">
-                    <h4>Veces reproducido</h4>
-                    <p>Placeholder</p>
-                </div>
-                <div class="col-md-4 text-center" id="datos">
-                    <h4>Tiempo total de reproducción</h4>
-                    <p>Placeholder horas</p>
-                </div>
-                <div class="col-md-4 text-center" id="datos">
-                    <h4>Última vez escuchado</h4>
-                    <p>Placeholder</p>
-                </div>
-            </div>
             </div>
 
-        <div className="canciones-container">
-            <div class="row mt-3">
-                <h1>Canciones más famosas</h1>
-                <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
-                    {canciones.length > 0 && canciones.map((cancion, index) => (
-                        <div key={index} className="d-inline-block mx-2">
-                            <img src={cancion?.album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
-                            <p>{cancion.name}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
+            <div className="canciones-container mt-4 mb-4">
+                <div class="row mt-3">
 
-            <div class="row mt-3">
-                <h1>Discos</h1>
-                <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
-                    {albums.length > 0 && albums.map((album, index) => (
-                        <div key={index} className="d-inline-block mx-2">
-                            <img src={album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
-                            <p>{album.name}</p>
-                        </div>
-                    ))}
+                    <h1>Canciones más famosas</h1>
+                    <div className="col-12" style={{ overflowX: 'scroll', overflowY: 'hidden', whiteSpace: 'nowrap', height: '320px' }}>
+                        {canciones.length > 0 && canciones.map((cancion, index) => (
+                            <div key={index} className="d-inline-block mx-2">
+                                <Link to={`/cancion/${cancion.id}`}>
+                                    <img src={cancion?.album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
+                                    <p>{cancion.name}</p>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+
+                <div class="row mt-3">
+                    <h1>Discos</h1>
+                    <div className="col-12" style={{ overflowX: 'scroll', overFlowY: 'hidden', whiteSpace: 'nowrap', height: '320px' }}>
+                        {albums.length > 0 && albums.map((album, index) => (
+                            <div key={index} className="d-inline-block mx-2">
+                                <Link to={`/disco/${album.id}`}>
+                                    <img src={album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
+                                    <p>{album.name}</p>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
             <div className="row mt-3">
                 <div>
                     <div class="row">
-                        <div class="col-md-6 text-center bg-gray" style={{ backgroundColor: '#18181C' }}>
-                        <div className='fotos-container'>
-                <div class="col-12" style={{ border: '2px solid green' }}>
-                    <h2>Galeria</h2>
-                    {imagenes.map((imagen, index) => (
-                        <div key={index} className="d-inline-block mx-2">
-                            <img src={imagen} alt={`Canción ${index}`} className="img-fluid" style={{width: '1000px', height: '1000px'}} />
+                        <div class="col-md-6 text-center">
+                            <div className='fotos-container'>
+                                <div class="col-12">
+                                    <Container>
+                                        <h2>Galería</h2>
+                                        <Row>
+                                            {imagenes.map((imagen, index) => (
+                                                <Col md={6} key={index}>
+                                                    <img src={imagen} alt={`Imagen ${index}`} className="img-fluid" />
+                                                </Col>
+                                            ))}
+                                        </Row>
+                                    </Container>
+                                </div>
+                            </div>
                         </div>
-                    ))}
-                </div>
-            </div>
-    </div>
-                       
-                        <div class="col-md-6 text-center bg-gray" style={{ backgroundColor: '#18181C' }}>
-                            <div className='noticias-container'>
-                            <h1 style={{ textAlign: "left" }}>Noticias</h1>
 
-                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 1</h4>
-                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 2</h4>
-                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 3</h4>
-                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 4</h4>
-                            <p style={{ borderBottom: '1px solid white', marginBottom: "20px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                        <div class="col-md-6 text-center">
+                            <div className='noticias-container'>
+                                <h1 style={{ textAlign: "left" }}>Noticias</h1>
+
+                                <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 1</h4>
+                                <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                                <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 2</h4>
+                                <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                                <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 3</h4>
+                                <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                                <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 4</h4>
+                                <p style={{ borderBottom: '1px solid white', marginBottom: "20px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-          
+
 
 
 

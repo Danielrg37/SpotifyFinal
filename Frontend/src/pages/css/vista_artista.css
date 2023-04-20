@@ -58,9 +58,6 @@
   color: white;
 }
 
-.info-container tr, th, td, h2{
-  color: #121212;
-}
 
 .noticias-container {
     background-color: #121212;
@@ -70,5 +67,13 @@
   }
 
 
-
-
+  .galeria {
+    column-count: 2;
+    column-gap: 1rem;
+  }
+  
+  .dos-cols {
+    width: 100%;
+    height: auto;
+    grid-row: span 2;
+  }
