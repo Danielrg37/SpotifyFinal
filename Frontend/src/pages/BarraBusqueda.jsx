@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,21 +22,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const options = ['Opción 1', 'Opción 2', 'Opción 3'];
-
 export function SearchBar() {
   const classes = useStyles();
-  const [value, setValue] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${searchValue}&type=track&limit=10`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // Reemplazar "accessToken" con tu token de acceso a la API de Spotify
+          },
+        });
+        const data = await response.json();
+        const tracks = data.tracks.items;
+        setSearchResults(tracks.map((track) => track.name));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (searchValue !== "") {
+      fetchData();
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchValue]);
 
   return (
     <Autocomplete
       id="search-bar"
-      options={options}
+      options={searchResults}
       getOptionLabel={(option) => option}
       style={{ width: '100%', maxWidth: 400 }}
-      value={value}
+      value={searchValue}
       onChange={(event, newValue) => {
-        setValue(newValue);
+        setSearchValue(newValue);
       }}
       renderInput={(params) => (
         <TextField
