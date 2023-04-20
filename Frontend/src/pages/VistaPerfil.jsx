@@ -125,7 +125,7 @@ function VistaPerfil() {
     console.log(topCanciones);
 
     return (
-
+        
         <div className="container">
             <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
                 <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -234,56 +234,56 @@ function VistaPerfil() {
                 </div>
             </div>
             <div className="col-12" style={{ overflowX: 'hidden', whiteSpace: 'nowrap', height: '300px' }}>
-                        <div class="gradient-container">
-                            {topArtistas.map((artista, index) => (
-                                <div key={index} className="d-inline-block mx-2">
-                                    <Link to={`/artista/${artista.id}`}>
-                                    {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" style={{ width: '250px', height: '250px' }} />}
-                                    </Link>
-                                    <p>{artista.name}</p>
-                                </div>
-                            ))}
+                <div class="gradient-container">
+                    {topArtistas.map((artista, index) => (
+                        <div key={index} className="d-inline-block mx-2 rounded-img">
+                            <Link to={`/artista/${artista.id}`}>
+                                {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} />}
+                            </Link>
+                            <p>{artista.name}</p>
                         </div>
-                    </div>
-
-
-                    <div className="row mt-5">
-                        <div className="col-12 ml-2">
-                            <h2>Mi historial de reproducciones</h2>
-                            <table className="table table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th>Imagen</th>
-                                        <th>Canción</th>
-                                        <th>Hora</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {historial.map((item, index) => (
-                                        <tr key={index}>
-                                            <td>
-                                                <img
-                                                    src={item.track.album.images[0].url}
-                                                    alt={`Imagen de ${item.track.name}`}
-                                                    style={{ width: 50, height: 50 }}
-                                                />
-                                            </td>
-                                            <td>{item.track.name}</td>
-                                            <td>{new Date(item.played_at).toLocaleTimeString()}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <footer>
-                        <p class="float-end"><a href="#">Back to top</a></p>
-                        <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
-
-                    </footer>
+                    ))}
                 </div>
+            </div>
 
-                );
+
+            <div className="row mt-5">
+                <div className="col-12 ml-2">
+                    <h2>Mi historial de reproducciones</h2>
+                    <table className="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Canción</th>
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {historial.map((item, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        <img
+                                            src={item.track.album.images[0].url}
+                                            alt={`Imagen de ${item.track.name}`}
+                                            style={{ width: 50, height: 50 }}
+                                        />
+                                    </td>
+                                    <td>{item.track.name}</td>
+                                    <td>{new Date(item.played_at).toLocaleTimeString()}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <footer>
+                <p class="float-end"><a href="#">Back to top</a></p>
+                <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
+
+            </footer>
+        </div>
+
+    );
 }
 
-                export default VistaPerfil;
+export default VistaPerfil;

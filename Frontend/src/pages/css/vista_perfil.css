@@ -18,7 +18,29 @@
     white-space: nowrap;
 }
 
-body{
-    background: #222;
-    background: linear-gradient(to right, #222, #444);
+body {
+    background: linear-gradient(to right, #1DB954, #222, #222, #222, #1DB954)'
+}
+
+.rounded-img {
+
+    border-radius: 50%;
+    overflow: hidden;
+    width: 250px;
+    height: 250px;
+    position: relative;
+
+}
+
+
+
+.rounded-img img {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
 }
