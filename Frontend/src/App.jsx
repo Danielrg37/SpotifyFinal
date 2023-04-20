@@ -11,6 +11,7 @@ import VistaDisco from './pages/VistaDisco'
 import ArtistaLista from './pages/ArtistaLista'
 import Admin from './pages/VistaAdmin'
 import SpotifyLogin from './pages/SpotifyLogin'
+import { SearchBar } from './pages/BarraBusqueda' 
 
 import VistaTotalArtistas from './pages/VistaTotalArtistas'
 import VistaTotalCanciones from './pages/VistaTotalCanciones'
@@ -40,6 +41,7 @@ function App() {
           <Route path = '/disco/:id' element={<VistaDisco />} />
           <Route path = '/totalArtistas' element={<VistaTotalArtistas />} />
           <Route path = '/totalCanciones' element={<VistaTotalCanciones />} />
+          <Route path = '/search' element={<SearchBar />} />
         </Routes>
       </Router>
     </div>
