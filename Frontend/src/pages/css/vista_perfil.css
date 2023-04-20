@@ -1,11 +1,24 @@
-*{
+* {
     color: white;
 }
 
 .img-circular {
     border-radius: 50%;
-  }
-  
-.titulo_eventos{
+}
+
+.titulo_eventos {
     text-align: left;
+}
+
+.gradient-container {
+    background: #222;
+    background: linear-gradient(to right, #222, #666);
+    height: 300px;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+body{
+    background: #222;
+    background: linear-gradient(to right, #222, #444);
 }

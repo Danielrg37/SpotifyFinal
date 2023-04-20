@@ -12,6 +12,42 @@ function VistaCancion() {
   const [cancion, setCancion] = useState({});
   const [albums, setAlbums] = useState([]);
 
+  const ID_GENIUS = "-ImT2ynhgjGOA_ktoe31opdJw0huxaFal8txUqK5Vjui_hgwES2ceLIlFDSNdAGP";
+
+
+  const artistName = 'Queen';
+  const songTitle = 'Bohemian Rhapsody';
+
+
+
+  // Primero, busca la canción por el nombre del artista y título de la canción
+  fetch(`https://api.genius.com/search?q=${artistName}%20${songTitle}`, {
+    headers: {
+      Authorization: `Bearer ${ID_GENIUS}`
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      const songId = data.response.hits[0].result.id; // Obtiene el ID de la canción desde los resultados de búsqueda
+
+
+
+      // Luego, obtén la letra de la canción por ID
+      return fetch(`https://api.genius.com/songs/${songId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+    })
+    .then(response => response.json())
+    .then(data => {
+      const songLyrics = data.response.song.media[0].body; // Obtiene la letra de la canción
+
+
+
+      console.log(songLyrics); // Imprime la letra de la canción en la consola
+    })
+    .catch(error => console.error(error)); // Manejo de errores
 
   const token = localStorage.getItem('token');
   const { id } = useParams();
@@ -39,9 +75,9 @@ function VistaCancion() {
     }
   }, [token]);
 
- 
 
- 
+
+  const embedUrl = `https://open.spotify.com/embed/track/${id}`;
 
   function milisegundosAMinutosSegundos(milisegundos) {
     let minutos = Math.floor(milisegundos / 60000);
@@ -71,7 +107,7 @@ function VistaCancion() {
           <img src={cancion.album?.images?.[1]?.url} alt="Artista 1" className="img-fluid" />
         </div>
         <div className="col-8">
-          <h1>
+          <h2>
             {cancion.artists && cancion.artists.length > 0 &&
               <span>
                 {cancion.artists.map((artista) => (
@@ -80,9 +116,20 @@ function VistaCancion() {
               </span>
             }
 
-          </h1>
-          <h2>{cancion.name}</h2>
-          <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
+          </h2>
+          <h1>{cancion.name}</h1>
+
+          <div className="row mt-5">
+            <iframe
+              src={embedUrl}
+              width="100%"
+              height="175"
+              frameBorder="0"
+              allowtransparency="true"
+              allow="encrypted-media"
+            />
+          </div>
+
         </div>
       </div>
       <div class="row mt-3">
@@ -105,13 +152,15 @@ function VistaCancion() {
           {albums.map((album, index) => (
             <div key={index} className="d-inline-block mx-2">
               <Link to={`/disco/${album.id}`}>
-              <img src={album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
+                <img src={album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
               </Link>
               <p>{album.name}</p>
             </div>
           ))}
         </div>
       </div>
+
+
 
 
       <div class="row mt-5">

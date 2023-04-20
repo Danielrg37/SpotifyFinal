@@ -63,16 +63,30 @@ function VistaArtista() {
                 });
         }
     }, [token]);
+    const [concerts, setConcerts] = useState([]);
+
+
+
+    useEffect(() => {
+        const artistName = "Coldplay";
+        const apiKey = "60a8f26d0fb8050912e18592eb17cdc1";
+        fetch(
+            `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${artistName}&api_key=${apiKey}&format=json`
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                const concerts = data;
+                setConcerts(concerts);
+            })
+            .catch((error) => console.error(error));
+    }, [token]);
+
 
 
     console.log(albums);
     console.log(artista);
     console.log(canciones);
-    
-  
-
-
-
+    console.log(concerts);
 
 
 
@@ -122,7 +136,7 @@ function VistaArtista() {
                         <div key={index} className="d-inline-block mx-2">
                             <img src={cancion?.album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
                             <p>{cancion.name}</p>
-                            </div>
+                        </div>
                     ))}
                 </div>
             </div>
@@ -143,17 +157,19 @@ function VistaArtista() {
                 <div>
                     <div class="row">
                         <div class="col-md-6 text-center bg-gray" style={{ backgroundColor: '#18181C' }}>
-                            <h1 style={{ textAlign: "left" }}>Eventos</h1>
-
-                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Evento 1</h4>
-                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Evento 2</h4>
-                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Evento 3</h4>
-                            <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                            <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Evento 4</h4>
-                            <p style={{ borderBottom: '1px solid white', marginBottom: "20px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                            <div>
+                                <h1>Conciertos de Spotify</h1>
+                                <iframe
+                                    title="Conciertos de Spotify"
+                                    src="https://open.spotify.com/artist/1rTUwYS38LkQTlT2fhikch/concerts"
+                                    width="100%"
+                                    height="500px"
+                                    frameBorder="0"
+                                    allowFullScreen
+                                />
+                            </div>
                         </div>
+
                         <div class="col-md-6 text-center bg-gray" style={{ backgroundColor: '#18181C' }}>
                             <h1 style={{ textAlign: "left" }}>Noticias</h1>
 
