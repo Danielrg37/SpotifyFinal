@@ -91,7 +91,7 @@ function VistaDisco() {
                 <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
     {cancionesDisco.map((cancion, index) => (
         <div key={index} className="d-inline-block mx-2">
-            <Link to={`cancion/${cancion.id}`}>
+            <Link to={`/cancion/${cancion.id}`}>
                 <img src={disco?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width="250" height="250" />
             </Link>
             <p>{cancion.name}</p>

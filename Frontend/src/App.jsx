@@ -12,6 +12,9 @@ import ArtistaLista from './pages/ArtistaLista'
 import Admin from './pages/VistaAdmin'
 import SpotifyLogin from './pages/SpotifyLogin'
 
+import VistaTotalArtistas from './pages/VistaTotalArtistas'
+import VistaTotalCanciones from './pages/VistaTotalCanciones'
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -35,6 +38,8 @@ function App() {
          <Route path = '/cancion/:id' element={<VistaCancion />} />
           <Route path = '/artista/:id' element={<VistaArtista />} />
           <Route path = '/disco/:id' element={<VistaDisco />} />
+          <Route path = '/totalArtistas' element={<VistaTotalArtistas />} />
+          <Route path = '/totalCanciones' element={<VistaTotalCanciones />} />
         </Routes>
       </Router>
     </div>

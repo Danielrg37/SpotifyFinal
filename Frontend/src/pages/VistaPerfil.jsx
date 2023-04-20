@@ -143,6 +143,9 @@ function VistaPerfil() {
                     <h1>Top Canciones</h1>
                 </div>
                 <div className="col-auto">
+                <Link to={`/totalCanciones`}> <Button> {'Ver más'} </Button> </Link>
+                </div>
+                <div className="col-auto">
                     <Button> {'>'} </Button>
                 </div>
                 <div className="col-auto">
@@ -167,6 +170,9 @@ function VistaPerfil() {
                     <h1>Top Artistas</h1>
                 </div>
                 <div className="col-auto">
+                <Link to={`/totalArtistas`}> <Button> {'Ver más'} </Button> </Link>
+                </div>
+                <div className="col-auto">
                     <Button> {'>'} </Button>
                 </div>
                 <div className="col-auto">
@@ -177,7 +183,7 @@ function VistaPerfil() {
             {topArtistas.map((artista, index) => (
                     <div key={index} className="d-inline-block mx-2">
                          <Link to={`/artista/${artista.id}`}>
-                            {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" style={{width: '150px', height: '150px'}} />}
+                            {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" style={{width: '250px', height: '200px'}} />}
                         </Link>
                         <p>{artista.name}</p>
                     </div>

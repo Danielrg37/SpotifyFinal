@@ -45,7 +45,7 @@ function Home() {
                 <div class="container-fluid py-5">
                     <div class="row">
                         <div class="col-md-8 text-center">
-                            <h1 class="display-5 fw-bold">Fernando Alonso</h1>
+                            <h1 class="display-5 fw-bold">Lorem ipsum dolor sit ame</h1>
                             <p class="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro pariatur, excepturi nulla, fugit ducimus in voluptatem est ipsum rem aliquam minima accusantium a assumenda similique vitae quibusdam laudantium reprehenderit totam!</p>
                             <Button className="green-color" style={{ width: '40rem', height: '4rem' }} onClick={() => navigate('/login')}>
                                 Placeholder
