@@ -32,7 +32,7 @@ export function SearchBar() {
       try {
         const response = await fetch(`https://api.spotify.com/v1/search?q=${searchValue}&type=track&limit=10`, {
           headers: {
-            'Authorization': `Bearer ${token}`, // Reemplazar "accessToken" con tu token de acceso a la API de Spotify
+            Authorization: `Bearer ${accessToken}`, // Reemplazar "accessToken" con tu token de acceso a la API de Spotify
           },
         });
         const data = await response.json();
@@ -49,7 +49,6 @@ export function SearchBar() {
       setSearchResults([]);
     }
   }, [searchValue]);
-  
 
   return (
     <Autocomplete
