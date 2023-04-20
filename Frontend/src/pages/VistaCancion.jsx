@@ -75,9 +75,7 @@ function VistaCancion() {
     }
   }, [token]);
 
-
-
-  const embedUrl = `https://open.spotify.com/embed/track/${id}`;
+ 
 
   function milisegundosAMinutosSegundos(milisegundos) {
     let minutos = Math.floor(milisegundos / 60000);
