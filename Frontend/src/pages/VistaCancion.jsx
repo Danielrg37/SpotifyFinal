@@ -5,53 +5,40 @@ import './css/vista_cancion.css';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import cheerio from 'cheerio';
+
+ 
+
 
 function VistaCancion() {
 
 
   const [cancion, setCancion] = useState({});
   const [albums, setAlbums] = useState([]);
+  const [color, setColor] = useState([]);
+  const [playbackList, setPlaybackList] = useState([]);
+  const [imagenes, setImagenes] = useState([]);
+  
+
 
   const ID_GENIUS = "-ImT2ynhgjGOA_ktoe31opdJw0huxaFal8txUqK5Vjui_hgwES2ceLIlFDSNdAGP";
-
-
-  const artistName = 'Queen';
-  const songTitle = 'Bohemian Rhapsody';
+  
 
 
 
-  // Primero, busca la canción por el nombre del artista y título de la canción
-  fetch(`https://api.genius.com/search?q=${artistName}%20${songTitle}`, {
-    headers: {
-      Authorization: `Bearer ${ID_GENIUS}`
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      const songId = data.response.hits[0].result.id; // Obtiene el ID de la canción desde los resultados de búsqueda
+  
+  
 
 
 
-      // Luego, obtén la letra de la canción por ID
-      return fetch(`https://api.genius.com/songs/${songId}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
-    })
-    .then(response => response.json())
-    .then(data => {
-      const songLyrics = data.response.song.media[0].body; // Obtiene la letra de la canción
 
-
-
-      console.log(songLyrics); // Imprime la letra de la canción en la consola
-    })
-    .catch(error => console.error(error)); // Manejo de errores
 
   const token = localStorage.getItem('token');
   const { id } = useParams();
+  const embedUrl = `https://open.spotify.com/embed/track/${id}`;
 
+   
 
   useEffect(() => {
     if (token) {
@@ -74,6 +61,17 @@ function VistaCancion() {
         .catch(error => console.error(error));
     }
   }, [token]);
+
+  console.log(cancion.name);
+
+
+
+
+
+
+
+
+
 
  
 
@@ -100,6 +98,7 @@ function VistaCancion() {
         </ul>
       </header>
 
+<div className='cancion-container'>
       <div className="row">
         <div className="col-4">
           <img src={cancion.album?.images?.[1]?.url} alt="Artista 1" className="img-fluid" />
@@ -119,6 +118,7 @@ function VistaCancion() {
 
           <div className="row mt-5">
             <iframe
+              id="spotify-iframe"
               src={embedUrl}
               width="100%"
               height="175"
@@ -144,9 +144,13 @@ function VistaCancion() {
           <p>Placeholder horas</p>
         </div>
       </div>
+      </div>
+
+    
       <div className="row mt-3">
+      <div className='disco-container'>
         <h1>Aparece en</h1>
-        <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap' }}>
+        <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden'}}>
           {albums.map((album, index) => (
             <div key={index} className="d-inline-block mx-2">
               <Link to={`/disco/${album.id}`}>
@@ -157,12 +161,14 @@ function VistaCancion() {
           ))}
         </div>
       </div>
+      </div>
 
 
 
-
+   
       <div class="row mt-5">
-        <div class="col-6 ml-2">
+        <div class="col-8 ml-2">
+        <div className='info-container'>
           <h2>Mi historial de reproducciones</h2>
           <table class="table table-responsive">
             <thead>
@@ -183,14 +189,22 @@ function VistaCancion() {
             </tbody>
           </table>
         </div>
+        </div>
 
+       
         <div class="col-4">
+        <div className='letra-container'>
           <h2>Letra</h2>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero nihil molestias qui ducimus laboriosam? Sit eaque consequuntur eveniet, unde quia at, tempora voluptatem, delectus maiores asperiores dignissimos in odio magnam!</p>
           <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum, ratione odit. Iste ad nihil eligendi molestiae assumenda delectus magnam minima odio culpa repudiandae omnis officia exercitationem, vel rem veniam ratione!</p>
           <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem doloremque veniam sint ipsum alias, quibusdam quod porro accusamus enim quasi inventore aliquid et dolor repellat dicta voluptate dolorem nulla quo?</p>
         </div>
       </div>
+      </div>
+
+      
+
+
 
 
       <footer>

@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/vista_artista.css';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import cheerio from 'cheerio';
 
 function VistaArtista() {
 
@@ -15,9 +17,16 @@ function VistaArtista() {
     const [albums, setAlbums] = useState([]);
     const [canciones, setCanciones] = useState([]);
 
+    const [imagenes, setImagenes] = useState([]);
 
+
+   
     const token = localStorage.getItem('token');
     const { id } = useParams();
+
+
+   
+
 
 
     useEffect(() => {
@@ -63,30 +72,53 @@ function VistaArtista() {
                 });
         }
     }, [token]);
-    const [concerts, setConcerts] = useState([]);
+   
 
+    console.log(artista.name)
 
 
     useEffect(() => {
-        const artistName = "Coldplay";
-        const apiKey = "60a8f26d0fb8050912e18592eb17cdc1";
-        fetch(
-            `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${artistName}&api_key=${apiKey}&format=json`
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                const concerts = data;
-                setConcerts(concerts);
-            })
-            .catch((error) => console.error(error));
-    }, [token]);
+        async function fetchImages() {
+            const url = `https://www.last.fm/music/${artista.name}/+images`;
+            
+            //send HTTP request using fetch
+            const response = await fetch(url, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+                    'Accept-Language': 'en-US,en;q=0.9'
+                }
+            });
+            
+            //parse HTML response using Cheerio
+            const html = await response.text();
+            const $ = cheerio.load(html);
+            
+            //get all image URLs and add them to an array
+            const images = [];
+            $('.image-list-item img').each((i, element) => {
+                const imageUrl = $(element).attr('src');
 
+                images.push(imageUrl.replace('avatar170s', 'avatar1920s')); // actualizar la url de la imagen
+            });
+    
+            //set state with array of image URLs
+            setImagenes(images);
+        }
+    
+        //invoke async function to fetch images
+        fetchImages();
+    }, [artista.name]);
 
+    console.log(imagenes);
 
     console.log(albums);
     console.log(artista);
     console.log(canciones);
-    console.log(concerts);
+
+
+
+
+
 
 
 
@@ -105,6 +137,7 @@ function VistaArtista() {
                 </ul>
             </header>
 
+            <div className='artista-container'>
             <div className="row">
                 <div className="col-4">
                     <img src={artista?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" />
@@ -128,7 +161,9 @@ function VistaArtista() {
                     <p>Placeholder</p>
                 </div>
             </div>
+            </div>
 
+        <div className="canciones-container">
             <div class="row mt-3">
                 <h1>Canciones más famosas</h1>
                 <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
@@ -140,6 +175,7 @@ function VistaArtista() {
                     ))}
                 </div>
             </div>
+        </div>
 
             <div class="row mt-3">
                 <h1>Discos</h1>
@@ -157,20 +193,20 @@ function VistaArtista() {
                 <div>
                     <div class="row">
                         <div class="col-md-6 text-center bg-gray" style={{ backgroundColor: '#18181C' }}>
-                            <div>
-                                <h1>Conciertos de Spotify</h1>
-                                <iframe
-                                    title="Conciertos de Spotify"
-                                    src="https://open.spotify.com/artist/1rTUwYS38LkQTlT2fhikch/concerts"
-                                    width="100%"
-                                    height="500px"
-                                    frameBorder="0"
-                                    allowFullScreen
-                                />
-                            </div>
+                        <div className='fotos-container'>
+                <div class="col-12" style={{ border: '2px solid green' }}>
+                    <h2>Galeria</h2>
+                    {imagenes.map((imagen, index) => (
+                        <div key={index} className="d-inline-block mx-2">
+                            <img src={imagen} alt={`Canción ${index}`} className="img-fluid" style={{width: '1000px', height: '1000px'}} />
                         </div>
-
+                    ))}
+                </div>
+            </div>
+    </div>
+                       
                         <div class="col-md-6 text-center bg-gray" style={{ backgroundColor: '#18181C' }}>
+                            <div className='noticias-container'>
                             <h1 style={{ textAlign: "left" }}>Noticias</h1>
 
                             <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 1</h4>
@@ -181,35 +217,13 @@ function VistaArtista() {
                             <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
                             <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 4</h4>
                             <p style={{ borderBottom: '1px solid white', marginBottom: "20px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row mt-5">
-                <div class="col-12" style={{ border: '2px solid green' }}>
-                    <h2>Mi historial de reproducciones</h2>
-                    <table class="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th>Imagen</th>
-                                <th>Canción</th>
-                                <th>Hora</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {[...Array(10)].map((_, i) => (
-                                <tr key={i}>
-                                    <td><img src="https://via.placeholder.com/50x50" alt="Imagen de la canción"></img></td>
-                                    <td>Canción</td>
-                                    <td>3:24</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+          
 
 
 

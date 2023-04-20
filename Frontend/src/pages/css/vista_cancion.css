@@ -1,0 +1,48 @@
+.cancion-container {
+    background-color: #121212;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+  }
+
+.disco-container {
+  background-color:   #F7F7F7;
+  border-radius: 20px;
+  padding: 20px;
+  color: #121212;
+}
+  
+.disco-container p {
+  color: #121212;
+}
+
+.disco-container h1 {
+  color: #121212;
+}
+
+.fotos-container{
+  background-color: #1DB954;
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+}
+
+.letra-container-morado{
+  background-color: #6A0DAD;
+}
+
+.info-container{
+ 
+  background-color:      #121212;
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+}
+
+.info-container tr, th, td, h2{
+  color:  #F7F7F7;
+}
+
+
+
+

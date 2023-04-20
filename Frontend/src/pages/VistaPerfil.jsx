@@ -235,10 +235,10 @@ function VistaPerfil() {
             </div>
             <div className="col-12" style={{ overflowX: 'hidden', whiteSpace: 'nowrap', height: '300px' }}>
                 <div class="gradient-container">
-                    {topArtistas.map((artista, index) => (
-                        <div key={index} className="d-inline-block mx-2 rounded-img">
+                {topArtistas.map((artista, index) => (
+                        <div key={index} className="d-inline-block mx-2">
                             <Link to={`/artista/${artista.id}`}>
-                                {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} />}
+                            {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" style={{ width: '250px', height: '250px' }} />}
                             </Link>
                             <p>{artista.name}</p>
                         </div>
