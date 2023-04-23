@@ -27,17 +27,19 @@ export function SearchBar() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
+  const token = localStorage.getValue("token");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://api.spotify.com/v1/search?q=${searchValue}&type=track&limit=10`, {
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${searchValue}&type=artist&limit=10`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`, // Reemplazar "accessToken" con tu token de acceso a la API de Spotify
+            Authorization: `Bearer ${token}`, // Reemplazar "accessToken" con tu token de acceso a la API de Spotify
           },
         });
         const data = await response.json();
-        const tracks = data.tracks.items;
-        setSearchResults(tracks.map((track) => track.name));
+        const artists = data.artists.items;
+        setSearchResults(artists.map((artist) => artist.name));
       } catch (error) {
         console.log(error);
       }
