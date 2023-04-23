@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/vista_artista.css';
+import './css/artista/vista_artista.css';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 

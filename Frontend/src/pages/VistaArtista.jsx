@@ -7,7 +7,7 @@ import { Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/vista_artista.css';
+import './css/artista/vista_artista.css';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -20,7 +20,7 @@ function VistaArtista() {
     const [artista, setArtista] = useState({});
     const [albums, setAlbums] = useState([]);
     const [canciones, setCanciones] = useState([]);
-
+    const [noticias, setNoticias] = useState([]);
     const [imagenes, setImagenes] = useState([]);
 
 
@@ -83,13 +83,17 @@ function VistaArtista() {
 
     useEffect(() => {
         async function fetchImages() {
-            const url = `https://www.last.fm/music/${artista.name}/+images`;
+            if (artista && artista.name) {
+            const url = `https://www.last.fm/music/${encodeURIComponent(
+        artista.name
+      )}/+images?${new Date().getTime()}`;
+            console.log(url);
 
             //send HTTP request using fetch
             const response = await fetch(url, {
                 headers: {
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-                    'Accept-Language': 'en-US,en;q=0.9'
+                    'Accept-Language': 'en-US,en;q=0.9',
                 }
             });
 
@@ -108,6 +112,7 @@ function VistaArtista() {
             //set state with array of image URLs
             setImagenes(images);
         }
+        }
 
         //invoke async function to fetch images
         fetchImages();
@@ -118,7 +123,11 @@ function VistaArtista() {
     console.log(albums);
     console.log(artista);
     console.log(canciones);
+    console.log(noticias);
 
+
+ 
+ 
 
 
 
@@ -200,24 +209,27 @@ function VistaArtista() {
             </div>
 
             <div className="row mt-3">
-                <div>
-                    <div class="row">
-                        <div class="col-md-6 text-center">
-                            <div className='fotos-container'>
-                                <div class="col-12">
-                                    <Container>
-                                        <h2>Galería</h2>
-                                        <Row>
-                                            {imagenes.map((imagen, index) => (
-                                                <Col md={6} key={index}>
-                                                    <img src={imagen} alt={`Imagen ${index}`} className="img-fluid" />
-                                                </Col>
-                                            ))}
-                                        </Row>
-                                    </Container>
-                                </div>
-                            </div>
-                        </div>
+    <div>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <div className='fotos-container'>
+                    <div class="col-12">
+                        <Container>
+                            <h2>Galería</h2>
+                            <Row>
+                                {imagenes.slice(0,6).map((imagen, index) => (
+                                    <Col md={6} key={index}>
+                                        <img src={imagen} alt={`Imagen ${index}`} className="img-fluid" />
+                                    </Col>
+                                ))}
+                            </Row>
+                        </Container>
+                        <Link to={`/galeria/${artista.id}`}><button className="btn btn-outline-dark rounded-pill w-100 mt-3"> {'Ver más'} </button> </Link>
+                    </div>
+                </div>
+            </div>
+       
+
 
                         <div class="col-md-6 text-center">
                             <div className='noticias-container'>

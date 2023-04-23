@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/vista_artista.css';
+import './css/admin/vista_admin.css';
 import { useNavigate } from 'react-router-dom';
 
 function VistaArtista() {
@@ -24,42 +24,51 @@ function VistaArtista() {
                 </ul>
             </header>
 
-            <div className="row">
-              
-            </div>
+
             <div class="row mt-3">
-                <div class="col-md-4 text-center" id="datos">
-                    <h4>Veces reproducido</h4>
-                    <p>Placeholder</p>
+
+                <div class="col-12 text-center" id="datos">
+                    <div className="grafico-container">
+                        <p>Placeholder</p>
+                    </div>
                 </div>
-                <div class="col-md-4 text-center" id="datos">
-                    <h4>Tiempo total de reproducci�n</h4>
-                    <p>Placeholder horas</p>
-                </div>
-                <div class="col-md-4 text-center" id="datos">
-                    <h4>�ltima vez escuchado</h4>
-                    <p>Placeholder</p>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <h1>Canciones m�s famosas</h1>
-                <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
-                    {[...Array(8)].map((_, index) => (
-                        <div key={index} className="d-inline-block mx-2">
-                            <img src="https://via.placeholder.com/150x150" alt={`Canci�n ${index}`} className="img-fluid" />
-                            <p>Canci�n {index}</p>
-                        </div>
-                    ))}
-                </div>
+
             </div>
 
-            <div className="row mt-3">
-                
+
+            <div className="row mt-5">
+
+                <div class="col-6 text-center" id="datos">
+                    <div className="grafico-container">
+                        <p>Placeholder</p>
+                    </div>
+                </div>
+
+                <div class="col-6 text-center" id="datos">
+                    <div className="grafico-container">
+                        <p>Placeholder</p>
+                    </div>
+                </div>
             </div>
 
             <div class="row mt-5">
-              
+                
+            <div class="col-6 text-center" id="datos">
+                    <div className="grafico-container">
+                        <p>Placeholder</p>
+                    </div>
+                </div>
+
+                <div class="col-6 text-center" id="datos">
+                    <div className="grafico-container">
+                    <Link to={`/admin/artista`}>
+                        <p>Placeholder</p>
+                  </Link>
+                    </div>
+                </div>
             </div>
+            
+            
 
 
 

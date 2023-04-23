@@ -1,0 +1,14 @@
+
+Cosas pendientes:
+
+-Juntar frontend con Backend (Preferiblemente Spring.js)
+-Implementar el login con el Backend
+-Implementar el registro con el Backend
+-Unir las cuentas del Backend con las del Frontend
+-Implementar el sistema de roles
+-Implementar el sistema de permisos
+-Hacer vistas de crear Playlist de ambos casos
+-Hacer vistas de admin
+-Implementar API de noticias
+-Implementar API de letras
+-Hacer webs responsive y mejorar quizás estética

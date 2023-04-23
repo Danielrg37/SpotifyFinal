@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/home.css';
+import './css/home/home.css';
 import fernando from './../img/fernando.png';
 import { useNavigate } from 'react-router-dom';
 import {useEffect, useState} from 'react';

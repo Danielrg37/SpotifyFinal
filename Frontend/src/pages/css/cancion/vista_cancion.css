@@ -31,17 +31,30 @@
   background-color: #6A0DAD;
 }
 
-.info-container{
- 
-  background-color:      #121212;
+
+
+.custom-underline {
+  text-decoration: none;
+  border-bottom: 0.5px dotted rgba(255, 255, 255, 0.5);
+  color: white;
+}
+
+
+
+.estadisticas-container {
+  background-color: #121212;
   border-radius: 20px;
   padding: 20px;
   color: white;
 }
 
-.info-container tr, th, td, h2{
-  color:  #F7F7F7;
+.info-container{
+  background-color:    #121212;
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
 }
+
 
 
 

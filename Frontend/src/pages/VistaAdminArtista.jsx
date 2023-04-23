@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
-    backgroundColor: 'white', 
+    backgroundColor: 'white',
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: 'gray',
     },
@@ -18,43 +18,61 @@ const useStyles = makeStyles((theme) => ({
   },
   option: {
     backgroundColor: 'white',
-    color: 'black', 
+    color: 'black',
   },
 }));
 
-export default function SearchBar() {
+function VistaAdminArtista() {
   const classes = useStyles();
-  const [value, setValue] = useState(null);
-  const [options, setOptions] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [token, setToken] = useState(null);
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setToken(token);
+  }, []);
 
-    fetch(`https://api.spotify.com/v1/search?type=artist&q=${event.target.value}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const results = data.artists.items.map((artist) => artist.name);
-        setOptions(results);
-      })
-      .catch((error) => console.error(error));
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${searchValue}&type=artist&limit=10`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        console.log(data);
+        const artists = data.artists.items;
+        setSearchResults(artists.map((artist) => artist.name));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    if (searchValue !== "") {
+      fetchData();
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchValue, token]);
+
+  useEffect(() => {
+    console.log(searchResults);
+  }, [searchResults]);
+
+  
 
   return (
     <Autocomplete
       id="search-bar"
-      options={options}
+      options={searchResults}
       getOptionLabel={(option) => option}
       style={{ width: '100%', maxWidth: 400 }}
-      value={value}
+      value={searchValue}
       onChange={(event, newValue) => {
-        setValue(newValue);
+        setSearchValue(newValue);
       }}
-      onInputChange={handleChange}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -65,7 +83,15 @@ export default function SearchBar() {
           }}
         />
       )}
-      classes={{ option: classes.option }} 
+      renderOption={(option) => (
+        <React.Fragment>
+          {option}
+        </React.Fragment>
+      )}
+      classes={{ option: classes.option }}
+      noOptionsText="No hay resultados"
     />
   );
 }
+
+export default VistaAdminArtista;

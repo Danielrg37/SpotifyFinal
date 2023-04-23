@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/registro.css";
+import "./css/registro/registro.css";
 
 function Registro() {
   const [nombre, setNombre] = useState("");

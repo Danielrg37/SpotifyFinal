@@ -1,0 +1,69 @@
+.cancion-container {
+    background-color: #121212;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+  }
+
+.grafico-container {
+  background-color:   #F7F7F7;
+  border-radius: 20px;
+  padding: 20px;
+  color: #121212;
+}
+
+.grafico-container p {
+  color: #121212;
+}
+
+.grafico-container h1 {
+  color: #121212;
+}
+
+  
+.disco-container p {
+  color: #121212;
+}
+
+.disco-container h1 {
+  color: #121212;
+}
+
+.fotos-container{
+  background-color: #1DB954;
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+}
+
+.letra-container-morado{
+  background-color: #6A0DAD;
+}
+
+
+
+.custom-underline {
+  text-decoration: none;
+  border-bottom: 0.5px dotted rgba(255, 255, 255, 0.5);
+}
+
+
+
+.estadisticas-container {
+  background-color: #121212;
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+}
+
+.info-container{
+  background-color:    #121212;
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+}
+
+
+
+
+

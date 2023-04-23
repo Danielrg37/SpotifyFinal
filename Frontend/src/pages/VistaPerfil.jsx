@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/vista_perfil.css';
+import './css/perfil/vista_perfil.css';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ButtonGroup } from 'react-bootstrap';
@@ -13,7 +13,6 @@ function VistaPerfil() {
     const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
     const [topArtistas, setTopArtistas] = useState([]);
-    const [topCanciones, setTopCanciones] = useState([]);
     const [historial, setHistorial] = useState([]);
 
 
@@ -47,20 +46,29 @@ function VistaPerfil() {
 
 
 
+    const [topCanciones, setTopCanciones] = useState([]);
+    const [lastOrderedSongs, setLastOrderedSongs] = useState([]);
+    
     useEffect(() => {
-        if (token) {
-            fetch(`https://api.spotify.com/v1/me/top/tracks?time_range=${tiempo}&limit=20`,
-                {
-                    method: "GET", headers:
-                    {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then(response => response.json())
-                .then(data => {
-                    setTopCanciones(data.items);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
-                });
-        }
-    }, [token, tiempo]);
+      if (token) {
+        fetch(`https://api.spotify.com/v1/me/top/tracks?time_range=${tiempo}&limit=20`, {
+          method: "GET",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }).then(response => response.json())
+          .then(data => {
+            setTopCanciones(data.items);
+            const orderedSongs = data.items.sort((a, b) => b.played_at.localeCompare(a.played_at)); // ordenar canciones por fecha de escucha
+            if (JSON.stringify(orderedSongs) !== JSON.stringify(lastOrderedSongs)) { // comparar con lista previa
+              setTopCanciones(lastOrderedSongs); // mantener orden previo
+            } else {
+              setLastOrderedSongs(orderedSongs); // actualizar lista previa
+            }
+          });
+      }
+    }, [token, tiempo, lastOrderedSongs]);
+    
 
 
 
@@ -109,6 +117,8 @@ function VistaPerfil() {
                 });
         }
     }, [token]);
+
+    
 
 
 
