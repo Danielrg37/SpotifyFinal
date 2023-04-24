@@ -55,13 +55,15 @@ function VistaArtista() {
                 
             <div class="col-6 text-center" id="datos">
                     <div className="grafico-container">
+                    <Link to={`/adminCancion`}>
                         <p>Placeholder</p>
+                  </Link>
                     </div>
                 </div>
 
                 <div class="col-6 text-center" id="datos">
                     <div className="grafico-container">
-                    <Link to={`/admin/artista`}>
+                    <Link to={`/adminArtista`}>
                         <p>Placeholder</p>
                   </Link>
                     </div>

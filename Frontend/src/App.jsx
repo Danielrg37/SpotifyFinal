@@ -14,6 +14,7 @@ import SpotifyLogin from './pages/SpotifyLogin'
 import { SearchBar } from './pages/BarraBusqueda' 
 import GalleryComponent from './pages/VistaGaleria'
 import VistaAdminArtista from './pages/VistaAdminArtista' 
+import VistaAdminCancion from './pages/VistaAdminCancion'
 
 
 import VistaTotalArtistas from './pages/VistaTotalArtistas'
@@ -47,7 +48,8 @@ function App() {
           <Route path = '/search' element={<SearchBar />} />
           <Route path = '/galeria' element={<GalleryComponent />} />
           <Route path = '/galeria/:id' element={<GalleryComponent />} />
-          <Route path = '/admin/artista' element={<VistaAdminArtista />} />
+          <Route path = '/adminArtista' element={<VistaAdminArtista />} />
+          <Route path = '/adminCancion' element={<VistaAdminCancion />} />
         </Routes>
       </Router>
     </div>

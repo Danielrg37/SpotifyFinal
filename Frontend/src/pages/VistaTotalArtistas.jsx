@@ -57,50 +57,51 @@ function VistaTotalArtistas() {
             </header>
 
             <div className="row">
-
-
-                <div className="col-4">
-                    <button
-                        className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'short_term' && 'active'}`}
-                        onClick={() => handleTiempoChange('short_term')}
-                    >
-                        Corto plazo
-                    </button>
-                </div>
-
-
-                <div className="col-4">
-                    <button
-                        className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'medium_term' && 'active'}`}
-                        onClick={() => handleTiempoChange('medium_term')}
-                    >
-                        Medio plazo
-                    </button>
-                </div>
-
-
-
-                <div className="col-4">
-                    <button
-                        className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'long_term' && 'active'}`}
-                        onClick={() => handleTiempoChange('long_term')}
-                    >
-                        Largo plazo
-                    </button>
-                </div>
-
-
-
-
-                {topArtistas.map((artista, index) => (
-                    <div key={index} className="col-3">
-                        <Link to={`/artista/${artista.id}`}>
-                            {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" style={{ width: '320px', height: '320px' }} />}
-                        </Link>
-                        <h4>{artista.name}</h4>
+                <div className="col-12 mb-4">
+                    <div className="bg-light rounded-pill p-3 d-flex justify-content-between">
+                        <button
+                            className={`btn btn-outline-success rounded-pill ${tiempo === 'short_term' && 'active'}`}
+                            onClick={() => handleTiempoChange('short_term')}
+                        >
+                            Corto plazo
+                        </button>
+                        <button
+                            className={`btn btn-outline-success rounded-pill ${tiempo === 'medium_term' && 'active'}`}
+                            onClick={() => handleTiempoChange('medium_term')}
+                        >
+                            Medio plazo
+                        </button>
+                        <button
+                            className={`btn btn-outline-success rounded-pill ${tiempo === 'long_term' && 'active'}`}
+                            onClick={() => handleTiempoChange('long_term')}
+                        >
+                            Largo plazo
+                        </button>
                     </div>
-                ))}
+                </div>
+            
 
+
+                <div className="row">
+  {topArtistas.map((artista, index) => (
+   <div key={index} className="col-lg-3 col-md-6 col-sm-12 mt-5">
+      <Link to={`/artista/${artista.id}`} className="d-block position-relative custom-underline">
+        <div className="img-container">
+            {artista.images && (
+            <img src={artista.images[1]?.url} className="img-fluid rounded" style={{height: '280px', width: '280px'}} />
+          )}
+        </div>
+        <div className="data-container bg-dark-opacity">
+            <h2>{index + 1}.</h2>
+          <h4 className="text-white m-0">{artista.name}</h4>
+        </div>
+      </Link>
+    </div>
+    ))}
+</div>
+
+
+       
 
 
 

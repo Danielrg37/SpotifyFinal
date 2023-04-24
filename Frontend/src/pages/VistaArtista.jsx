@@ -22,16 +22,23 @@ function VistaArtista() {
     const [canciones, setCanciones] = useState([]);
     const [noticias, setNoticias] = useState([]);
     const [imagenes, setImagenes] = useState([]);
+    const [descripcion, setDescripcion] = useState([]);
+    const [textoCortado, setTextoCortado] = useState([]);
 
 
+ /*      // Función para cortar el texto después de 100 caracteres
+  const truncateText = (text) => {
+    const truncated = text.substring(0, 100);
+    return truncated + "...";
+  }
 
+  // Función para mostrar el texto completo
+  const showFullText = () => {
+    setIsTextTruncated(false);
+  } */
+  
     const token = localStorage.getItem('token');
     const { id } = useParams();
-
-
-
-
-
 
     useEffect(() => {
         if (token) {
@@ -61,8 +68,6 @@ function VistaArtista() {
         }
     }, [token]);
 
-
-
     useEffect(() => {
         if (token) {
             fetch(`https://api.spotify.com/v1/artists/${id}?si=c14fd7cce6ec4d59`, {
@@ -77,9 +82,7 @@ function VistaArtista() {
         }
     }, [token]);
 
-
     console.log(artista.name)
-
 
     useEffect(() => {
         async function fetchImages() {
@@ -118,22 +121,50 @@ function VistaArtista() {
         fetchImages();
     }, [artista.name]);
 
+    useEffect(() => {
+        async function fetchDescripcion() {
+            if (artista && artista.name) {
+                const url = `https://www.last.fm/es/music/${encodeURIComponent(
+                    artista.name
+                )}/+wiki?${new Date().getTime()}`;
+                console.log(url);
+
+                //send HTTP request using fetch
+                const response = await fetch(url, {
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+                        'Accept-Language': 'en-US,en;q=0.9',
+                    }
+                });
+
+                //parse HTML response using Cheerio
+                const html = await response.text();
+                const $ = cheerio.load(html);
+
+                //get all image URLs and add them to an array
+                let descriptions = "";
+                let container = $('.wiki-content');
+               container.find('p').each((i, element) => {
+                    descriptions += $(element).text() + " "; // concatenar el texto de cada elemento <p> en la variable descriptions
+                });
+
+
+                //set state with array of image URLs
+                setDescripcion(descriptions);
+            }
+        }
+
+        //invoke async function to fetch images
+        fetchDescripcion();
+    }, [artista.name]);
+
     console.log(imagenes);
 
     console.log(albums);
     console.log(artista);
     console.log(canciones);
     console.log(noticias);
-
-
-
-
-
-
-
-
-
-
+    console.log(descripcion);
 
     return (
 
@@ -153,7 +184,7 @@ function VistaArtista() {
             <div className='artista-container'>
                 <div className="row">
                     <div className="col-4">
-                        <img src={artista?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" style={{width: '250px', height: '250px'}} />
+                        <img src={artista?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" style={{ width: '250px', height: '250px' }} />
                     </div>
                     <div className="col-8">
                         <h1>{artista.name}</h1>

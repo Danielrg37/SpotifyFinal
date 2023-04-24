@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/artista/vista_artista.css';
+import './css/disco/vista_disco.css';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -46,6 +46,8 @@ function VistaDisco() {
 
     console.log(disco);
 
+    const embedUrl = `https://open.spotify.com/embed/album/${id}`;
+
 
     
     return (
@@ -63,29 +65,31 @@ function VistaDisco() {
                 </ul>
             </header>
 
+            <div className="cancion-container">
             <div className="row">
                 <div className="col-4">
                     <img src={disco?.images?.[1]?.url} alt="Artista 1" className="img-fluid" />
                 </div>
                 <div className="col-8">
+                    <h2>
+                {disco.artists && disco.artists.length > 0 &&
+                <span>
+                  {disco.artists.map((artista) => (
+                    <Link key={artista.id} className="custom-underline" to={`/artista/${artista.id}`}>
+                      {artista.name}
+                    </Link>
+                  )).reduce((prev, curr) => [prev, ", ", curr])}
+                </span>
+              }
+              </h2>
+
                     <h1>{disco.name}</h1>
                     <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
                 </div>
             </div>
-            <div class="row mt-3">
-                <div class="col-md-4 text-center" id="datos">
-                    <h4>Veces reproducido</h4>
-                    <p>Placeholder</p>
-                </div>
-                <div class="col-md-4 text-center" id="datos">
-                    <h4>Tiempo total de reproducción</h4>
-                    <p>Placeholder horas</p>
-                </div>
-                <div class="col-md-4 text-center" id="datos">
-                    <h4>Última vez escuchado</h4>
-                    <p>Placeholder</p>
-                </div>
             </div>
+
+            <div className='disco-container mt-3'>
             <div class="row mt-3">
                 <h1>Canciones que pertenecen al disco</h1>
                 <div className="col-12" style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '300px' }}>
@@ -97,38 +101,29 @@ function VistaDisco() {
             <p>{cancion.name}</p>
             </Link>
         </div>
+        
     ))}
 </div>
+</div>
             </div>
+            <div class="row mt-5 mb-3">
+    <div class="col-6 canciones-container">
+        <h1>Placeholder</h1>
+    </div>
 
-            <div class="row mt-5">
-                <div class="col-12" style={{ border: '2px solid green' }}>
-                    <h2>Mi historial de reproducciones</h2>
-                    <table class="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th>Imagen</th>
-                                <th>Canción</th>
-                                <th>Hora</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {[...Array(10)].map((_, i) => (
-                                <tr key={i}>
-                                    <td><img src="https://via.placeholder.com/50x50" alt="Imagen de la canci�n"></img></td>
-                                    <td>Canción</td>
-                                    <td>3:24</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-
-
-
-
+    <div class="col-6 canciones-container">
+        <h1>Placeholder</h1>
+        <iframe
+            id="spotify-iframe"
+            src={embedUrl}
+            width="100%"
+            height="500"
+            frameBorder="0"
+            allowtransparency="true"
+            allow="encrypted-media"
+        />
+    </div>
+</div>
 
             <footer>
                 <p class="float-end"><a href="#">Back to top</a></p>

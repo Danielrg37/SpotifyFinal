@@ -88,6 +88,27 @@ function VistaCancion() {
   const songTitle = cancion.name;
   const GENIUS_KEY = '-ImT2ynhgjGOA_ktoe31opdJw0huxaFal8txUqK5Vjui_hgwES2ceLIlFDSNdAGP';
 
+  useEffect(() => {
+    axios.get(`https://cors-anywhere.herokuapp.com/https://api.genius.com/search?q=${songTitle}`, {
+      headers: {
+        Authorization: `Bearer ${GENIUS_KEY}`
+      }
+    })
+      .then(response => {
+        const song = response.data.response.hits[0].result;
+        console.log(song);
+        axios.get(song.url)
+          .then(response => {
+            const html = response.data;
+            const $ = cheerio.load(html);
+            const lyrics = $('.lyrics').text().trim();
+            setLetras(lyrics);
+          })
+      })
+  }, [songTitle]);
+
+  console.log(letras);
+
 
 
   function milisegundosAMinutosSegundos(milisegundos) {

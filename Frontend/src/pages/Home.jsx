@@ -11,6 +11,7 @@ function Home() {
     const [token, setToken] = useState("")
     const navigate = useNavigate();
 
+
     useEffect(() => {
         const hash = window.location.hash
         let token = window.localStorage.getItem("token")
@@ -23,7 +24,6 @@ function Home() {
         }
 
         setToken(token)
-
     }, [])
 
 
@@ -38,6 +38,7 @@ function Home() {
                         Placeholder
                     </Button>
                 </ul>
+
             </header>
 
             <div className="containers_info">

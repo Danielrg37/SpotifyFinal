@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function VistaAdminArtista() {
+function VistaAdminCancion() {
   const classes = useStyles();
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -85,7 +85,7 @@ function VistaAdminArtista() {
 
       <div className="containers_info">
         <div class="row">
-          <h2>Consultar artistas via API</h2>
+          <h2>Consultar canciones via API</h2>
         
         </div>
       </div>
@@ -145,4 +145,4 @@ function VistaAdminArtista() {
 }
 
 
-export default VistaAdminArtista;
+export default VistaAdminCancion;
