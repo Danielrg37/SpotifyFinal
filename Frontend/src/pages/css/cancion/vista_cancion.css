@@ -59,3 +59,20 @@
 
 
 
+.stats-container{
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.stats-container p {
+  color: #121212;
+}
+
+.stats-container h5 {
+  color: #121212;
+}
+
+.stats-container label {
+  color: #121212;
+}

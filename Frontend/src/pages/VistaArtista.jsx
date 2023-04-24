@@ -84,34 +84,34 @@ function VistaArtista() {
     useEffect(() => {
         async function fetchImages() {
             if (artista && artista.name) {
-            const url = `https://www.last.fm/music/${encodeURIComponent(
-        artista.name
-      )}/+images?${new Date().getTime()}`;
-            console.log(url);
+                const url = `https://www.last.fm/music/${encodeURIComponent(
+                    artista.name
+                )}/+images?${new Date().getTime()}`;
+                console.log(url);
 
-            //send HTTP request using fetch
-            const response = await fetch(url, {
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-                    'Accept-Language': 'en-US,en;q=0.9',
-                }
-            });
+                //send HTTP request using fetch
+                const response = await fetch(url, {
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+                        'Accept-Language': 'en-US,en;q=0.9',
+                    }
+                });
 
-            //parse HTML response using Cheerio
-            const html = await response.text();
-            const $ = cheerio.load(html);
+                //parse HTML response using Cheerio
+                const html = await response.text();
+                const $ = cheerio.load(html);
 
-            //get all image URLs and add them to an array
-            const images = [];
-            $('.image-list-item img').each((i, element) => {
-                const imageUrl = $(element).attr('src');
+                //get all image URLs and add them to an array
+                const images = [];
+                $('.image-list-item img').each((i, element) => {
+                    const imageUrl = $(element).attr('src');
 
-                images.push(imageUrl.replace('avatar170s', 'avatar1920s')); // actualizar la url de la imagen
-            });
+                    images.push(imageUrl.replace('avatar170s', 'avatar1920s')); // actualizar la url de la imagen
+                });
 
-            //set state with array of image URLs
-            setImagenes(images);
-        }
+                //set state with array of image URLs
+                setImagenes(images);
+            }
         }
 
         //invoke async function to fetch images
@@ -126,8 +126,8 @@ function VistaArtista() {
     console.log(noticias);
 
 
- 
- 
+
+
 
 
 
@@ -153,14 +153,14 @@ function VistaArtista() {
             <div className='artista-container'>
                 <div className="row">
                     <div className="col-4">
-                        <img src={artista?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" />
+                        <img src={artista?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" style={{width: '250px', height: '250px'}} />
                     </div>
                     <div className="col-8">
                         <h1>{artista.name}</h1>
                         <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
                     </div>
                 </div>
-                <div class="row mt-3">
+                {/* <div class="row mt-3">
                     <div class="col-md-4 text-center" id="datos">
                         <h4>Veces reproducido</h4>
                         <p>Placeholder</p>
@@ -173,7 +173,7 @@ function VistaArtista() {
                         <h4>Última vez escuchado</h4>
                         <p>Placeholder</p>
                     </div>
-                </div>
+                </div> */}
             </div>
 
             <div className="canciones-container mt-4 mb-4">
@@ -196,39 +196,55 @@ function VistaArtista() {
                 <div class="row mt-3">
                     <h1>Discos</h1>
                     <div className="col-12" style={{ overflowX: 'scroll', overFlowY: 'hidden', whiteSpace: 'nowrap', height: '320px' }}>
-                        {albums.length > 0 && albums.map((album, index) => (
-                            <div key={index} className="d-inline-block mx-2">
-                                <Link to={`/disco/${album.id}`}>
-                                    <img src={album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
-                                    <p>{album.name}</p>
-                                </Link>
+                        {albums.length === 0 ? (
+                            <div style={{ textAlign: 'center', marginTop: '5rem' }}>
+                                <h1 style={{ fontSize: '3rem', fontWeight: 'bold', color: '#555' }}>No hay discos</h1>
                             </div>
-                        ))}
+                        ) : (
+                            <>
+                                {albums.map((album, index) => (
+                                    <div key={index} className="d-inline-block mx-2">
+                                        <Link to={`/disco/${album.id}`}>
+                                            <img src={album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
+                                            <p>{album.name}</p>
+                                        </Link>
+                                    </div>
+                                ))}
+                            </>
+                        )}
+
                     </div>
                 </div>
             </div>
 
             <div className="row mt-3">
-    <div>
-        <div class="row">
-            <div class="col-md-6 text-center">
-                <div className='fotos-container'>
-                    <div class="col-12">
-                        <Container>
-                            <h2>Galería</h2>
-                            <Row>
-                                {imagenes.slice(0,6).map((imagen, index) => (
-                                    <Col md={6} key={index}>
-                                        <img src={imagen} alt={`Imagen ${index}`} className="img-fluid" />
-                                    </Col>
-                                ))}
-                            </Row>
-                        </Container>
-                        <Link to={`/galeria/${artista.id}`}><button className="btn btn-outline-dark rounded-pill w-100 mt-3"> {'Ver más'} </button> </Link>
-                    </div>
-                </div>
-            </div>
-       
+                <div>
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <div className='fotos-container'>
+                                <div class="col-12">
+                                    <Container>
+                                        <h2>Galería</h2>
+                                        <Row>
+                                            {imagenes.length === 0 ? (
+                                                <div mt-5 style={{ textAlign: 'center' }}>
+                                                    <h1 className="mt-4" style={{ fontSize: '3rem', fontWeight: 'bold', color: '#555' }}>No hay fotos</h1>
+                                                </div>
+                                            ) : (
+                                                imagenes.slice(0, 6).map((imagen, index) => (
+                                                    <Col md={6} key={index}>
+                                                        <img src={imagen} alt={`Imagen ${index}`} className="img-fluid" />
+                                                    </Col>
+                                                ))
+                                            )}
+                                        </Row>
+
+                                    </Container>
+                                    <Link to={`/galeria/${artista.id}`}><button className="btn btn-outline-dark rounded-pill w-100 mt-3" disabled={imagenes.length === 0}> {'Ver más'} </button> </Link>
+                                </div>
+                            </div>
+                        </div>
+
 
 
                         <div class="col-md-6 text-center">

@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/home/home.css';
 import fernando from './../img/fernando.png';
 import { useNavigate } from 'react-router-dom';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 
 function Home() {
     const [token, setToken] = useState("")
@@ -14,16 +14,16 @@ function Home() {
     useEffect(() => {
         const hash = window.location.hash
         let token = window.localStorage.getItem("token")
-    
+
         if (!token && hash) {
             token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1]
-    
+
             window.location.hash = ""
             window.localStorage.setItem("token", token)
         }
-    
+
         setToken(token)
-    
+
     }, [])
 
 
@@ -33,47 +33,44 @@ function Home() {
                 <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     Placeholder
                 </a>
-
                 <ul class="nav nav-pills">
-                    <Button className="green-color"  onClick={() => navigate('/registro')}>
-                        
+                    <Button className="green-color" onClick={() => navigate('/registro')}>
                         Placeholder
                     </Button>
                 </ul>
             </header>
-            <div class="p-5 mb-4 rounded-3" id="containers_info">
-                <div class="container-fluid py-5">
-                    <div class="row">
-                        <div class="col-md-8 text-center">
-                            <h1 class="display-5 fw-bold">Lorem ipsum dolor sit ame</h1>
-                            <p class="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro pariatur, excepturi nulla, fugit ducimus in voluptatem est ipsum rem aliquam minima accusantium a assumenda similique vitae quibusdam laudantium reprehenderit totam!</p>
-                            <Button className="green-color" style={{ width: '40rem', height: '4rem' }} onClick={() => navigate('/login')}>
-                                Placeholder
-                            </Button>
-                        </div>
 
-                        <div class="col-md-4 d-flex align-items-center justify-content-center">
+            <div className="containers_info">
+                <div class="row">
+                    <div class="col-md-8 col-lg-6 text-center">
+                        <h1 class="display-5 fw-bold">Lorem ipsum dolor sit ame</h1>
+                        <p class="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro pariatur, excepturi nulla, fugit ducimus in voluptatem est ipsum rem aliquam minima accusantium a assumenda similique vitae quibusdam laudantium reprehenderit totam!</p>
+                        <Button className="green-color d-block mx-auto mb-3 mb-md-0" style={{ width: '100%', height: '4rem' }} onClick={() => navigate('/login')}>
+                            Placeholder
+                        </Button>
+                    </div>
+
+
+                    <div class="col-md-4 d-flex align-items-center justify-content-center">
 
                         <img src="https://picsum.photos/500/500" class="img-fluid rounded-start" alt="..." />
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="p-5 mb-4 rounded-3" id="containers_info">
-                <div class="container-fluid py-5">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="https://picsum.photos/500/500" class="img-fluid rounded-start" alt="..." />
-                        </div>
-                        <div class="col-md-6">
-                            <h1>Placeholder 1</h1>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis alias incidunt nam ex, molestiae deleniti libero totam perferendis aspernatur laudantium delectus porro neque aut, dicta recusandae dolorem in eos id.</p>
-                            <h1 className='mt-5'>Placeholder 2</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo, quos voluptas qui assumenda soluta facilis minus distinctio excepturi ut sit saepe, blanditiis, eaque quidem deserunt itaque consectetur quae necessitatibus perspiciatis.</p>
-                            <h1 className='mt-5'>Placeholder 3</h1>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, esse, magnam ab perferendis voluptate cum minus eum similique quam beatae qui. Maxime reprehenderit accusamus esse rerum provident ad autem quisquam!</p>
 
-                        </div>
+            <div className="containers_info mt-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="https://picsum.photos/1800/1800" class="img-fluid rounded-start" alt="..." />
+                    </div>
+                    <div class="col-md-6">
+                        <h1>Consulta tus tops de Spotify</h1>
+                        <p>¿Quieres saber cuáles son tus canciones y artistas más escuchados en Spotify? Aquí podrás acceder a esta información de forma fácil y rápida.</p>
+                        <h1 className='mt-5'>Obten más información de tus artistas y canciones favoritos</h1>
+                        <p>Descubre más sobre tus artistas y canciones favoritos aquí. Obtén información detallada sobre ellos y sus canciones</p>
+                        <h1 className='mt-5'>Infórmate acerca de conciertos u noticias</h1>
+                        <p>No te pierdas los eventos o conciertos de tus artistas favoritos. Aquí, podrás estar al tanto de las últimas noticias y fechas de conciertos en todo el mundo.</p>
+
                     </div>
                 </div>
             </div>

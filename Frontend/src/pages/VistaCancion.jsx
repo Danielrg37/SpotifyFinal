@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import cheerio from 'cheerio';
 import { Doughnut } from 'react-chartjs-2';
+import { ProgressBar } from 'react-bootstrap';
 
 
 
@@ -180,38 +181,45 @@ function VistaCancion() {
             <div class="estadisticas-container">
               <div class="row">
                 <div class="col-6">
-                  <p>Acústica: {stats[0]?.acousticness}</p>
-                  <p>Danceability: {stats[0]?.danceability}</p>
-                  <p>Energy: {stats[0]?.energy}</p>
-                  <p>Instrumentalness: {stats[0]?.instrumentalness}</p>
-                  <p>Liveness: {stats[0]?.liveness}</p>
-                  <p>Loudness: {stats[0]?.loudness}</p>
-                  <p>Speechiness: {stats[0]?.speechiness}</p>
-                  <p>Tempo: {stats[0]?.tempo}</p>
-                  <p>Valence: {stats[0]?.valence}</p>
+                  {stats[0] &&
+                    <>
+                        <div className="stats-container mt-2">
+                          <h5 className="text-wrap">Bailabilidad:</h5>
+                          <ProgressBar now={stats[0].danceability * 100} label={`${(stats[0].danceability * 100).toFixed(0)}%`} />
+                        </div>
+
+                        <div className="stats-container mt-2">
+                          <h5 className="text-wrap">Energia:</h5>
+                          <ProgressBar now={stats[0].energy * 100} label={`${(stats[0].energy * 100).toFixed(0)}%`} />
+                        </div>
+
+                        <div className="stats-container mt-2">
+                          <h5 className="text-wrap">Positividad:</h5>
+                          <ProgressBar now={stats[0].speechiness * 100} label={`${(stats[0].speechiness * 100).toFixed(0)}%`} />
+                        </div>
+
+                        <div className="stats-container mt-2">
+                          <h5 className="text-wrap">Acusticidad:</h5>
+                          <ProgressBar now={stats[0].acousticness * 100} label={`${(stats[0].acousticness * 100).toFixed(0)}%`} />
+                        </div>
+
+                        
+
+
+                    
+
+                    </>
+                  }
+
                 </div>
 
                 <div class="col-6">
-                  <p>Key: {stats[0]?.key}</p>
-                  <p>Mode: {stats[0]?.mode}</p>
-                  <p>Time Signature: {stats[0]?.time_signature}</p>
-                  <p>Duration: {stats[0]?.duration_ms}</p>
-
-                  <p>Popularity: {stats[0]?.popularity}</p>
-                  <p>Explicit: {stats[0]?.explicit}</p>
-                  <p>Disc Number: {stats[0]?.disc_number}</p>
-                  <p>Track Number: {stats[0]?.track_number}</p>
-
-                </div>
+                <img src="https://placehold.co/800x800" class="img-fluid rounded-start" alt="..." />
+                  </div>
               </div>
-
-
-
             </div>
           </div>
         </div>
-
-
 
         <div class="col-4">
           <div className='letra-container'>
@@ -221,14 +229,8 @@ function VistaCancion() {
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem doloremque veniam sint ipsum alias, quibusdam quod porro accusamus enim quasi inventore aliquid et dolor repellat dicta voluptate dolorem nulla quo?</p>
           </div>
         </div>
+
       </div>
-
-
-
-
-
-
-
 
       <footer>
         <p class="float-end"><a href="#">Back to top</a></p>
