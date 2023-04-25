@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
-import { SearchBar } from './BarraBusqueda';
+import BarraBusqueda from './BarraBusquedaCancion';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function VistaAdminCancion() {
+function VistaAdminArtista() {
   const classes = useStyles();
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -85,54 +85,10 @@ function VistaAdminCancion() {
 
       <div className="containers_info">
         <div class="row">
-          <h2>Consultar canciones via API</h2>
-        
+          <h2>Consultar artistas via API</h2>
+        <BarraBusqueda></BarraBusqueda>
         </div>
       </div>
-{/* 
-      <div className="containers_info mt-4">
-        <div class="row">
-          <div class="col-8">
-            <div class="row">
-              <div class="col-2" style={{ backgroundColor: 'green', marginRight: '1rem' }}>
-                <p>Placeholder</p>
-              </div>
-              <div class="col-2" style={{ backgroundColor: 'green', marginRight: '1rem' }}>
-                <p>Placeholder</p>
-              </div>
-              <div class="col-2" style={{ backgroundColor: 'green', marginRight: '1rem' }}>
-                <p>Placeholder</p>
-              </div>
-              <div class="col-2" style={{ backgroundColor: 'green', marginRight: '1rem' }}>
-                <p>Placeholder</p>
-              </div>
-              <div class="col-2" style={{ backgroundColor: 'green', marginRight: '1rem' }}>
-                <p>Placeholder</p>
-              </div>
-            </div>
-            <div class="row mt-4">
-            <div class="col-2" style={{ backgroundColor: 'green', marginRight: '1rem' }}>
-                <p>Placeholder</p>
-              </div>
-              <div class="col-2" style={{ backgroundColor: 'green', marginRight: '1rem' }}>
-                <p>Placeholder</p>
-              </div>
-              <div class="col-2" style={{ backgroundColor: 'green', marginRight: '1rem' }}>
-                <p>Placeholder</p>
-              </div>
-              <div class="col-2" style={{ backgroundColor: 'green', marginRight: '1rem' }}>
-                <p>Placeholder</p>
-              </div>
-              <div class="col-2" style={{ backgroundColor: 'green', marginRight: '1rem' }}>
-                <p>Placeholder</p>
-              </div>
-              </div>
-          </div>
-          <div class="col-4">
-            <img src="https://picsum.photos/1800/1800" class="img-fluid rounded-start" alt="..." />
-          </div>
-        </div>
-      </div> */}
 
 
       <footer>
@@ -145,4 +101,4 @@ function VistaAdminCancion() {
 }
 
 
-export default VistaAdminCancion;
+export default VistaAdminArtista;

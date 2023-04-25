@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
-import { SearchBar } from './BarraBusqueda';
+import BarraBusqueda from './BarraBusquedaArtista';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -86,7 +86,7 @@ function VistaAdminArtista() {
       <div className="containers_info">
         <div class="row">
           <h2>Consultar artistas via API</h2>
-        
+        <BarraBusqueda></BarraBusqueda>
         </div>
       </div>
 {/* 

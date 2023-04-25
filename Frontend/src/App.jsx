@@ -6,12 +6,10 @@ import Login from './pages/Login'
 import Perfil from './pages/VistaPerfil'
 import VistaCancion from './pages/VistaCancion'
 import VistaArtista from './pages/VistaArtista'
-import CancionLista from './pages/CancionLista'
 import VistaDisco from './pages/VistaDisco'
-import ArtistaLista from './pages/ArtistaLista'
 import Admin from './pages/VistaAdmin'
 import SpotifyLogin from './pages/SpotifyLogin'
-import { SearchBar } from './pages/BarraBusqueda' 
+import BarraBusqueda from './pages/BarraBusquedaCancion'
 import GalleryComponent from './pages/VistaGaleria'
 import VistaAdminArtista from './pages/VistaAdminArtista' 
 import VistaAdminCancion from './pages/VistaAdminCancion'
@@ -19,6 +17,8 @@ import VistaAdminCancion from './pages/VistaAdminCancion'
 
 import VistaTotalArtistas from './pages/VistaTotalArtistas'
 import VistaTotalCanciones from './pages/VistaTotalCanciones'
+import VistaCancionP from './pages/VistaCancionPlaylist'
+import VistaArtistaP from './pages/VistaArtistaPlaylist'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
@@ -35,8 +35,8 @@ function App() {
           <Route path = '/perfil' element={<Perfil />} />
           <Route path = '/cancion' element={<VistaCancion />} />
           <Route path = '/artista' element={<VistaArtista />} />
-          <Route path = '/playlistC' element={<CancionLista />} />
-          <Route path = '/playlistA' element={<ArtistaLista />} />
+          <Route path = '/playlistC' element={<VistaCancionP />} />
+          <Route path = '/playlistA' element={<VistaArtistaP />} />
           <Route path = '/disco' element={<VistaDisco />} />
           <Route path = '/admin' element={<Admin />} />
           <Route path = '/login2' element={<SpotifyLogin />} />
@@ -45,11 +45,12 @@ function App() {
           <Route path = '/disco/:id' element={<VistaDisco />} />
           <Route path = '/totalArtistas' element={<VistaTotalArtistas />} />
           <Route path = '/totalCanciones' element={<VistaTotalCanciones />} />
-          <Route path = '/search' element={<SearchBar />} />
+          <Route path = '/search' element={<BarraBusqueda />} />
           <Route path = '/galeria' element={<GalleryComponent />} />
           <Route path = '/galeria/:id' element={<GalleryComponent />} />
           <Route path = '/adminArtista' element={<VistaAdminArtista />} />
           <Route path = '/adminCancion' element={<VistaAdminCancion />} />
+
         </Routes>
       </Router>
     </div>

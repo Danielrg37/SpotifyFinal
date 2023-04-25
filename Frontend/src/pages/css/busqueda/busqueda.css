@@ -1,0 +1,39 @@
+.artist-container {
+    display: flex;
+  }
+  
+  .artist-container .artist-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .artist-container .artist-image img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  .artist-container .artist-details {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .artist-container .artist-details h2 {
+    margin-bottom: 20px;
+  }
+  
+  .artist-container .artist-details li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  
+  .artist-container .artist-details li strong {
+    display: inline-block;
+    width: 120px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
