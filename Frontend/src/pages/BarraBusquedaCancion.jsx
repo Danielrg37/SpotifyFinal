@@ -73,7 +73,7 @@ function BarraBusqueda() {
               <div className="row">
                 <div className="row artist-container">
                   <div className="col-5 bg-dark artist-image">
-                {cancion.length > 0 &&
+                  {Object.keys(cancion).length > 0 &&
                     <img src={cancion.album.images[0].url} alt="Imagen del cancion" />
 }
                   </div>
@@ -81,8 +81,15 @@ function BarraBusqueda() {
                   <div className="col-7 bg-dark artist-details">
 
                    
-                    {cancion.length > 0 &&
+                  {Object.keys(cancion).length > 0 &&
                       <><h2>{cancion.album.name}</h2><ul>
+
+                        <li>Fecha de lanzamiento: {cancion.album.release_date}</li>
+                    
+                      
+                        
+
+
                         
                       </ul></>
 }

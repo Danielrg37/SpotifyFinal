@@ -12,6 +12,7 @@ function VistaDisco() {
     
     const [disco, setDisco] = useState([]);
     const [cancionesDisco, setCancionesDisco] = useState([]);
+    const [url, setUrl] = useState(``);
    
     const token = localStorage.getItem('token');
 
@@ -25,7 +26,14 @@ function VistaDisco() {
           }
         })
             .then(response => response.json())
-            .then(data => setDisco(data))
+            .then(
+                (data) => {
+            setDisco(data)
+            const baseUrl = "https://www.amazon.es/s?k=";
+            const searchQuery = `${data.artists[0].name}+${disco.name}`.replace(/ /g, "+");
+            const url = baseUrl + searchQuery;
+            setUrl(url)
+        }) 
             .catch(error => console.error(error));
     }
     }, [token]);
@@ -48,7 +56,17 @@ function VistaDisco() {
 
     const embedUrl = `https://open.spotify.com/embed/album/${id}`;
 
+   
+       
+   
 
+        console.log(url);
+      
+    
+   
+    
+   
+    
     
     return (
 
@@ -85,6 +103,10 @@ function VistaDisco() {
 
                     <h1>{disco.name}</h1>
                     <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
+                    
+                    {/* // Añadir url */}
+                    {url !== null && <Button href={url} className="green-color">Compra en Amazon</Button>}
+
                 </div>
             </div>
             </div>
