@@ -6,6 +6,8 @@ import './css/perfil/vista_perfil.css';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ButtonGroup } from 'react-bootstrap';
+import BarraBusqueda from './BarraBusquedaGlobal';
+import Loader from './Loader';
 
 function VistaPerfil() {
     const [artistInfo, setArtistInfo] = useState(null);
@@ -135,65 +137,58 @@ function VistaPerfil() {
     console.log(topCanciones);
 
     return (
-
-        <div className="container">
+        !userData || !topArtistas.length || !topCanciones.length || !historial.length ? (
+          <Loader />
+        ) : (
+          <div className="container">
             <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    Placeholder
-                </a>
-
-                <ul className="nav nav-pills">
-                    <Button className="green-color" onClick={() => navigate('/registro')}>
-                        Placeholder
-                    </Button>
-                </ul>
+              <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                Placeholder
+              </a>
+      
+              <ul className="nav nav-pills">
+                <BarraBusqueda />
+                <Button className="green-color" onClick={() => navigate('/registro')}>
+                  Placeholder
+                </Button>
+              </ul>
             </header>
-
+      
             <div className="perfil-container">
-            <div className="row">
+              <div className="row">
                 <div className="col-4">
-                    <img src={userData?.images?.[0]?.url} alt="Artista 1" className="img-fluid rounded-circle" />
+                  <img src={userData?.images?.[0]?.url} alt="Artista 1" className="img-fluid rounded-circle" />
                 </div>
                 <div className="col-8">
-                    <h1>{nombreUser}</h1>
-                    <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
+                  <h1>{nombreUser}</h1>
+                  <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
                 </div>
-            </div>
-
-            <div className="row mt-4">
-
-
+              </div>
+      
+              <div className="row mt-4">
                 <div className="col-4">
-                    <button
-                        className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'short_term' && 'active'}`}
-                        onClick={() => handleTiempoChange('short_term')}
-                    >
-                        Corto plazo
-                    </button>
+                  <button className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'short_term' && 'active'}`}
+                    onClick={() => handleTiempoChange('short_term')}>
+                    Corto plazo
+                  </button>
                 </div>
-
-
+      
                 <div className="col-4">
-                    <button
-                        className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'medium_term' && 'active'}`}
-                        onClick={() => handleTiempoChange('medium_term')}
-                    >
-                        Medio plazo
-                    </button>
+                  <button className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'medium_term' && 'active'}`}
+                    onClick={() => handleTiempoChange('medium_term')}>
+                    Medio plazo
+                  </button>
                 </div>
-
-
-
+      
                 <div className="col-4">
-                    <button
-                        className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'long_term' && 'active'}`}
-                        onClick={() => handleTiempoChange('long_term')}
-                    >
-                        Largo plazo
-                    </button>
+                  <button className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'long_term' && 'active'}`}
+                    onClick={() => handleTiempoChange('long_term')}>
+                    Largo plazo
+                  </button>
                 </div>
-            </div>
-        </div>
+              </div>
+            </div> {/* closing tag for perfil-container */}
+      
 
 
             <div className="row mt-5">
@@ -296,8 +291,9 @@ function VistaPerfil() {
 
             </footer>
         </div>
+    ));
+};
 
-    );
-}
+
 
 export default VistaPerfil;

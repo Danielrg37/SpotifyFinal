@@ -34,8 +34,16 @@ function Home() {
                     Placeholder
                 </a>
                 <ul class="nav nav-pills">
-                    <Button className="green-color" onClick={() => navigate('/registro')}>
+                    <Button className="green-color" onClick={() => navigate('login2')}>
                         Placeholder
+                    </Button>
+
+                    <Button className="green-color" onClick={() => navigate('perfil')}>
+                        Perfil rápido
+                    </Button>
+
+                    <Button className="green-color" onClick={() => navigate('admin')}>
+                        Admin rápido
                     </Button>
                 </ul>
 
@@ -44,6 +52,7 @@ function Home() {
             <div className="containers_info">
                 <div class="row">
                     <div class="col-md-8 col-lg-6 text-center">
+                        
                         <h1 class="display-5 fw-bold">Lorem ipsum dolor sit ame</h1>
                         <p class="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro pariatur, excepturi nulla, fugit ducimus in voluptatem est ipsum rem aliquam minima accusantium a assumenda similique vitae quibusdam laudantium reprehenderit totam!</p>
                         <Button className="green-color d-block mx-auto mb-3 mb-md-0" style={{ width: '100%', height: '4rem' }} onClick={() => navigate('/login')}>

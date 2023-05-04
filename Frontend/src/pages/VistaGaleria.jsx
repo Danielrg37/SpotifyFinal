@@ -84,9 +84,9 @@ function GalleryComponent() {
                     </Button>
                 </ul>
             </header>
-            <div className="row">
+            <div className="row gallery-container">
                 <div className="col-12">
-                    <h1 className="text-center">{artista.name}</h1>
+                    <h1 className="text-center nombre">{artista.name}</h1>
                 </div>
             </div>
           

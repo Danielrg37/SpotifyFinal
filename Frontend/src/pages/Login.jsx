@@ -25,7 +25,7 @@ function Login() {
         </a>
       </header>
 
-      <div className="p-5 mb-4 rounded-3" id="containers_info">
+      <div className="p-5 mb-4 rounded-3 registro-container">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="nombreUsuario" className="form-label">

@@ -166,6 +166,9 @@ function VistaArtista() {
     console.log(noticias);
     console.log(descripcion);
 
+   
+
+
     return (
 
         <div className="container">
@@ -188,7 +191,7 @@ function VistaArtista() {
                     </div>
                     <div className="col-8">
                         <h1>{artista.name}</h1>
-                        <a href="https://www.spotify.com/"><img src="https://cdn.iconscout.com/icon/free/png-256/spotify-11-432546.png" alt="Spotify" width="50" height="50" /></a>
+                        <p>{descripcion}</p>
                     </div>
                 </div>
                 {/* <div class="row mt-3">

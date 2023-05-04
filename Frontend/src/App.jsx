@@ -13,6 +13,7 @@ import BarraBusqueda from './pages/BarraBusquedaCancion'
 import GalleryComponent from './pages/VistaGaleria'
 import VistaAdminArtista from './pages/VistaAdminArtista' 
 import VistaAdminCancion from './pages/VistaAdminCancion'
+import Loader from './pages/Loader'
 
 
 import VistaTotalArtistas from './pages/VistaTotalArtistas'
@@ -50,7 +51,7 @@ function App() {
           <Route path = '/galeria/:id' element={<GalleryComponent />} />
           <Route path = '/adminArtista' element={<VistaAdminArtista />} />
           <Route path = '/adminCancion' element={<VistaAdminCancion />} />
-
+          <Route path = 'loader' element={<Loader />} />
         </Routes>
       </Router>
     </div>

@@ -119,7 +119,7 @@ function VistaDisco() {
                 </div>
 
                 <div class="col-6 canciones-container">
-                    <h1>Placeholder</h1>
+                    <h1>Vista del disco</h1>
                     <iframe
                         id="spotify-iframe"
                         src={embedUrl}
