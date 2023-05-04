@@ -9,6 +9,7 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 import { Doughnut } from 'react-chartjs-2';
 import { ProgressBar } from 'react-bootstrap';
+import Loader from './Loader';
 
 
 
@@ -124,6 +125,9 @@ function VistaCancion() {
 
 
   return (
+    !cancion && !cancion.album && !cancion.album.images ? (
+      <Loader> </Loader>
+    ) : (
     <div className="container">
       <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -259,7 +263,7 @@ function VistaCancion() {
 
       </footer>
     </div>
-  );
+  ));
 }
 
 export default VistaCancion;

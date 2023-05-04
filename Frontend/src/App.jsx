@@ -16,12 +16,14 @@ import VistaAdminCancion from './pages/VistaAdminCancion'
 import Loader from './pages/Loader'
 
 
+
 import VistaTotalArtistas from './pages/VistaTotalArtistas'
 import VistaTotalCanciones from './pages/VistaTotalCanciones'
 import VistaCancionP from './pages/VistaCancionPlaylist'
 import VistaArtistaP from './pages/VistaArtistaPlaylist'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import CommentSection from './pages/ComentariosCaja'
 
 function App() {
   return (
@@ -52,6 +54,7 @@ function App() {
           <Route path = '/adminArtista' element={<VistaAdminArtista />} />
           <Route path = '/adminCancion' element={<VistaAdminCancion />} />
           <Route path = 'loader' element={<Loader />} />
+          <Route path = 'nested' element={<CommentSection />} />
         </Routes>
       </Router>
     </div>

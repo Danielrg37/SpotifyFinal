@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import cheerio from 'cheerio';
+import Loader from './Loader';
 
 
 function VistaArtista() {
@@ -170,7 +171,9 @@ function VistaArtista() {
 
 
     return (
-
+        !token && !artista || !albums && !canciones && !imagenes  ? (
+            <Loader />
+        ) : (
         <div className="container">
             <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
                 <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -312,7 +315,7 @@ function VistaArtista() {
 
             </footer>
         </div>
-    );
+    ));
 }
 
 export default VistaArtista;

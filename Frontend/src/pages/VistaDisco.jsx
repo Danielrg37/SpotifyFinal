@@ -20,23 +20,23 @@ function VistaDisco() {
 
     useEffect(() => {
         if (token) {
-            fetch(`https://api.spotify.com/v1/albums/${id}?si=c14fd7cce6ec4d59`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-                .then(response => response.json())
-                .then(
-                    (data) => {
-                        setDisco(data)
-                        const baseUrl = "https://www.amazon.es/s?k=";
-                        const searchQuery = `${data.artists[0].name}+${disco.name}`.replace(/ /g, "+");
-                        const url = baseUrl + searchQuery;
-                        setUrl(url)
-                    })
-                .catch(error => console.error(error));
+          fetch(`https://api.spotify.com/v1/albums/${id}?si=c14fd7cce6ec4d59`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          })
+          .then(response => response.json())
+          .then((data) => {
+            setDisco(data);
+            const baseUrl = "https://www.amazon.es/s?k=";
+            const searchQuery = `${data.artists[0].name}+${data.name}`;
+            const url = baseUrl + searchQuery;
+            setUrl(url);
+          })
+          .catch(error => console.error(error));
         }
-    }, [token]);
+      }, [token]);
+      
 
     useEffect(() => {
         if (token) {
@@ -56,7 +56,9 @@ function VistaDisco() {
     console.log(url);
 
     return (
-
+       !disco ? (
+          <Loader /> 
+          ) : (
         <div className="container">
             <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
                 <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -139,7 +141,7 @@ function VistaDisco() {
             </footer>
         </div>
 
-    );
+    ));
 
 }
 
