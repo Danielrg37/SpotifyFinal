@@ -227,19 +227,13 @@ function VistaCancion() {
                           <h5 className="text-wrap">Acusticidad:</h5>
                           <ProgressBar now={stats[0].acousticness * 100} label={`${(stats[0].acousticness * 100).toFixed(0)}%`} />
                         </div>
-
-                        
-
-
-                    
-
                     </>
                   }
 
                 </div>
 
                 <div class="col-6">
-                <img src="https://placehold.co/800x800" class="img-fluid rounded-start" alt="..." />
+                
                   </div>
               </div>
             </div>

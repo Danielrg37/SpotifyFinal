@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { ButtonGroup } from 'react-bootstrap';
 import BarraBusqueda from './BarraBusquedaGlobal';
 import Loader from './Loader';
+import axios from 'axios';
 
 function VistaPerfil() {
     const [artistInfo, setArtistInfo] = useState(null);
@@ -119,6 +120,17 @@ function VistaPerfil() {
                 });
         }
     }, [token]);
+
+ 
+
+
+    fetch('http://localhost:5272/api/artista')
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+  
+  
+
 
     
 
@@ -274,6 +286,7 @@ function VistaPerfil() {
                                                 src={item.track.album.images[0].url}
                                                 alt={`Imagen de ${item.track.name}`}
                                                 style={{ width: 50, height: 50 }}
+                                               onClick={() => navigate(`/cancion/${item.track.id}`)}
                                             />
                                         </td>
                                         <td>{item.track.name}</td>

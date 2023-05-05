@@ -21,7 +21,7 @@
     "ejs": "^3.1.9",
     "js-sha256": "^0.9.0",
     "mdb-react-ui-kit": "^6.0.0",
-    "node-vibrant": "^3.1.6",
+    "node-vibrant": "^3.2.1-alpha.1",
     "react": "^18.2.0",
     "react-autosuggest": "^10.1.0",
     "react-bootstrap": "^2.5.0-beta.1",
@@ -33,6 +33,7 @@
     "react-masonry-css": "^1.0.16",
     "react-photo-gallery": "^8.0.0",
     "react-router-dom": "^6.10.0",
+    "react-vis": "^0.3.4",
     "require": "^0.4.4",
     "spotify-web-api-js": "^1.5.2",
     "vibrant": "^0.0.1"

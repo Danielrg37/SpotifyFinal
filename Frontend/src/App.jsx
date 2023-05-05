@@ -17,6 +17,7 @@ import Loader from './pages/Loader'
 
 
 
+
 import VistaTotalArtistas from './pages/VistaTotalArtistas'
 import VistaTotalCanciones from './pages/VistaTotalCanciones'
 import VistaCancionP from './pages/VistaCancionPlaylist'
@@ -55,6 +56,7 @@ function App() {
           <Route path = '/adminCancion' element={<VistaAdminCancion />} />
           <Route path = 'loader' element={<Loader />} />
           <Route path = 'nested' element={<CommentSection />} />
+         
         </Routes>
       </Router>
     </div>

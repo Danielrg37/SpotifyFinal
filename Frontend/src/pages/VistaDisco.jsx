@@ -120,8 +120,8 @@ function VistaDisco() {
                     <h1>Placeholder</h1>
                 </div>
 
-                <div class="col-6 canciones-container">
-                    <h1>Vista del disco</h1>
+                <div class="col-6 cancion-container">
+                    <h1 style={{textAlign: 'center'}}>Vista del disco</h1>
                     <iframe
                         id="spotify-iframe"
                         src={embedUrl}
