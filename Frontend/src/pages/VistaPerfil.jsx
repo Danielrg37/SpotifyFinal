@@ -123,19 +123,15 @@ function VistaPerfil() {
 
  
 
-
-    fetch('http://localhost:5272/api/artista')
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
-  
-  
-
-
-    
-
-
-
+    fetch('http://localhost:5272/api/artista', {
+        headers: {
+          'X-Access-Token': localStorage.getItem('token')
+        }
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+      
 
     const nombreUser = userData?.display_name;
 
