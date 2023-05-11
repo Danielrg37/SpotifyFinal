@@ -155,7 +155,6 @@ function VistaPerfil() {
               </a>
       
               <ul className="nav nav-pills">
-                <BarraBusqueda />
                 <Button className="green-color" onClick={() => navigate('/registro')}>
                   Placeholder
                 </Button>
