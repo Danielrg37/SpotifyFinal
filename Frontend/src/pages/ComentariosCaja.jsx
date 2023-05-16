@@ -57,9 +57,9 @@ const CommentSection = () => {
                     Ben Yart{' '}
                     <span className="small">- Hace 2 horas</span>
                   </p>
-                  <Button variant="link" onClick={BotonResponder}>
-                    <i className="fas fa-reply fa-xs" /> Responder
-                  </Button>
+                  <Button className='green-color mt-2' onClick={BotonResponder}>
+                Responder
+              </Button>
                 </div>
                 <p className="small mb-0">
                   Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo
