@@ -10,3 +10,10 @@
     background-color: #1DB954; /* color verde de Spotify */
     border-color: #1DB954;
   }
+
+  .comentarios-container{
+    background-color:  white;
+    border-radius: 30px;
+    padding: 20px;
+  }
+

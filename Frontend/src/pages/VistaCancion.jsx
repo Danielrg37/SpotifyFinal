@@ -189,7 +189,7 @@ function VistaCancion() {
 
         <div class="row mt-5">
           <div class="col-8 ml-2">
-            <div class="info-container h-100">
+            <div class="info-container">
               <h2>Información</h2>
               <div class="estadisticas-container">
                 <div class="row">
@@ -226,10 +226,13 @@ function VistaCancion() {
                 </div>
               </div>
             </div>
+            <div class="col-12 mt-4">
+                  <CommentSection></CommentSection>
+                  </div>
           </div>
 
           <div class="col-4">
-            <div className='letra-container h-100'>
+            <div className='letra-container h-80'>
               <h2>Letra</h2>
               <div class="lyrics-container">
   <div class="lyrics-column">
@@ -278,9 +281,7 @@ function VistaCancion() {
 
         </div>
 
-        <div class="row mt-5">
-          <CommentSection></CommentSection>
-        </div>
+     
 
         <footer>
           <p class="float-end"><a href="#">Back to top</a></p>
