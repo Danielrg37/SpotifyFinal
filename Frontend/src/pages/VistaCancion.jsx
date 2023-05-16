@@ -10,6 +10,7 @@ import cheerio from 'cheerio';
 import { Doughnut } from 'react-chartjs-2';
 import { ProgressBar } from 'react-bootstrap';
 import Loader from './Loader';
+import CommentSection from './ComentariosCaja';
 
 
 
@@ -21,19 +22,6 @@ function VistaCancion() {
   const [albums, setAlbums] = useState([]);
   const [stats, setStats] = useState([]);
   const [letras, setLetras] = useState([]);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   const token = localStorage.getItem('token');
@@ -250,7 +238,7 @@ function VistaCancion() {
         </div>
 
       </div>
-
+<CommentSection></CommentSection>
       <footer>
         <p class="float-end"><a href="#">Back to top</a></p>
         <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
