@@ -79,10 +79,15 @@ function BarraBusqueda() {
   <div className="col-7 bg-dark artist-details">
     {artista.images && artista.images.length > 0 &&
       <>
-        <h2>{artista.name}</h2>
+        <div className="artist-name">
+          <h2>{artista.name}</h2>
+        </div>
         
         <ul>
-          <li><strong>Genre:</strong> {artista.genres[0]}</li>
+         <div className='artist-name'>
+          {artista.followers.total}
+          </div>
+
           <li><strong>Followers:</strong> {artista.followers.total}</li>
           <li><strong>Popularity:</strong> {artista.popularity}</li>
           <li><strong>Type:</strong> {artista.type}</li>
