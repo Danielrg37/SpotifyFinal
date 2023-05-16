@@ -1,3 +1,4 @@
+using System.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -7,16 +8,16 @@ namespace Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ArtistaController : ControllerBase
+    public class UsuarioController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public ArtistaController(IHttpClientFactory httpClientFactory)
+        public UsuarioController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
-        [HttpGet("{id}", Name = "Artista")]
+        [HttpGet("{id}", Name = "Usuario")]
         public async Task<IActionResult> Get(string id)
         {
             var httpClient = _httpClientFactory.CreateClient();
