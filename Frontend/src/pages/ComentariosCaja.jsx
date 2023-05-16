@@ -1,116 +1,150 @@
 import { useState } from 'react';
-import { Container, Row, Col, Card, Image, Button, Form } from 'react-bootstrap';
+import { Card, Image, Button, Form } from 'react-bootstrap';
 import React from 'react';
-import "./css/comentarios/comentarios.css";
+import ben from "./../img/ben.png";
+import fernando from "./../img/fernando.png";
 
 const CommentSection = () => {
-  const [replyText, setReplyText] = useState('');
-  const [showReplyForm, setShowReplyForm] = useState(false);
+  const [respuesta, setRespuesta] = useState('');
+  const [mostrarForm, setmostrarForm] = useState(false);
+  const [comentarios, setComentarios] = useState([]);
 
-  const handleReplyChange = (event) => {
-    setReplyText(event.target.value);
+  const ManejarRespuesta = (event) => {
+    setRespuesta(event.target.value);
   };
 
-  const handleReplySubmit = (event) => {
+  const AñadirRespuesta = (event) => {
     event.preventDefault();
-    // Perform any necessary actions with the reply text (e.g., send it to a server or update the state)
-    console.log('Reply:', replyText);
-    setReplyText('');
-    setShowReplyForm(false);
+    // Create a new comment object
+    const nuevoComentario = {
+      Escritor: 'Nombre', // Set the author of the comment here
+      Momento: new Date().toLocaleString(), // Set the timestamp of the comment
+      Comentario: respuesta, // Get the reply text from the state
+    };
+
+    // Update the comments state with the new comment
+    setComentarios([...comentarios, nuevoComentario]);
+
+    // Reset the reply text and hide the reply form
+    setRespuesta('');
+    setmostrarForm(false);
   };
 
-  const handleReplyButtonClick = () => {
-    setShowReplyForm(true);
+  const BotonResponder = () => {
+    setmostrarForm(true);
   };
 
+  
   return (
-    <Container>
-      <Row className="justify-content-center">
-        <Col md="12" lg="10" xl="8">
-          <Card>
-            <Card.Body>
-              <Card.Title>Nested comments section</Card.Title>
-
-              <div className="d-flex flex-start">
-                <Image
-                  className="rounded-circle shadow-1-strong me-3"
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp"
-                  alt="avatar"
-                  width="65"
-                  height="65"
+    <div className='cancion-container'>
+      <Card className='cancion-container'>
+        <Card.Body>
+          <h2 className="mb-3">Comentarios</h2>
+  
+          <div className="d-flex flex-start cancion-container">
+            <Image
+              className="rounded-circle shadow-1-strong me-3"
+              src={ben}
+              alt="avatar"
+              width="65"
+              height="65"
+            />
+  
+            <div className="flex-grow-1 flex-shrink-1 cancion-container">
+              <div>
+                <div className="d-flex justify-content-between align-items-center">
+                  <p className="mb-1">
+                    Ben Yart{' '}
+                    <span className="small">- Hace 2 horas</span>
+                  </p>
+                  <Button variant="link" onClick={BotonResponder}>
+                    <i className="fas fa-reply fa-xs" /> Responder
+                  </Button>
+                </div>
+                <p className="small mb-0">
+                  Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo
+                </p>
+              </div>
+            </div>
+          </div>
+  
+          {/* Nested comment */}
+          <div className="d-flex flex-start mt-4 cancion-container">
+            <Image
+              className="rounded-circle shadow-1-strong me-3"
+              src={fernando}
+              alt="avatar"
+              width="65"
+              height="65"
+            />
+  
+            <div className="flex-grow-1 flex-shrink-1">
+              <div>
+                <div className="d-flex justify-content-between align-items-center">
+                  <p className="mb-1">
+                    Lorem ipsum{' '}
+                    <span className="small">- Hace 3 horas</span>
+                  </p>
+                </div>
+                <p className="small mb-0">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, officia!
+                </p>
+              </div>
+            </div>
+          </div>
+          {/* End of nested comment */}
+  
+          {/* Reply form */}
+          {mostrarForm && (
+            <Form onSubmit={AñadirRespuesta}>
+              <Form.Group className="mt-4">
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Escribe aquí tu respuesta"
+                  value={respuesta}
+                  onChange={ManejarRespuesta}
                 />
-
-                <div className="flex-grow-1 flex-shrink-1">
-                  <div>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <p className="mb-1">
-                        Maria Smantha{' '}
-                        <span className="small">- 2 hours ago</span>
-                      </p>
-                      <Button variant="link" onClick={handleReplyButtonClick}>
-                        <i className="fas fa-reply fa-xs" /> reply
-                      </Button>
-                    </div>
-                    <p className="small mb-0">
-                      It is a long established fact that a reader will be
-                      distracted by the readable content of a page.
+              </Form.Group>
+              <Button className='green-color mt-2' type="submit">
+                Responder
+              </Button>
+            </Form>
+          )}
+          {/* End of reply form */}
+        </Card.Body>
+      </Card>
+  
+      {/* Display comments */}
+      {comentarios.map((comentario, index) => (
+        <Card className="mt-4 cancion-container" key={index}>
+          <Card.Body>
+            <div className="d-flex flex-start">
+              <Image
+                className="rounded-circle shadow-1-strong me-3"
+                src={ben}
+                alt="avatar"
+                width="65"
+                height="65"
+              />
+  
+              <div className="flex-grow-1 flex-shrink-1">
+                <div>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p className="mb-1">
+                      {comentario.Escritor} <span className="small">- {comentario.Momento}</span>
                     </p>
                   </div>
-
-                  {/* Nested comment */}
-                  <div className="d-flex flex-start mt-4">
-                    <Image
-                      className="rounded-circle shadow-1-strong me-3"
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp"
-                      alt="avatar"
-                      width="65"
-                      height="65"
-                    />
-
-                    <div className="flex-grow-1 flex-shrink-1">
-                      <div>
-                        <div className="d-flex justify-content-between align-items-center">
-                          <p className="mb-1">
-                            Simona Disa{' '}
-                            <span className="small">- 3 hours ago</span>
-                          </p>
+                  <p className="small mb-0">{comentario.Comentario}</p>
                         </div>
-                        <p className="small mb-0">
-                          letters, as opposed to using 'Content here, content
-                          here', making it look like readable English.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  {/* End of nested comment */}
-
-                  {/* Reply form */}
-                  {showReplyForm && (
-                    <Form onSubmit={handleReplySubmit}>
-                      <Form.Group className="mt-4">
-                        <Form.Control
-                          as="textarea"
-                          rows={3}
-                          placeholder="Write your reply"
-                          value={replyText}
-                          onChange={handleReplyChange}
-                        />
-                      </Form.Group>
-                      <Button variant="primary" type="submit">
-                        Submit
-                      </Button>
-                    </Form>
-                  )}
-                  {/* End of reply form */}
-                </div>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+                          </div>
+                          </div>
+                          </Card.Body>
+                          </Card>
+      ))}
+      {/* End of display comments */}
+        </div>
   );
-
 };
 
 export default CommentSection;
