@@ -7,24 +7,24 @@ namespace Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TopCancionesController : ControllerBase
+    public class HistorialRController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public TopCancionesController(IHttpClientFactory httpClientFactory)
+        public HistorialRController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
-        [HttpGet("{id}", Name = "TopCanciones")]
-        public async Task<IActionResult> Get(string id, string tiempo)
+        [HttpGet("{id}", Name = "Historialr")]
+        public async Task<IActionResult> Get(string id)
         {
             var httpClient = _httpClientFactory.CreateClient();
 
             var token = Request.Headers["X-Access-Token"];
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var url = $"https://api.spotify.com/v1/me/top/tracks?time_range={tiempo}&limit=51";
+            var url = $"https://api.spotify.com/v1/me/player/recently-played?limit=50";
             var response = await httpClient.GetAsync(url);
             var content = await response.Content.ReadAsStringAsync();
 
@@ -32,4 +32,3 @@ namespace Backend.Controllers
         }
     }
 }
-

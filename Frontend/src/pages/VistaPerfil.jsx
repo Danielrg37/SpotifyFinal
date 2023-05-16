@@ -123,7 +123,7 @@ function VistaPerfil() {
 
  
 
-    fetch('http://localhost:5272/api/artista', {
+    fetch('http://localhost:5120/Disco', {
         headers: {
           'X-Access-Token': localStorage.getItem('token')
         }
