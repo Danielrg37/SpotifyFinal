@@ -222,7 +222,7 @@ function VistaArtista() {
                             <div key={index} className="d-inline-block mx-2">
                                 <Link to={`/cancion/${cancion.id}`}>
                                     <img src={cancion?.album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
-                                    <p>{cancion.name}</p>
+                                    <h5>{cancion.name}</h5>
                                 </Link>
                             </div>
                         ))}
@@ -243,7 +243,7 @@ function VistaArtista() {
                                     <div key={index} className="d-inline-block mx-2">
                                         <Link to={`/disco/${album.id}`}>
                                             <img src={album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
-                                            <p>{album.name}</p>
+                                            <h5>{album.name}</h5>
                                         </Link>
                                     </div>
                                 ))}
