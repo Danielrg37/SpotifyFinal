@@ -220,9 +220,9 @@ function VistaArtista() {
                     <div className="col-12" style={{ overflowX: 'scroll', overflowY: 'hidden', whiteSpace: 'nowrap', height: '320px' }}>
                         {canciones.length > 0 && canciones.map((cancion, index) => (
                             <div key={index} className="d-inline-block mx-2">
-                                <Link to={`/cancion/${cancion.id}`}>
+                                <Link to={`/cancion/${cancion.id}`} className="custom-underline">
                                     <img src={cancion?.album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
-                                    <h5>{cancion.name}</h5>
+                                    <p style={{fontSize: '22px'}}>{cancion.name}</p>
                                 </Link>
                             </div>
                         ))}
@@ -241,9 +241,9 @@ function VistaArtista() {
                             <>
                                 {albums.map((album, index) => (
                                     <div key={index} className="d-inline-block mx-2">
-                                        <Link to={`/disco/${album.id}`}>
+                                        <Link to={`/disco/${album.id}`} className="custom-underline">
                                             <img src={album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
-                                            <h5>{album.name}</h5>
+                                            <p style={{fontSize: '22px'}}>{album.name}</p>
                                         </Link>
                                     </div>
                                 ))}

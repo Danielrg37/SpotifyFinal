@@ -223,7 +223,7 @@ function VistaPerfil() {
                             <Link to={`/cancion/${cancion.id}`}>
                                 {cancion.album && cancion.album.images && <img src={cancion.album.images[1]?.url} className="img-fluid" style={{ width: '250px', height: '250px' }} />}
                             </Link>
-                            <p style={{fontSize: '20px'}}>{cancion.name}</p>
+                            <p style={{fontSize: '22px'}}>{cancion.name}</p>
                         </div>
                     ))}
                 </div>
@@ -254,7 +254,7 @@ function VistaPerfil() {
                             <Link to={`/artista/${artista.id}`}>
                                 {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" style={{ width: '250px', height: '250px' }} />}
                             </Link>
-                            <p style={{fontSize: '20px'}}>{artista.name}</p>
+                            <p style={{fontSize: '22px'}}>{artista.name}</p>
                         </div>
                     ))}
                 </div>

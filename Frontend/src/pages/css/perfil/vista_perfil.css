@@ -63,3 +63,18 @@ h2{
     padding: 20px;
     color: white;
 }
+
+.gradient-container {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    transition: transform 0.5s ease-in-out; /* Add a smooth transition effect */
+  }
+  
+  .gradient-container > div {
+    flex-shrink: 0;
+    margin-right: 20px;
+  }
+  
+
+  
