@@ -83,7 +83,7 @@ function BarraBusqueda() {
           <h2>{artista.name}</h2>
         </div>
         
-        <ul>
+      
          <div className='artist-name'>
           {artista.followers.total}
           </div>
@@ -94,7 +94,7 @@ function BarraBusqueda() {
           <li><strong>Spotify URI:</strong> {artista.uri}</li>
           <li><strong>External URL:</strong> <a href={artista.external_urls.spotify}>{artista.external_urls.spotify}</a></li>
           <li><strong>ID:</strong> {artista.id}</li>
-        </ul>
+      
       </>
     }
   </div>

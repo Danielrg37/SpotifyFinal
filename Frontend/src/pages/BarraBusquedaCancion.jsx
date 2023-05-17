@@ -82,7 +82,7 @@ function BarraBusqueda() {
 
                    
                   {Object.keys(cancion).length > 0 &&
-                      <><h2>{cancion.album.name}</h2><ul>
+                      <><h2>{cancion.name}</h2><ul>
 
                         <li>Fecha de lanzamiento: {cancion.album.release_date}</li>
                     
