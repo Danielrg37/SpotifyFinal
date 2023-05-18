@@ -74,6 +74,25 @@ function VistaCancion() {
 
   console.log(stats);
 
+/*   useEffect(() => {
+    if (token) {
+      fetch(`http://localhost:5120/letras/${cancion.name}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer-ImT2ynhgjGOA_ktoe31opdJw0huxaFal8txUqK5Vjui_hgwES2ceLIlFDSNdAGP}}`,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          setLetras(data);
+        })
+        .catch(error => console.error(error));
+    }
+  }, [token]);
+ */
+/* 
   const songTitle = cancion.name;
   const GENIUS_KEY = '-ImT2ynhgjGOA_ktoe31opdJw0huxaFal8txUqK5Vjui_hgwES2ceLIlFDSNdAGP';
 
@@ -96,7 +115,7 @@ function VistaCancion() {
       })
   }, [songTitle]);
 
-  console.log(letras);
+  console.log(letras); */
 
 
 

@@ -127,7 +127,7 @@ function VistaPerfil() {
 
  
 
-    fetch('http://localhost:5120/artista/7sRtI3bMrrgSFkNs2jFHrl', {
+   /*  fetch('http://localhost:5120/artista/7sRtI3bMrrgSFkNs2jFHrl', {
         method: 'GET',
         headers: {
           'X-Access-Token': localStorage.getItem('token'),
@@ -136,7 +136,7 @@ function VistaPerfil() {
       })
       .then(response => response.json())
       .then(data => console.log(data))
-      .catch(error => console.error(error));
+      .catch(error => console.error(error)); */
     
 
       
