@@ -124,13 +124,16 @@ function VistaPerfil() {
  
 
     fetch('http://localhost:5120/Disco', {
+        mode: 'no-cors', // 'cors' by default
         headers: {
-          'X-Access-Token': localStorage.getItem('token')
+          'X-Access-Token': localStorage.getItem('token'),
+          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
         }
       })
       .then(response => response.json())
       .then(data => console.log(data))
       .catch(error => console.error(error));
+      
       
 
     const nombreUser = userData?.display_name;

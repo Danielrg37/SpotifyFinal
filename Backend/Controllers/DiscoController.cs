@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -7,6 +8,7 @@ namespace Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [DisableCors]
     public class DiscoController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;

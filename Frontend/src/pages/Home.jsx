@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import imagenBack from './../img/foto2.png';
 import imagen2 from './../img/foto3.png';
+import BarraNav from './BarraNav';
 
 function Home() {
     const [token, setToken] = useState("")
@@ -31,25 +32,7 @@ function Home() {
 
     return (
         <div class="container">
-            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    Placeholder
-                </a>
-                <ul class="nav nav-pills">
-                    <Button className="green-color" onClick={() => navigate('login2')}>
-                        Placeholder
-                    </Button>
-
-                    <Button className="green-color" onClick={() => navigate('perfil')}>
-                        Perfil rápido
-                    </Button>
-
-                    <Button className="green-color" onClick={() => navigate('admin')}>
-                        Admin rápido
-                    </Button>
-                </ul>
-
-            </header>
+           <BarraNav />
 
             <div className="containers_info">
                 <div class="row">

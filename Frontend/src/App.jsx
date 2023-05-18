@@ -14,6 +14,8 @@ import GalleryComponent from './pages/VistaGaleria'
 import VistaAdminArtista from './pages/VistaAdminArtista' 
 import VistaAdminCancion from './pages/VistaAdminCancion'
 import Loader from './pages/Loader'
+import BarraNav from './pages/BarraNav'
+import VistaAdminUsuario from './pages/VistaAdminUsuario'
 
 
 
@@ -57,6 +59,9 @@ function App() {
           <Route path = '/adminCancion' element={<VistaAdminCancion />} />
           <Route path = 'loader' element={<Loader />} />
           <Route path = 'nested' element={<CommentSection />} />
+          <Route path = 'nav' element={<BarraNav />} />
+          <Route path = '/adminUsuario' element={<VistaAdminUsuario />} />
+
          
         </Routes>
       </Router>

@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/admin/vista_admin.css';
 import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 
 function VistaArtista() {
 
@@ -29,7 +30,9 @@ function VistaArtista() {
 
                 <div class="col-12 text-center" id="datos">
                     <div className="grafico-container">
-                        <p>Placeholder</p>
+                    <Link to={`/adminUsuario`}>
+                    <p style={{fontSize: '22px'}}>Consultar usuarios</p>
+                    </Link>
                     </div>
                 </div>
 
@@ -56,7 +59,7 @@ function VistaArtista() {
             <div class="col-6 text-center" id="datos">
                     <div className="grafico-container">
                     <Link to={`/adminCancion`}>
-                        <p>Placeholder</p>
+                    <p style={{fontSize: '22px'}}>Consultar canción</p>
                   </Link>
                     </div>
                 </div>
@@ -64,24 +67,11 @@ function VistaArtista() {
                 <div class="col-6 text-center" id="datos">
                     <div className="grafico-container">
                     <Link to={`/adminArtista`}>
-                        <p>Placeholder</p>
+                    <p style={{fontSize: '22px'}}>Consultar artista</p>
                   </Link>
                     </div>
                 </div>
             </div>
-            
-            
-
-
-
-
-
-
-            <footer>
-                <p class="float-end"><a href="#">Back to top</a></p>
-                <p>Placeholder <a href="#">Placeholder</a> � <a href="#"></a></p>
-
-            </footer>
         </div>
     );
 }

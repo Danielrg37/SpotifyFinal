@@ -11,7 +11,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { ProgressBar } from 'react-bootstrap';
 import Loader from './Loader';
 import CommentSection from './ComentariosCaja';
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
 
 
