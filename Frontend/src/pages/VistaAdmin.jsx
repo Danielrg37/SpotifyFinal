@@ -38,22 +38,6 @@ function VistaArtista() {
 
             </div>
 
-
-            <div className="row mt-5">
-
-                <div class="col-6 text-center" id="datos">
-                    <div className="grafico-container">
-                        <p>Placeholder</p>
-                    </div>
-                </div>
-
-                <div class="col-6 text-center" id="datos">
-                    <div className="grafico-container">
-                        <p>Placeholder</p>
-                    </div>
-                </div>
-            </div>
-
             <div class="row mt-5">
                 
             <div class="col-6 text-center" id="datos">
