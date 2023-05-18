@@ -30,7 +30,7 @@ function VistaArtista() {
 
                 <div class="col-12 text-center" id="datos">
                     <div className="grafico-container">
-                    <Link to={`/adminUsuario`}>
+                    <Link to={`/adminUsuario`} className="custom-underline">
                     <p style={{fontSize: '22px'}}>Consultar usuarios</p>
                     </Link>
                     </div>
@@ -58,7 +58,7 @@ function VistaArtista() {
                 
             <div class="col-6 text-center" id="datos">
                     <div className="grafico-container">
-                    <Link to={`/adminCancion`}>
+                    <Link to={`/adminCancion`} className="custom-underline">
                     <p style={{fontSize: '22px'}}>Consultar canción</p>
                   </Link>
                     </div>
@@ -66,7 +66,7 @@ function VistaArtista() {
 
                 <div class="col-6 text-center" id="datos">
                     <div className="grafico-container">
-                    <Link to={`/adminArtista`}>
+                    <Link to={`/adminArtista`} className="custom-underline">
                     <p style={{fontSize: '22px'}}>Consultar artista</p>
                   </Link>
                     </div>

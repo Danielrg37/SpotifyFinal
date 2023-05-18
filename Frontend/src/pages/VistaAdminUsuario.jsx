@@ -10,8 +10,31 @@ function VistaAdminUsuario() {
     return (
         <div className="container">
             <BarraNav />
+            <div class="row mt-3">
+                <div class="col-12 text-center" id="datos">
+                    <div className="grafico-container">
 
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-6 text-center" id="datos">
+                        <div className="grafico-container">
+
+                        </div>
+                    </div>
+
+                    <div class="col-6 text-center" id="datos">
+                        <div className="grafico-container">
+
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
+        </div>
+
     )
 }
 
