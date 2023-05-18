@@ -27,6 +27,9 @@ function VistaPerfil() {
     }, []);
 
 
+  
+
+
     useEffect(() => {
         if (token) {
             fetch('https://api.spotify.com/v1/me',
@@ -124,7 +127,7 @@ function VistaPerfil() {
 
  
 
-    fetch('http://localhost:5120/artista', {
+    fetch('http://localhost:5120/artista/7sRtI3bMrrgSFkNs2jFHrl', {
         method: 'GET',
         headers: {
           'X-Access-Token': localStorage.getItem('token'),

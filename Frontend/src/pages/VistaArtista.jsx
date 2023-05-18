@@ -69,6 +69,27 @@ function VistaArtista() {
         }
     }, [token]);
 
+
+
+    useEffect(() => {
+        if (token) {
+            fetch(`http://localhost:5120/artista/${id}?si=c14fd7cce6ec4d59`, {
+                method: 'GET',
+                headers: {
+                  'X-Access-Token': localStorage.getItem('token'),
+                  'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                }
+              })
+              .then(response => response.json())
+              .then(data => {
+                setArtista(data);
+                });
+        }
+    }, [token]);
+
+    
+              
+/* 
     useEffect(() => {
         if (token) {
             fetch(`https://api.spotify.com/v1/artists/${id}?si=c14fd7cce6ec4d59`, {
@@ -81,7 +102,7 @@ function VistaArtista() {
                     setArtista(data);
                 });
         }
-    }, [token]);
+    }, [token]); */
 
     console.log(artista.name)
 

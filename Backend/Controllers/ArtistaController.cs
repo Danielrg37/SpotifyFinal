@@ -24,7 +24,7 @@ namespace Backend.Controllers
             var token = Request.Headers["X-Access-Token"];
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var url = $"https://api.spotify.com/v1/albums/{id}";
+            var url = $"https://api.spotify.com/v1/artists/{id}";
             var response = await httpClient.GetAsync(url);
             var content = await response.Content.ReadAsStringAsync();
 
