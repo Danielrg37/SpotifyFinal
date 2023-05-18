@@ -124,7 +124,7 @@ function VistaPerfil() {
 
  
 
-    fetch('http://localhost:5120/Disco', {
+    fetch('http://localhost:5120/disco', {
         method: 'GET',
         headers: {
           'X-Access-Token': localStorage.getItem('token'),
@@ -134,6 +134,8 @@ function VistaPerfil() {
       .then(response => response.json())
       .then(data => console.log(data))
       .catch(error => console.error(error));
+    
+
       
       
 
