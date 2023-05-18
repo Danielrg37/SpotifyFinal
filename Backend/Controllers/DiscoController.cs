@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Backend.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[disco]")]
     [DisableCors]
     public class DiscoController : ControllerBase
     {
@@ -29,6 +29,10 @@ namespace Backend.Controllers
             var url = $"https://api.spotify.com/v1/albums/{id}";
             var response = await httpClient.GetAsync(url);
             var content = await response.Content.ReadAsStringAsync();
+
+            Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:5173");
+            Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST");
+            Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
 
             return Ok(content);
         }

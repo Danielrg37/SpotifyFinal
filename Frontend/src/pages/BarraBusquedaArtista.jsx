@@ -63,7 +63,7 @@ function BarraBusqueda() {
               setSearchInput(event.target.value);
             }}
           />
-          <Button onClick={() => { }}>Buscar</Button>
+          <Button className="color-verde" onClick={() => { }}>Buscar</Button>
         </InputGroup>
         <div className="row mt-3">
           <div className='disco-container'>
@@ -71,32 +71,15 @@ function BarraBusqueda() {
             <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden' }}>
               <div className="row">
               <div className="row artist-container">
+
   <div className="col-5 bg-dark artist-image">
     {artista.images && artista.images.length > 0 &&
       <img src={artista.images[0].url} alt="Imagen del artista" />
     }
+
   </div>
   <div className="col-7 bg-dark artist-details">
-    {artista.images && artista.images.length > 0 &&
-      <>
-        <div className="artist-name">
-          <h2>{artista.name}</h2>
-        </div>
-        
-      
-         <div className='artist-name'>
-          {artista.followers.total}
-          </div>
-
-          <li><strong>Followers:</strong> {artista.followers.total}</li>
-          <li><strong>Popularity:</strong> {artista.popularity}</li>
-          <li><strong>Type:</strong> {artista.type}</li>
-          <li><strong>Spotify URI:</strong> {artista.uri}</li>
-          <li><strong>External URL:</strong> <a href={artista.external_urls.spotify}>{artista.external_urls.spotify}</a></li>
-          <li><strong>ID:</strong> {artista.id}</li>
-      
-      </>
-    }
+  
   </div>
 </div>
 

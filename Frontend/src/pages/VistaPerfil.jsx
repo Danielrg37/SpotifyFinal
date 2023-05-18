@@ -9,6 +9,7 @@ import { ButtonGroup } from 'react-bootstrap';
 import BarraBusqueda from './BarraBusquedaGlobal';
 import Loader from './Loader';
 import axios from 'axios';
+import BarraNav from './BarraNav';
 
 function VistaPerfil() {
     const [artistInfo, setArtistInfo] = useState(null);
@@ -124,7 +125,7 @@ function VistaPerfil() {
  
 
     fetch('http://localhost:5120/Disco', {
-        mode: 'no-cors', // 'cors' by default
+        method: 'GET',
         headers: {
           'X-Access-Token': localStorage.getItem('token'),
           'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
@@ -152,17 +153,9 @@ function VistaPerfil() {
           <Loader />
         ) : (
           <div className="container">
-            <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-              <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                Placeholder
-              </a>
-      
-              <ul className="nav nav-pills">
-                <Button className="green-color" onClick={() => navigate('/registro')}>
-                  Placeholder
-                </Button>
-              </ul>
-            </header>
+            <BarraNav />
+
+
       
             <div className="perfil-container">
               <div className="row">

@@ -64,7 +64,7 @@ function BarraBusqueda() {
               setSearchInput(event.target.value);
             }}
           />
-          <Button onClick={() => { }}>Buscar</Button>
+           <Button className="color-verde" onClick={() => { }}>Buscar</Button>
         </InputGroup>
         <div className="row mt-3">
           <div className='disco-container'>

@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import { Container } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import "./css/busqueda/busqueda.css";
+import BarraNav from './BarraNav';
 
 
 function VistaCancionC() {
@@ -126,7 +127,8 @@ function VistaCancionC() {
     };
 
     return (
-        <div className='app'>
+        <div className='container'>
+            <BarraNav />
             <Container>
                 <InputGroup className="mb-3" size="lg">
                     <FormControl
@@ -142,7 +144,7 @@ function VistaCancionC() {
                             setSearchInput(event.target.value);
                         }}
                     />
-                    <Button onClick={() => nuevaPlaylist()}>Buscar</Button>
+                    <Button className="color-verde" onClick={() => nuevaPlaylist()}>Buscar</Button>
                 </InputGroup>
                 <div className="row mt-3">
                     <div className='disco-container'>
@@ -160,7 +162,7 @@ function VistaCancionC() {
                                         {Object.keys(cancion).length > 0 && playlist_id &&
 
 
-<iframe src={`https://open.spotify.com/embed/playlist/${playlist_id}?show-tracklist=true`} width="100%" height="700" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<iframe src={`https://open.spotify.com/embed/playlist/${playlist_id}?show-tracklist=true`} width="100%" height="400" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
                                         }
 

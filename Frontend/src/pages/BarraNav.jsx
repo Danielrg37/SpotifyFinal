@@ -15,16 +15,23 @@ const navigate = useNavigate();
 
 if(!localStorage.getItem('token')){
 return (
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        Placeholder
+    <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" style={{ marginRight: 'auto' }}>
+      Placeholder
     </a>
-    <ul class="nav nav-pills">
-        <Button className="green-color" onClick={() => navigate('login')}>
-            Placeholder
-        </Button>
+    <ul className="nav nav-pills" style={{ marginLeft: 'auto' }}>
+      <Button className="green-color" onClick={() => navigate('login')}>
+        Placeholder
+      </Button>
     </ul>
-    </header>
+    <style>
+      {`@media (max-width: 767px) {
+        .nav-pills {
+          margin-left: 10px; /* Ajusta el valor según tus necesidades */
+        }
+      }`}
+    </style>
+  </header>
 )
 } else 
 return (

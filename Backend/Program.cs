@@ -28,6 +28,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAll"); // Apply the CORS policy globally and to all controllers and actions
+
 app.UseAuthorization();
 
 app.MapControllers();
