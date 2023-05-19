@@ -18,7 +18,25 @@ function VistaDisco() {
 
     const { id } = useParams();
 
-    useEffect(() => {
+ /*    useEffect(() => {
+        if (token) {
+            fetch(`http://localhost:5120/Disco/${id}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Origin": "http://localhost:5173"
+                }
+            })
+                .then(response => response.json())
+                .then(data => setDisco(data))
+                .catch(error => console.error(error));
+        }
+    }, [token]); */
+ 
+
+            
+
+   useEffect(() => {
         if (token) {
           fetch(`https://api.spotify.com/v1/albums/${id}?si=c14fd7cce6ec4d59`, {
             headers: {
@@ -35,8 +53,8 @@ function VistaDisco() {
           })
           .catch(error => console.error(error));
         }
-      }, [token]);
-      
+      }, [token]); 
+       
 
     useEffect(() => {
         if (token) {

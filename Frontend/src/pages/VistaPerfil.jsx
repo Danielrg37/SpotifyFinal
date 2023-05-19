@@ -9,6 +9,7 @@ import { ButtonGroup } from 'react-bootstrap';
 import BarraBusqueda from './BarraBusquedaGlobal';
 import Loader from './Loader';
 import axios from 'axios';
+import { useRef } from 'react';
 import BarraNav from './BarraNav';
 
 function VistaPerfil() {
@@ -149,6 +150,37 @@ function VistaPerfil() {
     console.log(topArtistas);
     console.log(topCanciones);
 
+ 
+        const iconsContainerRef = useRef(null);
+
+        const iconsContainerRef2 = useRef(null);
+      
+        const moverIconos1 = (direccion) => {
+          const container = iconsContainerRef.current;
+          const scrollCantidad = 350; // Adjust this value based on your desired scroll distance
+      
+          if (direccion === 'left') {
+            container.scrollLeft -= scrollCantidad;
+          } else if (direccion === 'right') {
+            container.scrollLeft += scrollCantidad;
+          }
+        };
+
+         
+        const moverIconos2 = (direccion) => {
+            const container = iconsContainerRef2.current;
+            const scrollCantidad = 350; // Adjust this value based on your desired scroll distance
+      
+          if (direccion === 'left') {
+            container.scrollLeft -= scrollCantidad;
+          } else if (direccion === 'right') {
+            container.scrollLeft += scrollCantidad;
+          }
+        };
+    
+
+    
+
     return (
         !userData || !topArtistas.length || !topCanciones.length || !historial.length ? (
           <Loader />
@@ -204,17 +236,17 @@ function VistaPerfil() {
                 </div>
                 <div className="col-auto">
                     <ButtonGroup>
-                        <button className="btn btn-outline-success rounded-pill">
+                        <button className="btn btn-outline-success rounded-pill" onClick={() => moverIconos1('left')}>
                             {'>'}
                         </button>
-                        <button className="btn btn-outline-success rounded-pill">
+                        <button className="btn btn-outline-success rounded-pill" onClick={() => moverIconos1('right')}>
                             {'<'}
                         </button>
                     </ButtonGroup>
                 </div>
             </div>
             <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap', height: '300px' }}>
-                <div class="gradient-container">
+                <div class="gradient-container" ref={iconsContainerRef}>
                     {topCanciones.map((cancion, index) => (
                         <div key={index} className="d-inline-block mx-2">
                             <Link to={`/cancion/${cancion.id}`}>
@@ -235,17 +267,17 @@ function VistaPerfil() {
                 </div>
                 <div className="col-auto">
                     <ButtonGroup>
-                        <button className="btn btn-outline-success rounded-pill">
+                        <button className="btn btn-outline-success rounded-pill" onClick={() => moverIconos2('left')}>
                             {'>'}
                         </button>
-                        <button className="btn btn-outline-success rounded-pill">
+                        <button className="btn btn-outline-success rounded-pill" onClick={() => moverIconso2('right')}>
                             {'<'}
                         </button>
                     </ButtonGroup>
                 </div>
             </div>
             <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap', height: '300px' }}>
-                <div class="gradient-container">
+                <div class="gradient-container" ref={iconsContainerRef2}>
                     {topArtistas.map((artista, index) => (
                         <div key={index} className="d-inline-block mx-2">
                             <Link to={`/artista/${artista.id}`}>

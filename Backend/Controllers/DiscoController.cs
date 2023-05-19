@@ -1,4 +1,3 @@
-/* using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -7,8 +6,7 @@ using System.Threading.Tasks;
 namespace Backend.Controllers
 {
     [ApiController]
-    [Route("[disco]")]
-    [DisableCors]
+    [Route("[controller]")]
     public class DiscoController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -26,16 +24,11 @@ namespace Backend.Controllers
             var token = Request.Headers["X-Access-Token"];
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var url = $"https://api.spotify.com/v1/albums/{id}";
+            var url = $"https://api.spotify.com/v1/albums/{id}?si=c14fd7cce6ec4d59";
             var response = await httpClient.GetAsync(url);
             var content = await response.Content.ReadAsStringAsync();
-
-            Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:5173");
-            Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST");
-            Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
 
             return Ok(content);
         }
     }
 }
- */
