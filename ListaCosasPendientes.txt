@@ -5,6 +5,7 @@ Controladores que revisar:
 -Letras
 -Eventos
 -TopCanciones / Eventos
+-Historial Repros
 
 -Cosas por hacer:
 

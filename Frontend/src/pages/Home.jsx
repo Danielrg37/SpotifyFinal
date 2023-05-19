@@ -14,6 +14,7 @@ function Home() {
     const [token, setToken] = useState("")
     const navigate = useNavigate();
 
+  
 
     useEffect(() => {
         const hash = window.location.hash

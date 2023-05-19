@@ -13,6 +13,9 @@ function BarraNav(){
 
 const navigate = useNavigate();
 
+
+
+
 if(!localStorage.getItem('token')){
 return (
     <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -48,6 +51,7 @@ return (
             Perfil rápido
         </Button>
 
+ 
         <Button className="green-color" onClick={() => navigate('admin')}>
             Admin rápido
         </Button>

@@ -27,22 +27,20 @@ function VistaPerfil() {
     }, []);
 
 
-  
-
-
     useEffect(() => {
         if (token) {
-            fetch('https://api.spotify.com/v1/me',
+            fetch(`http://localhost:5120/Perfil`,	
                 {
                     method: "GET", headers:
-                    {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then(response => response.json())
+                {
+                    'X-Access-Token': localStorage.getItem('token'),
+                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                }
+            }).then(response => response.json())
                 .then(data => {
                     console.log(data);
                     setUserData(data);
-                    // Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
+                    // Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta
                 });
         }
     }, [token]);
@@ -109,7 +107,7 @@ function VistaPerfil() {
         }
     }, [token]);
 
-
+    
     useEffect(() => {
         if (token) {
             fetch("https://api.spotify.com/v1/me/player/recently-played?limit=50", {
@@ -125,22 +123,20 @@ function VistaPerfil() {
         }
     }, [token]);
 
- 
 
-   /*  fetch('http://localhost:5120/artista/7sRtI3bMrrgSFkNs2jFHrl', {
-        method: 'GET',
-        headers: {
-          'X-Access-Token': localStorage.getItem('token'),
-          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+   /*  useEffect(() => {
+        if (token) {
+            fetch("http://localhost:5120/HistorialR", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Origin": "http://localhost:5173"
+                }
+            })
+                .then(response => response.json())
+                .then(data => setHistorial(data));
         }
-      })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error)); */
-    
-
-      
-      
+    }, [token]); */
 
     const nombreUser = userData?.display_name;
 
