@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -9,32 +10,57 @@ namespace Backend.Controllers
     [Route("[controller]")]
     public class LetrasController : ControllerBase
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _geniusApiToken = "-ImT2ynhgjGOA_ktoe31opdJw0huxaFal8txUqK5Vjui_hgwES2ceLIlFDSNdAGP";
 
-        public LetrasController(IHttpClientFactory httpClientFactory)
+        [HttpGet("{songName}/{artistName}", Name = "Letras")]
+        public async Task<IActionResult> Get(string songName, string artistName)
         {
-            _httpClientFactory = httpClientFactory;
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _geniusApiToken);
+
+            var searchUrl = $"https://api.genius.com/search?q={Uri.EscapeDataString(songName)} {Uri.EscapeDataString(artistName)}";
+            var searchResponse = await httpClient.GetAsync(searchUrl);
+            var searchContent = await searchResponse.Content.ReadAsStringAsync();
+
+            var songUrl = ObtenerUrlLetraCancionDesdeRespuestaBusqueda(searchContent, songName, artistName);
+
+            if (!string.IsNullOrEmpty(songUrl))
+            {
+                var lyricsUrl = $"{songUrl}/lyrics";
+                var lyricsResponse = await httpClient.GetAsync(lyricsUrl);
+                var lyricsContent = await lyricsResponse.Content.ReadAsStringAsync();
+
+                dynamic lyricsJson = Newtonsoft.Json.JsonConvert.DeserializeObject(lyricsContent);
+                var lyrics = lyricsJson.response.lyrics.body.ToString();
+
+                return Ok(lyrics);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
-        [HttpGet("{id}", Name = "Letras")]
-        public async Task<IActionResult> Get(string id)
+        private string ObtenerUrlLetraCancionDesdeRespuestaBusqueda(string searchResponse, string songName, string artistName)
         {
-            var httpClient = _httpClientFactory.CreateClient();
+            dynamic jsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(searchResponse);
+            var hits = jsonResponse.response.hits;
 
-            var token = Request.Headers["X-Access-Token"];
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            foreach (var hit in hits)
+            {
+                var result = hit.result;
+                var resultSongName = result.title.ToString();
+                var resultArtistName = result.primary_artist.name.ToString();
 
-            
+                if (string.Equals(resultSongName, songName, StringComparison.OrdinalIgnoreCase) &&
+                    string.Equals(resultArtistName, artistName, StringComparison.OrdinalIgnoreCase))
+                {
+                    var songUrl = result.url.ToString();
+                    return songUrl;
+                }
+            }
 
-            var url = $"https://api.genius.com/search?q={id}";
-            var response = await httpClient.GetAsync(url);
-            var content = await response.Content.ReadAsStringAsync();
-            
-
-
-
-            
-            return Ok(content);
+            return null;
         }
     }
 }

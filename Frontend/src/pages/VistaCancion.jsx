@@ -29,6 +29,8 @@ function VistaCancion() {
   const embedUrl = `https://open.spotify.com/embed/track/${id}`;
 
 
+
+
   useEffect(() => {
     if (token) {
       fetch(`https://api.spotify.com/v1/tracks/${id}?si=c14fd7cce6ec4d59`, {
@@ -74,12 +76,11 @@ function VistaCancion() {
 
   console.log(stats);
 
-/*   useEffect(() => {
-    if (token) {
-      fetch(`http://localhost:5120/letras/${cancion.name}`, {
+  useEffect(() => {
+    if (cancion.name) {
+      fetch(`http://localhost:5120/letras/${encodeURIComponent(cancion.name)}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer-ImT2ynhgjGOA_ktoe31opdJw0huxaFal8txUqK5Vjui_hgwES2ceLIlFDSNdAGP}}`,
           'Content-Type': 'application/json',
         },
       })
@@ -90,8 +91,8 @@ function VistaCancion() {
         })
         .catch(error => console.error(error));
     }
-  }, [token]);
- */
+  }, [token, cancion.name]);
+ 
 /* 
   const songTitle = cancion.name;
   const GENIUS_KEY = '-ImT2ynhgjGOA_ktoe31opdJw0huxaFal8txUqK5Vjui_hgwES2ceLIlFDSNdAGP';
@@ -129,7 +130,7 @@ function VistaCancion() {
 
 
 
-
+  console.log(letras);
 
   return (
     !cancion && !cancion.album && !cancion.album.images ? (
