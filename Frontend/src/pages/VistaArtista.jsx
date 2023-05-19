@@ -143,7 +143,7 @@ function VistaArtista() {
         fetchImages();
     }, [artista.name]);
 
-    useEffect(() => {
+   /*  useEffect(() => {
         async function fetchDescripcion() {
             if (artista && artista.name) {
                 const url = `https://www.last.fm/es/music/${encodeURIComponent(
@@ -180,10 +180,13 @@ function VistaArtista() {
         //invoke async function to fetch images
         fetchDescripcion();
     }, [artista.name]);
+ */
+
+/* 
 
     useEffect(() => {
         if (artista.name) {
-            fetch(`http://localhost:5120/artista/${artista.name}/noticias`, {
+            fetch(`http://localhost:5120/eventos/${artista.name}`, {
                 method: 'GET',
                 headers: {
                     'X-Access-Token': localStorage.getItem('token'),
@@ -192,12 +195,33 @@ function VistaArtista() {
             })
                 .then(response => response.json())
                 .then(data => {
-                    setNoticias(data);
+                    setEventos(data);
                 }
                 )
         }
     }, [artista.name]);
+ */
 
+
+
+    
+   /*  useEffect(() => {
+        if (artista.name) {
+            fetch(`http://localhost:5120/descripcion/${artista.name}`, {
+                method: 'GET',
+                headers: {
+                    'X-Access-Token': localStorage.getItem('token'),
+                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setDescripcion(data);
+                }
+                )
+        }
+    }, [artista.name]);
+ */
 
 
 
@@ -209,6 +233,7 @@ function VistaArtista() {
     console.log(canciones);
     console.log(noticias);
     console.log(descripcion);
+
 
 
 
