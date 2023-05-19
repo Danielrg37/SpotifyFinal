@@ -22,6 +22,25 @@ function VistaTotalCanciones() {
     const handleTiempoChange = (nuevoTiempo) => { setTiempo(nuevoTiempo); };
 
 
+ /*    useEffect(() => {
+        if (token) {
+       fetch(`http://localhost:5120/TopCanciones?tiempo=${tiempo}`,
+            {
+                method: "GET", headers:
+                {
+                    headers: {
+                        'X-Access-Token': localStorage.getItem('token'),
+                        'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                    }
+                }
+            }).then(response => response.json())
+            .then(data => {
+                setTopCanciones(data.items);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta
+            });
+    }
+}, [token, tiempo]); */
+
+
 
     useEffect(() => {
         if (token) {

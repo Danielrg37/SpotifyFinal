@@ -17,7 +17,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}", Name = "TopArtistas")]
-        public async Task<IActionResult> Get(string id, string tiempo)
+        public async Task<IActionResult> Get(string tiempo)
         {
             var httpClient = _httpClientFactory.CreateClient();
 

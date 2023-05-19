@@ -1,17 +1,16 @@
 
-Cosas pendientes:
 
-MAXIMA PRIORIDAD
--Juntar frontend con Backend (Preferiblemente Spring.js)
- 
-PRIORIDAD MEDIA (AHORA MISMO)
--Implementar el login y registro con el Backend
--Unir las cuentas del Backend con las del Frontend
--Implementar el sistema de roles y permisos
--Implementar API de noticias y de letras
+Controladores que revisar:
 
-MINIMA PRIORIDAD
--Hacer vistas de crear Playlist y de admin
+-Letras
+-Eventos
+-TopCanciones / Eventos
 
-PA EL FINAL
--Hacer webs responsive y mejorar quizás estética
+-Cosas por hacer:
+
+-Mudar fetches a backend y añadir algún controller
+-Hacer funcionar los de arriba
+-Mejorar zona Admin
+-Gestión usuarios
+-Roles y permisos
+
