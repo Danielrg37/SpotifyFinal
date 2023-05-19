@@ -157,7 +157,7 @@ function VistaPerfil() {
       
         const moverIconos1 = (direccion) => {
           const container = iconsContainerRef.current;
-          const scrollCantidad = 350; // Adjust this value based on your desired scroll distance
+          const scrollCantidad = 275; // Adjust this value based on your desired scroll distance
       
           if (direccion === 'left') {
             container.scrollLeft -= scrollCantidad;
@@ -169,7 +169,7 @@ function VistaPerfil() {
          
         const moverIconos2 = (direccion) => {
             const container = iconsContainerRef2.current;
-            const scrollCantidad = 350; // Adjust this value based on your desired scroll distance
+            const scrollCantidad = 275; // Adjust this value based on your desired scroll distance
       
           if (direccion === 'left') {
             container.scrollLeft -= scrollCantidad;
@@ -270,7 +270,7 @@ function VistaPerfil() {
                         <button className="btn btn-outline-success rounded-pill" onClick={() => moverIconos2('left')}>
                             {'>'}
                         </button>
-                        <button className="btn btn-outline-success rounded-pill" onClick={() => moverIconso2('right')}>
+                        <button className="btn btn-outline-success rounded-pill" onClick={() => moverIconos2('right')}>
                             {'<'}
                         </button>
                     </ButtonGroup>
