@@ -10,7 +10,13 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 10px;
+    background-color: #1DB954;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
   }
+
+
 
   .imagen-0 {
     grid-column: span 2;
@@ -80,4 +86,20 @@
     width: 100%;
     height: auto;
     grid-row: span 2;
+  }
+
+
+  .eventos-container{
+    background-color:    #F7F7F7;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+  }
+  
+  .eventos-container p {
+    color: #121212;
+  }
+
+  .eventos-container h1 {
+    color: #121212;
   }

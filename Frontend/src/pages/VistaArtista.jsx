@@ -27,17 +27,17 @@ function VistaArtista() {
     const [textoCortado, setTextoCortado] = useState([]);
 
 
- /*      // Función para cortar el texto después de 100 caracteres
-  const truncateText = (text) => {
-    const truncated = text.substring(0, 100);
-    return truncated + "...";
-  }
+    /*      // Función para cortar el texto después de 100 caracteres
+     const truncateText = (text) => {
+       const truncated = text.substring(0, 100);
+       return truncated + "...";
+     }
+   
+     // Función para mostrar el texto completo
+     const showFullText = () => {
+       setIsTextTruncated(false);
+     } */
 
-  // Función para mostrar el texto completo
-  const showFullText = () => {
-    setIsTextTruncated(false);
-  } */
-  
     const token = localStorage.getItem('token');
     const { id } = useParams();
 
@@ -76,25 +76,8 @@ function VistaArtista() {
             fetch(`http://localhost:5120/artista/${id}?si=c14fd7cce6ec4d59`, {
                 method: 'GET',
                 headers: {
-                  'X-Access-Token': localStorage.getItem('token'),
-                  'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-                }
-              })
-              .then(response => response.json())
-              .then(data => {
-                setArtista(data);
-                });
-        }
-    }, [token]);
-
-    
-              
-/* 
-    useEffect(() => {
-        if (token) {
-            fetch(`https://api.spotify.com/v1/artists/${id}?si=c14fd7cce6ec4d59`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
+                    'X-Access-Token': localStorage.getItem('token'),
+                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
                 }
             })
                 .then(response => response.json())
@@ -102,7 +85,24 @@ function VistaArtista() {
                     setArtista(data);
                 });
         }
-    }, [token]); */
+    }, [token]);
+
+
+
+    /* 
+        useEffect(() => {
+            if (token) {
+                fetch(`https://api.spotify.com/v1/artists/${id}?si=c14fd7cce6ec4d59`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        setArtista(data);
+                    });
+            }
+        }, [token]); */
 
     console.log(artista.name)
 
@@ -166,19 +166,41 @@ function VistaArtista() {
                 //get all image URLs and add them to an array
                 let descriptions = "";
                 let container = $('.wiki-content');
-               container.find('p').each((i, element) => {
+                container.find('p').each((i, element) => {
                     descriptions += $(element).text() + " "; // concatenar el texto de cada elemento <p> en la variable descriptions
                 });
 
 
                 //set state with array of image URLs
                 setDescripcion(descriptions);
+
             }
         }
 
         //invoke async function to fetch images
         fetchDescripcion();
     }, [artista.name]);
+
+    useEffect(() => {
+        if (artista.name) {
+            fetch(`http://localhost:5120/artista/${artista.name}/noticias`, {
+                method: 'GET',
+                headers: {
+                    'X-Access-Token': localStorage.getItem('token'),
+                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setNoticias(data);
+                }
+                )
+        }
+    }, [artista.name]);
+
+
+
+
 
     console.log(imagenes);
 
@@ -188,37 +210,37 @@ function VistaArtista() {
     console.log(noticias);
     console.log(descripcion);
 
-   
+
 
 
     return (
-        !token && !artista || !albums && !canciones && !imagenes  ? (
+        !token && !artista || !albums && !canciones && !imagenes ? (
             <Loader />
         ) : (
-        <div className="container">
-            <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    Placeholder
-                </a>
-
-                <ul className="nav nav-pills">
-                    <Button className="green-color" onClick={() => navigate('/registro')}>
+            <div className="container">
+                <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+                    <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         Placeholder
-                    </Button>
-                </ul>
-            </header>
+                    </a>
 
-            <div className='artista-container'>
-                <div className="row">
-                    <div className="col-4">
-                        <img src={artista?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" style={{ width: '250px', height: '250px' }} />
+                    <ul className="nav nav-pills">
+                        <Button className="green-color" onClick={() => navigate('/registro')}>
+                            Placeholder
+                        </Button>
+                    </ul>
+                </header>
+
+                <div className='artista-container'>
+                    <div className="row">
+                        <div className="col-4">
+                            <img src={artista?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" style={{ width: '250px', height: '250px' }} />
+                        </div>
+                        <div className="col-8">
+                            <h1>{artista.name}</h1>
+                            <p>{descripcion}</p>
+                        </div>
                     </div>
-                    <div className="col-8">
-                        <h1>{artista.name}</h1>
-                        <p>{descripcion}</p>
-                    </div>
-                </div>
-                {/* <div class="row mt-3">
+                    {/* <div class="row mt-3">
                     <div class="col-md-4 text-center" id="datos">
                         <h4>Veces reproducido</h4>
                         <p>Placeholder</p>
@@ -232,111 +254,123 @@ function VistaArtista() {
                         <p>Placeholder</p>
                     </div>
                 </div> */}
-            </div>
+                </div>
 
-            <div className="canciones-container mt-4 mb-4">
-                <div class="row mt-3">
+                <div className="canciones-container mt-4 mb-4">
+                    <div class="row mt-3">
 
-                    <h1>Canciones más famosas</h1>
-                    <div className="col-12" style={{ overflowX: 'scroll', overflowY: 'hidden', whiteSpace: 'nowrap', height: '320px' }}>
-                        {canciones.length > 0 && canciones.map((cancion, index) => (
-                            <div key={index} className="d-inline-block mx-2">
-                                <Link to={`/cancion/${cancion.id}`} className="custom-underline">
-                                    <img src={cancion?.album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
-                                    <p style={{fontSize: '22px'}}>{cancion.name}</p>
-                                </Link>
-                            </div>
-                        ))}
+                        <h1>Canciones más famosas</h1>
+                        <div className="col-12" style={{ overflowX: 'scroll', overflowY: 'hidden', whiteSpace: 'nowrap', height: '320px' }}>
+                            {canciones.length > 0 && canciones.map((cancion, index) => (
+                                <div key={index} className="d-inline-block mx-2">
+                                    <Link to={`/cancion/${cancion.id}`} className="custom-underline">
+                                        <img src={cancion?.album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
+                                        <p style={{ fontSize: '22px' }}>{cancion.name}</p>
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-3">
+                        <h1>Discos</h1>
+                        <div className="col-12" style={{ overflowX: 'scroll', overFlowY: 'hidden', whiteSpace: 'nowrap', height: '320px' }}>
+                            {albums.length === 0 ? (
+                                <div style={{ textAlign: 'center', marginTop: '5rem' }}>
+                                    <h1 style={{ fontSize: '3rem', fontWeight: 'bold', color: '#555' }}>No hay discos</h1>
+                                </div>
+                            ) : (
+                                <>
+                                    {albums.map((album, index) => (
+                                        <div key={index} className="d-inline-block mx-2">
+                                            <Link to={`/disco/${album.id}`} className="custom-underline">
+                                                <img src={album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
+                                                <p style={{ fontSize: '22px' }}>{album.name}</p>
+                                            </Link>
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+
+                        </div>
                     </div>
                 </div>
 
+                <div className="row mt-3">
+                    <div>
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <div className='fotos-container'>
+                                    <div class="col-12">
+                                        <Container>
+                                            <h2>Galería</h2>
+                                            <Row>
+                                                {imagenes.length === 0 ? (
+                                                    <div mt-5 style={{ textAlign: 'center' }}>
+                                                        <h1 className="mt-4" style={{ fontSize: '3rem', fontWeight: 'bold', color: '#555' }}>No hay fotos</h1>
+                                                    </div>
+                                                ) : (
+                                                    imagenes.slice(0, 6).map((imagen, index) => (
+                                                        <Col md={6} key={index}>
+                                                            <img src={imagen} alt={`Imagen ${index}`} className="img-fluid" />
+                                                        </Col>
+                                                    ))
+                                                )}
+                                            </Row>
 
-                <div class="row mt-3">
-                    <h1>Discos</h1>
-                    <div className="col-12" style={{ overflowX: 'scroll', overFlowY: 'hidden', whiteSpace: 'nowrap', height: '320px' }}>
-                        {albums.length === 0 ? (
-                            <div style={{ textAlign: 'center', marginTop: '5rem' }}>
-                                <h1 style={{ fontSize: '3rem', fontWeight: 'bold', color: '#555' }}>No hay discos</h1>
-                            </div>
-                        ) : (
-                            <>
-                                {albums.map((album, index) => (
-                                    <div key={index} className="d-inline-block mx-2">
-                                        <Link to={`/disco/${album.id}`} className="custom-underline">
-                                            <img src={album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
-                                            <p style={{fontSize: '22px'}}>{album.name}</p>
-                                        </Link>
+                                        </Container>
+                                        <Link to={`/galeria/${artista.id}`}><button className="btn btn-outline-dark rounded-pill w-100 mt-3" disabled={imagenes.length === 0}> {'Ver más'} </button> </Link>
                                     </div>
-                                ))}
-                            </>
-                        )}
+                                </div>
+                            </div>
 
-                    </div>
-                </div>
-            </div>
 
-            <div className="row mt-3">
-                <div>
-                    <div class="row">
-                        <div class="col-md-6 text-center">
-                            <div className='fotos-container'>
-                                <div class="col-12">
-                                    <Container>
-                                        <h2>Galería</h2>
-                                        <Row>
-                                            {imagenes.length === 0 ? (
-                                                <div mt-5 style={{ textAlign: 'center' }}>
-                                                    <h1 className="mt-4" style={{ fontSize: '3rem', fontWeight: 'bold', color: '#555' }}>No hay fotos</h1>
-                                                </div>
-                                            ) : (
-                                                imagenes.slice(0, 6).map((imagen, index) => (
-                                                    <Col md={6} key={index}>
-                                                        <img src={imagen} alt={`Imagen ${index}`} className="img-fluid" />
-                                                    </Col>
-                                                ))
-                                            )}
-                                        </Row>
 
-                                    </Container>
-                                    <Link to={`/galeria/${artista.id}`}><button className="btn btn-outline-dark rounded-pill w-100 mt-3" disabled={imagenes.length === 0}> {'Ver más'} </button> </Link>
+                            <div class="col-md-6 text-center">
+                                <div className='noticias-container'>
+                                    <h1 style={{ textAlign: "left" }}>Noticias</h1>
+
+                                    <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 1</h4>
+                                    <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                                    <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 2</h4>
+                                    <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                                    <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 3</h4>
+                                    <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
+                                    <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 4</h4>
+                                    <p style={{ borderBottom: '1px solid white', marginBottom: "20px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
                                 </div>
                             </div>
                         </div>
-
-
-
-                        <div class="col-md-6 text-center">
-                            <div className='noticias-container'>
-                                <h1 style={{ textAlign: "left" }}>Noticias</h1>
-
-                                <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 1</h4>
-                                <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                                <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 2</h4>
-                                <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                                <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 3</h4>
-                                <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                                <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 4</h4>
-                                <p style={{ borderBottom: '1px solid white', marginBottom: "20px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
+
+                <div className="row mt-4">
+                    <div className="col-12">
+                        <div className="eventos-container">
+
+                            <h1>Eventos</h1>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <footer>
+                    <p class="float-end"><a href="#">Back to top</a></p>
+                    <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
+
+                </footer>
             </div>
+        ));
 
-
-
-
-
-
-
-
-            <footer>
-                <p class="float-end"><a href="#">Back to top</a></p>
-                <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
-
-            </footer>
-        </div>
-    ));
 }
 
 export default VistaArtista;
