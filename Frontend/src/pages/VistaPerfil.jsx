@@ -12,6 +12,7 @@ import axios from 'axios';
 import { useRef } from 'react';
 import BarraNav from './BarraNav';
 
+
 function VistaPerfil() {
     const [artistInfo, setArtistInfo] = useState(null);
     const [token, setToken] = useState(null);
@@ -232,14 +233,14 @@ function VistaPerfil() {
                     <h1>Top Canciones</h1>
                 </div>
                 <div className="col-auto">
-                    <Link to={`/totalCanciones`}> <button className="btn btn-outline-success rounded-pill w-100"> {'Ver más'} </button> </Link>
+                    <Link to={`/totalCanciones`}> <button className="btn btn-outline-success rounded-pill w-100" style={{height: '40px'}}> {'Ver más'} </button> </Link>
                 </div>
                 <div className="col-auto">
                     <ButtonGroup>
-                        <button className="btn btn-outline-success rounded-pill" onClick={() => moverIconos1('left')}>
+                        <button className="btn btn-outline-success rounded-pill" style={{height: '40px'}} onClick={() => moverIconos1('left')}>
                             {'>'}
                         </button>
-                        <button className="btn btn-outline-success rounded-pill" onClick={() => moverIconos1('right')}>
+                        <button className="btn btn-outline-success rounded-pill" style={{height: '40px'}} onClick={() => moverIconos1('right')}>
                             {'<'}
                         </button>
                     </ButtonGroup>
@@ -263,21 +264,22 @@ function VistaPerfil() {
                     <h1>Top Artistas</h1>
                 </div>
                 <div className="col-auto">
-                    <Link to={`/totalArtistas`}> <button className="btn btn-outline-success rounded-pill w-100"> {'Ver más'} </button> </Link>
+                    <Link to={`/totalArtistas`}> <button className="btn btn-outline-success rounded-pill w-100" style={{height: '40px'}}> {'Ver más'} </button> </Link>
                 </div>
                 <div className="col-auto">
                     <ButtonGroup>
-                        <button className="btn btn-outline-success rounded-pill" onClick={() => moverIconos2('left')}>
+                        <button className="btn btn-outline-success rounded-pill" style={{height: '40px'}} onClick={() => moverIconos2('left')}>
                             {'>'}
                         </button>
-                        <button className="btn btn-outline-success rounded-pill" onClick={() => moverIconos2('right')}>
+                        <button className="btn btn-outline-success rounded-pill" style={{height: '40px'}} onClick={() => moverIconos2('right')}>
                             {'<'}
                         </button>
                     </ButtonGroup>
                 </div>
             </div>
             <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap', height: '300px' }}>
-                <div class="gradient-container" ref={iconsContainerRef2}>
+
+  <div className="gradient-container" ref={iconsContainerRef2} >
                     {topArtistas.map((artista, index) => (
                         <div key={index} className="d-inline-block mx-2">
                             <Link to={`/artista/${artista.id}`}>
