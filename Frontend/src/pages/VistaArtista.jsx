@@ -182,7 +182,7 @@ function VistaArtista() {
     }, [artista.name]);
  */
 
-/* 
+ 
 
     useEffect(() => {
         if (artista.name) {
@@ -200,7 +200,7 @@ function VistaArtista() {
                 )
         }
     }, [artista.name]);
- */
+ 
 
 
 
@@ -286,14 +286,14 @@ function VistaArtista() {
 
                         <h1>Canciones más famosas</h1>
                         <div className="col-12" style={{ overflowX: 'scroll', overflowY: 'hidden', whiteSpace: 'nowrap', height: '320px' }}>
-                            {canciones.length > 0 && canciones.map((cancion, index) => (
+                             {canciones.length > 0 && canciones.map((cancion, index) => (
                                 <div key={index} className="d-inline-block mx-2">
                                     <Link to={`/cancion/${cancion.id}`} className="custom-underline">
                                         <img src={cancion?.album?.images?.[1]?.url} alt={`Canción ${index}`} className="img-fluid" width={250} height={250} />
                                         <p style={{ fontSize: '22px' }}>{cancion.name}</p>
                                     </Link>
                                 </div>
-                            ))}
+                            ))}  
                         </div>
                     </div>
 

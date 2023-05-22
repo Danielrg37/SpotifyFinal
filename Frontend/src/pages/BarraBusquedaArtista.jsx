@@ -91,7 +91,7 @@ function BarraBusqueda() {
             </div>
           </div>
         </div>
-        {searchInput !== "" && <VistaArtista id={event.target.value}></VistaArtista>}
+        {searchInput !== "" && <VistaArtista id={searchInput[0].id}></VistaArtista>}
 
       </Container>
 

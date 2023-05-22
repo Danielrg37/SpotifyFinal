@@ -58,7 +58,7 @@ function Home() {
   
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-2">
                         <h1>Consulta tus tops de Spotify</h1>
                         <p>¿Quieres saber cuáles son tus canciones y artistas más escuchados en Spotify? Aquí podrás acceder a esta información de forma fácil y rápida.</p>
                         <h1 className='mt-5'>Obten más información de tus artistas y canciones favoritos</h1>
