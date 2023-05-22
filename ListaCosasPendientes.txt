@@ -5,7 +5,6 @@ Controladores que revisar:
 -Letras
 -Eventos
 -TopCanciones / Eventos
--Historial Repros
 
 
 
@@ -18,7 +17,7 @@ Controladores que revisar:
 -Hacer funcionar los de arriba
 
 (Estimación de esto: 3 días)
--Mejorar zona Admin
+-Mejorar zona Admin 1/3 hecho o 2/4
 
 (Estimación de esto: 3-4 días)
 -Gestión usuarios

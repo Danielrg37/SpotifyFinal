@@ -54,7 +54,7 @@ function VistaPerfil() {
 
 
     const [topCanciones, setTopCanciones] = useState([]);
-    const [lastOrderedSongs, setLastOrderedSongs] = useState([]);
+    
     
     useEffect(() => {
       if (token) {
@@ -66,15 +66,9 @@ function VistaPerfil() {
         }).then(response => response.json())
           .then(data => {
             setTopCanciones(data.items);
-            const orderedSongs = data.items.sort((a, b) => b.played_at.localeCompare(a.played_at)); // ordenar canciones por fecha de escucha
-            if (JSON.stringify(orderedSongs) !== JSON.stringify(lastOrderedSongs)) { // comparar con lista previa
-              setTopCanciones(lastOrderedSongs); // mantener orden previo
-            } else {
-              setLastOrderedSongs(orderedSongs); // actualizar lista previa
-            }
-          });
+            }); 
       }
-    }, [token, tiempo, lastOrderedSongs]);
+    }, [token, tiempo]);
     
 
 
@@ -109,45 +103,31 @@ function VistaPerfil() {
         }
     }, [token]);
 
-    
-    useEffect(() => {
-        if (token) {
-            fetch("https://api.spotify.com/v1/me/player/recently-played?limit=50", {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    setHistorial(data.items);
-                });
-        }
-    }, [token]);
 
-
-   /*  useEffect(() => {
+     useEffect(() => {
         if (token) {
             fetch("http://localhost:5120/HistorialR", {
                 method: "GET",
                 headers: {
-                    "Authorization": `Bearer ${token}`,
+                    'X-Access-Token': localStorage.getItem('token'),
                     "Origin": "http://localhost:5173"
                 }
             })
                 .then(response => response.json())
-                .then(data => setHistorial(data));
-        }
-    }, [token]); */
+                .then(data => setHistorial(data.items));
 
+        }
+    }, [token]); 
+ 
     const nombreUser = userData?.display_name;
 
     console.log("La petición se ha realizado.");
     console.log(`Bearer ${token}`);
-
+ 
 
 
     console.log(userData); // muestra toda la información del usuario
+    console.log(historial);
     console.log(topArtistas);
     console.log(topCanciones);
 
@@ -183,8 +163,8 @@ function VistaPerfil() {
     
 
     return (
-        !userData || !topArtistas.length || !topCanciones.length || !historial.length ? (
-          <Loader />
+        !userData ? (
+            <Loader />
         ) : (
           <div className="container">
             <BarraNav />

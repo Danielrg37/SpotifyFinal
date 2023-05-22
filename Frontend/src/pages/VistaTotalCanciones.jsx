@@ -22,9 +22,9 @@ function VistaTotalCanciones() {
     const handleTiempoChange = (nuevoTiempo) => { setTiempo(nuevoTiempo); };
 
 
- /*    useEffect(() => {
+    useEffect(() => {
         if (token) {
-       fetch(`http://localhost:5120/TopCanciones?tiempo=${tiempo}`,
+       fetch(`http://localhost:5120/TopC?tiempo=${tiempo}`,
             {
                 method: "GET", headers:
                 {
@@ -38,11 +38,10 @@ function VistaTotalCanciones() {
                 setTopCanciones(data.items);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta
             });
     }
-}, [token, tiempo]); */
+}, [token, tiempo]); 
 
 
-
-    useEffect(() => {
+  /*   useEffect(() => {
         if (token) {
             fetch(`https://api.spotify.com/v1/me/top/tracks?time_range=${tiempo}&limit=51`,
                 {
@@ -55,7 +54,7 @@ function VistaTotalCanciones() {
                     setTopCanciones(data.items);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
                 });
         }
-    }, [token, tiempo]);
+    }, [token, tiempo]); */
 
     return (
         <div className="container">
