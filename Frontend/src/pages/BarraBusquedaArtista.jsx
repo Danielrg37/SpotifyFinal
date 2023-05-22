@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import "./css/busqueda/busqueda.css";
-
+import VistaArtista from './VistaArtista';
 
 function BarraBusqueda() {
 
@@ -91,11 +91,12 @@ function BarraBusqueda() {
             </div>
           </div>
         </div>
-
-
+        {searchInput !== "" && <VistaArtista id={event.target.value}></VistaArtista>}
 
       </Container>
+
     </div>
+    
 
 
 
