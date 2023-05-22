@@ -84,7 +84,6 @@ function VistaAdminArtista() {
         <div className="row">
           <h2>Consultar artistas vía API</h2>
           <BarraBusqueda></BarraBusqueda>
-          {searchValue !== "" && <VistaArtista id={searchValue}></VistaArtista>}
         </div>
       </div>
 
