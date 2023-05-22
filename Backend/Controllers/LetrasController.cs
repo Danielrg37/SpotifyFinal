@@ -41,26 +41,32 @@ namespace Backend.Controllers
             }
         }
 
-        private string ObtenerUrlLetraCancionDesdeRespuestaBusqueda(string searchResponse, string songName, string artistName)
+  private string ObtenerUrlLetraCancionDesdeRespuestaBusqueda(string searchResponse, string songName, string artistName)
+{
+    dynamic jsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(searchResponse);
+    var hits = jsonResponse.response.hits;
+
+    foreach (var hit in hits)
+    {
+        var result = hit.result;
+        var resultSongName = result.title.ToString();
+        var resultArtistName = result.primary_artist.name.ToString();
+
+        if (IsMatch(songName, resultSongName) && IsMatch(artistName, resultArtistName))
         {
-            dynamic jsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(searchResponse);
-            var hits = jsonResponse.response.hits;
-
-            foreach (var hit in hits)
-            {
-                var result = hit.result;
-                var resultSongName = result.title.ToString();
-                var resultArtistName = result.primary_artist.name.ToString();
-
-                if (string.Equals(resultSongName, songName, StringComparison.OrdinalIgnoreCase) &&
-                    string.Equals(resultArtistName, artistName, StringComparison.OrdinalIgnoreCase))
-                {
-                    var songUrl = result.url.ToString();
-                    return songUrl;
-                }
-            }
-
-            return null;
+            var songUrl = result.url.ToString();
+            return songUrl;
         }
+    }
+
+    return null;
+}
+
+private bool IsMatch(string input1, string input2)
+{
+    // You can implement a more advanced matching logic here if needed
+    return string.Equals(input1, input2, StringComparison.OrdinalIgnoreCase);
+}
+
     }
 }

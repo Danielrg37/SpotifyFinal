@@ -226,7 +226,7 @@ function VistaPerfil() {
                     </ButtonGroup>
                 </div>
             </div>
-            <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap' }}>
+            <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap', userSelect: 'none' }}>
                 <div class="gradient-container" ref={iconsContainerRef}>
                     {topCanciones.map((cancion, index) => (
                         <div key={index} className="d-inline-block mx-2">
@@ -257,7 +257,7 @@ function VistaPerfil() {
                     </ButtonGroup>
                 </div>
             </div>
-            <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap', height: '300px' }}>
+            <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap', height: '300px', userSelect: 'none' }}>
 
   <div className="gradient-container" ref={iconsContainerRef2} >
                     {topArtistas.map((artista, index) => (

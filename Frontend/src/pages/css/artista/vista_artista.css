@@ -39,12 +39,16 @@
     color: white;
   }
 
+ 
+
 .canciones-container {
   background-color:   #F7F7F7;
   border-radius: 20px;
   padding: 20px;
   color: #121212;
 }
+
+
   
 .canciones-container p {
   color: #121212;

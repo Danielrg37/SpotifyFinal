@@ -4,16 +4,13 @@ Controladores que revisar:
 
 -Letras
 -Eventos
--TopCanciones / Eventos
 
 
 
 -Cosas por hacer:
 
-
-
 (Estimación de esto: 1-3 días)
--Mudar fetches a backend y añadir algún controller
+-Mudar fetches a backend y añadir algún controller 2/3 de esto
 -Hacer funcionar los de arriba
 
 (Estimación de esto: 3 días)

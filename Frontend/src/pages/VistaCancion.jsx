@@ -180,6 +180,7 @@ function VistaCancion() {
               </div>
             </div>
           </div>
+          <h4 style={{textAlign: 'center'}}>Duración: {milisegundosAMinutosSegundos(stats[0]?.duration_ms)}</h4>
         </div>
 
         <div className="row mt-3">

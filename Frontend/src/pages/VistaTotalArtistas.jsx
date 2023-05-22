@@ -22,40 +22,24 @@ function VistaTotalArtistas() {
 
 
 
-   useEffect(() => {
-        if (token) {
-            fetch(`https://api.spotify.com/v1/me/top/artists?time_range=${tiempo}&limit=60`,
-                {
-                    method: "GET", headers:
-                    {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then(response => response.json())
-                .then(data => {
-                    setTopArtistas(data.items);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
-                });
-        }
-    }, [token, tiempo]); 
 
     
-  /*   useEffect(() => {
+     useEffect(() => {
         if (token) {
        fetch(`http://localhost:5120/TopArtistas?tiempo=${tiempo}`,
             {
-                method: "GET", headers:
-                {
+                method: "GET", 
                     headers: {
                         'X-Access-Token': localStorage.getItem('token'),
                         'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
                     }
                 }
-            }).then(response => response.json())
+            ).then(response => response.json())
             .then(data => {
-                setTopArtistas(data.items);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta
+                setTopArtistas(data.items);
             });
-    }
-}, [token, tiempo]); */
-
+        }   
+    }, [token, tiempo]);
 
 
 
