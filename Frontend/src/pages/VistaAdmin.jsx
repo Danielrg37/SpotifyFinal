@@ -26,33 +26,37 @@ function VistaArtista() {
             </header>
 
 
-            <div class="row mt-3">
-
-                <div class="col-12 text-center" id="datos">
-                    <div className="grafico-container">
-                    <Link to={`/adminUsuario`} className="custom-underline">
-                    <p style={{fontSize: '22px'}}>Consultar usuarios</p>
-                    </Link>
-                    </div>
-                </div>
-
-            </div>
-
             <div class="row mt-5">
-                
-            <div class="col-6 text-center" id="datos">
-                    <div className="grafico-container">
-                    <Link to={`/adminCancion`} className="custom-underline">
-                    <p style={{fontSize: '22px'}}>Consultar canción</p>
-                  </Link>
+
+                <div class="col-6 text-center" id="datos">
+                    <div className="grafico-container" style={{ height: '90vh' }}>
+                        <Link to={`/adminUsuario`} className="custom-underline">
+                            <p style={{ fontSize: '22px' }}>Consultar usuarios</p>
+
+                            <img src="https://i.ibb.co/0jJQY5Q/grafica-usuario.png" alt="grafica-usuario" border="0" width="80%" height="400"></img>
+
+                            <div className="row mt-3">
+                                <button className={`btn btn-outline-success rounded-pill w-100`}>
+                                    Acceder
+                                </button>
+                            </div>
+                        </Link>
+
                     </div>
                 </div>
 
                 <div class="col-6 text-center" id="datos">
-                    <div className="grafico-container">
-                    <Link to={`/adminArtista`} className="custom-underline">
-                    <p style={{fontSize: '22px'}}>Consultar artista</p>
-                  </Link>
+                    <div className="grafico-container" style={{ height: '90vh' }}>
+                        <Link to={`/adminArtista`} className="custom-underline">
+                            <p style={{ fontSize: '22px' }}>Consultar artista</p>
+
+                            <img src="https://i.ibb.co/0jJQY5Q/grafica-usuario.png" alt="grafica-usuario" border="0" width="80%" height="400"></img>
+                            <div className="row mt-3">
+                                <button className={`btn btn-outline-success rounded-pill w-100`}>
+                                    Acceder
+                                </button>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>

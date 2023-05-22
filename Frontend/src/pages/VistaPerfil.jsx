@@ -246,12 +246,12 @@ function VistaPerfil() {
                     </ButtonGroup>
                 </div>
             </div>
-            <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap', height: '300px' }}>
+            <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap' }}>
                 <div class="gradient-container" ref={iconsContainerRef}>
                     {topCanciones.map((cancion, index) => (
                         <div key={index} className="d-inline-block mx-2">
                             <Link to={`/cancion/${cancion.id}`}>
-                                {cancion.album && cancion.album.images && <img src={cancion.album.images[1]?.url} className="img-fluid" style={{ width: '250px', height: '250px' }} />}
+                                {cancion.album && cancion.album.images && <img src={cancion.album.images[1]?.url} className="img-fluid" style={{ width: '250px', height: '230px' }} />}
                             </Link>
                             <p style={{fontSize: '22px'}}>{cancion.name}</p>
                         </div>
@@ -283,7 +283,7 @@ function VistaPerfil() {
                     {topArtistas.map((artista, index) => (
                         <div key={index} className="d-inline-block mx-2">
                             <Link to={`/artista/${artista.id}`}>
-                                {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" style={{ width: '250px', height: '250px' }} />}
+                                {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" style={{ width: '250px', height: '230px' }} />}
                             </Link>
                             <p style={{fontSize: '22px'}}>{artista.name}</p>
                         </div>

@@ -1,4 +1,4 @@
-.cancion-container {
+.grafico2-container {
     background-color: #121212;
     border-radius: 20px;
     padding: 20px;
@@ -17,6 +17,10 @@
 }
 
 .grafico-container h1 {
+  color: #121212;
+}
+
+.grafico-container h4 {
   color: #121212;
 }
 
