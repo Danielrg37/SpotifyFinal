@@ -4,15 +4,13 @@ Controladores que revisar:
 
 -Letras / Eventos / Galeria / Descripcion (literalmente debe ser copiar y pegar casi)
 -Busquedas
--Top Artistas
+
 
 
 
 -Cosas por hacer:
 
-(Estimación de esto: 1-3 días)
--Mudar fetches a backend y añadir algún controller 2/3 de esto
--Hacer funcionar los de arriba
+-Hacer funcionar esos de arriba que me están dando pelea, el resto ya va y casi mudado todo o me queda cambiar el fetch nicee
 
 (Estimación de esto: 3 días)
 -Mejorar zona Admin 1/3 hecho o 2/4

@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/disco/vista_disco.css';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import CommentSection from './ComentariosCaja';
 
 function VistaDisco() {
 
@@ -18,56 +19,45 @@ function VistaDisco() {
 
     const { id } = useParams();
 
- /*    useEffect(() => {
+     useEffect(() => {
         if (token) {
             fetch(`http://localhost:5120/Disco/${id}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Origin": "http://localhost:5173"
+               
+                    method: "GET", headers:
+                {
+                    'X-Access-Token': localStorage.getItem('token'),
+                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
                 }
+            }).then(response => response.json())
+            .then((data) => {
+              setDisco(data);
+              const baseUrl = "https://www.amazon.es/s?k=";
+              const searchQuery = `${data.artists[0].name}+${data.name}`;
+              const url = baseUrl + searchQuery;
+              setUrl(url);
             })
-                .then(response => response.json())
-                .then(data => setDisco(data))
-                .catch(error => console.error(error));
-        }
-    }, [token]); */
+            .catch(error => console.error(error));
+          }
+        }, [token]); 
+         
  
-
-            
-
-   useEffect(() => {
-        if (token) {
-          fetch(`https://api.spotify.com/v1/albums/${id}?si=c14fd7cce6ec4d59`, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          })
-          .then(response => response.json())
-          .then((data) => {
-            setDisco(data);
-            const baseUrl = "https://www.amazon.es/s?k=";
-            const searchQuery = `${data.artists[0].name}+${data.name}`;
-            const url = baseUrl + searchQuery;
-            setUrl(url);
-          })
-          .catch(error => console.error(error));
-        }
-      }, [token]); 
-       
 
     useEffect(() => {
         if (token) {
-            fetch(`https://api.spotify.com/v1/albums/${id}/tracks?si=c14fd7cce6ec4d59`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
+            fetch(`http://localhost:5120/CancionesD/${id}`, {
+                method: "GET", headers:
+                {
+                    'X-Access-Token': localStorage.getItem('token'),
+                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
                 }
-            })
-                .then(response => response.json())
-                .then(data => setCancionesDisco(data.items))
+            }).then(response => response.json())
+                .then((data) => {
+                    setCancionesDisco(data);
+                })
                 .catch(error => console.error(error));
-        }
-    }, [token]);
+            }
+        }, [token]);
+
 
     console.log(disco);
     const embedUrl = `https://open.spotify.com/embed/album/${id}`;
@@ -134,8 +124,8 @@ function VistaDisco() {
                 </div>
             </div>
             <div class="row mt-5 mb-3">
-                <div class="col-6 canciones-container">
-                    <h1>Placeholder</h1>
+                <div class="col-6 canciones-container mr-1">
+                   <CommentSection />
                 </div>
 
                 <div class="col-6 cancion-container">
