@@ -42,26 +42,31 @@ function VistaDisco() {
          
  
 
-    useEffect(() => {
-        if (token) {
-            fetch(`http://localhost:5120/CancionesD/${id}`, {
-                method: "GET", headers:
-                {
-                    'X-Access-Token': localStorage.getItem('token'),
-                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-                }
-            }).then(response => response.json())
-                .then((data) => {
-                    setCancionesDisco(data);
-                })
-                .catch(error => console.error(error));
-            }
-        }, [token]);
+    // useEffect(() => {
+    //     if (token) {
+    //         fetch(`http://localhost:5120/CancionesD/${id}`, {
+    //             method: "GET", headers:
+    //             {
+    //                 'X-Access-Token': localStorage.getItem('token'),
+    //                 'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+    //             }
+    //         }).then(response => response.json())
+    //             .then((data) => {
+    //                 console.log(data);
+    //                 setCancionesDisco(data);
+                
+    //             })
+    //             .catch(error => console.error(error));
+    //         }
+    //     }, [token]);
 
 
     console.log(disco);
     const embedUrl = `https://open.spotify.com/embed/album/${id}`;
     console.log(url);
+
+    console.log(cancionesDisco);
+
 
     return (
        !disco ? (

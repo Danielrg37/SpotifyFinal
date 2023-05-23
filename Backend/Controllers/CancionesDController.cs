@@ -16,7 +16,7 @@ namespace Backend.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        [HttpGet("{id}", Name = "Cancion")]
+        [HttpGet("{id}", Name = "CancionesD")]
         public async Task<IActionResult> Get(string id)
         {
             var httpClient = _httpClientFactory.CreateClient();
@@ -24,7 +24,7 @@ namespace Backend.Controllers
             var token = Request.Headers["X-Access-Token"];
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var url = $"https://api.spotify.com/v1/tracks/{id}/tracks?si=c14fd7cce6ec4d59";
+            var url = $"https://api.spotify.com/v1/albums/{id}/tracks";
             var response = await httpClient.GetAsync(url);
             var content = await response.Content.ReadAsStringAsync();
 
