@@ -1,10 +1,9 @@
-using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using HtmlAgilityPack;
 
 namespace Backend.Controllers
 {
@@ -19,21 +18,21 @@ namespace Backend.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        [HttpGet("{Nombre}", Name = "Eventos")]
-        public async Task<IActionResult> Get(string Nombre)
+        [HttpGet("{nombre}", Name = "Eventos")]
+        public async Task<IActionResult> Get(string nombre)
         {
             var httpClient = _httpClientFactory.CreateClient();
 
-            var token = Request.Headers["X-Access-Token"];
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            var url = $"https://www.last.fm/music/{Uri.EscapeDataString(Nombre)}/+events";
-            var web = new HtmlWeb();
-            var doc = await web.LoadFromWebAsync(url);
+            var url = $"https://www.last.fm/music/{Uri.EscapeDataString(nombre)}/+events";
+            var response = await httpClient.GetAsync(url);
+            var content = await response.Content.ReadAsStringAsync();
 
             var events = new List<LastFmEvent>();
 
-            var eventNodes = doc.DocumentNode.SelectNodes("//li[contains(@class, 'events-list-item')]");
+            var htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(content);
+
+            var eventNodes = htmlDocument.DocumentNode.SelectNodes("//li[contains(@class, 'events-list-item')]");
 
             if (eventNodes != null)
             {
@@ -69,8 +68,8 @@ namespace Backend.Controllers
 
     internal class LastFmEvent
     {
-        public string? Title { get; set; }
-        public string? Location { get; set; }
+        public string Title { get; set; }
+        public string Location { get; set; }
         public DateTime Date { get; set; }
     }
 }

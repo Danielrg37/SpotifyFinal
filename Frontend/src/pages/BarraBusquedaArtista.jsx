@@ -24,15 +24,17 @@ function BarraBusqueda() {
 
   useEffect(() => {
     if (token) {
-      fetch(`https://api.spotify.com/v1/search?q=${searchInput}&type=artist&limit=4`, {
+      fetch(`http://localhost:5120/BusquedaA/${searchInput}`, {
+        method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
+          'X-Access-Token': localStorage.getItem('token'),
+          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+        }
       })
         .then(response => response.json())
         .then(data => {
           console.log(data);
-          setSuggestions(data.artists.items);
+          setSuggestions(data.artists);
           setArtista(data.artists.items[0]);
         })
         .catch(error => {
@@ -40,6 +42,8 @@ function BarraBusqueda() {
         });
     }
   }, [searchInput, token]);
+  
+
 
 
 
@@ -91,7 +95,7 @@ function BarraBusqueda() {
             </div>
           </div>
         </div>
-        {searchInput !== "" && <VistaArtista id={searchInput[0].id}></VistaArtista>}
+       
 
       </Container>
 

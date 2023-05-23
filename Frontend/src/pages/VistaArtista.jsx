@@ -25,18 +25,7 @@ function VistaArtista() {
     const [imagenes, setImagenes] = useState([]);
     const [descripcion, setDescripcion] = useState([]);
     const [textoCortado, setTextoCortado] = useState([]);
-
-
-    /*      // Función para cortar el texto después de 100 caracteres
-     const truncateText = (text) => {
-       const truncated = text.substring(0, 100);
-       return truncated + "...";
-     }
-   
-     // Función para mostrar el texto completo
-     const showFullText = () => {
-       setIsTextTruncated(false);
-     } */
+    const [eventos, setEventos] = useState([]);
 
     const token = localStorage.getItem('token');
     const { id } = useParams();
@@ -87,26 +76,9 @@ function VistaArtista() {
         }
     }, [token]);
 
-
-
-    /* 
-        useEffect(() => {
-            if (token) {
-                fetch(`https://api.spotify.com/v1/artists/${id}?si=c14fd7cce6ec4d59`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        setArtista(data);
-                    });
-            }
-        }, [token]); */
-
     console.log(artista.name)
 
-    useEffect(() => {
+  /*   useEffect(() => {
         async function fetchImages() {
             if (artista && artista.name) {
                 const url = `https://www.last.fm/music/${encodeURIComponent(
@@ -142,7 +114,7 @@ function VistaArtista() {
         //invoke async function to fetch images
         fetchImages();
     }, [artista.name]);
-
+ */
    /*  useEffect(() => {
         async function fetchDescripcion() {
             if (artista && artista.name) {
@@ -189,13 +161,29 @@ function VistaArtista() {
             fetch(`http://localhost:5120/eventos/${artista.name}`, {
                 method: 'GET',
                 headers: {
-                    'X-Access-Token': localStorage.getItem('token'),
                     'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
                 }
             })
                 .then(response => response.json())
                 .then(data => {
                     setEventos(data);
+                    console.log(data);
+                }
+                )
+        }
+    }, [artista.name]);
+
+    useEffect(() => {
+        if (artista.name) {
+            fetch(`http://localhost:5120/galeria/${encodeURIComponent(artista.name)}`, {
+                method: 'GET',
+                headers: {
+                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setImagenes(data);
                 }
                 )
         }
@@ -223,16 +211,6 @@ function VistaArtista() {
     }, [artista.name]);
  */
 
-
-
-
-    console.log(imagenes);
-
-    console.log(albums);
-    console.log(artista);
-    console.log(canciones);
-    console.log(noticias);
-    console.log(descripcion);
 
 
 
