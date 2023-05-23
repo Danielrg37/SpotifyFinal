@@ -44,41 +44,39 @@ function VistaCancionC() {
 
     useEffect(() => {
         if (token) {
-            fetch(`https://api.spotify.com/v1/me`, {
+            fetch(`https://localhost:5120/Perfil`, {
+                method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                    'X-Access-Token': localStorage.getItem('token'),
+                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                }
             })
-                .then(response => response.json())
+                .then(response => response.json())  
                 .then(data => {
-                    console.log(data);
-                    setUser_id(data.id);
-                })
-                .catch(error => {
-                    console.log(error);
+                        console.log(data);
+                            setUser_id(data.id);
                 });
         }
-    }, [token]);
+    }, [token]); 
 
     useEffect(() => {
         if (token) {
-            fetch(`https://api.spotify.com/v1/recommendations?seed_tracks=${cancion.id}&limit=50`, {
+            fetch(`https://localhost:5120/recomendaciones/${cancion.id}`, {
+                method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                    'X-Access-Token': localStorage.getItem('token'),
+                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                }
             })
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
                     setRecomendaciones(data);
-                })
-                .catch(error => {
-                    console.log(error);
-
-                });
+                }
+                );
         }
-
-    }, [cancion, token]);
+    }, [token, cancion]);
+    
 
 
     const nuevaPlaylist = () => {

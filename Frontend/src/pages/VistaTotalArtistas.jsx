@@ -12,18 +12,10 @@ import { useParams } from 'react-router-dom';
 function VistaTotalArtistas() {
 
     const [topArtistas, setTopArtistas] = useState([]);
-
     const token = localStorage.getItem('token');
-
-
     let [tiempo, setTiempo] = useState('short_term');
-
     const handleTiempoChange = (nuevoTiempo) => { setTiempo(nuevoTiempo); };
 
-
-
-
-    
     useEffect(() => {   
         if (token) {
             fetch(`http://localhost:5120/TopArtista?tiempo=${tiempo}`,
@@ -40,9 +32,6 @@ function VistaTotalArtistas() {
                 });
             }
         }, [token, tiempo]);
-
-
-
 
     console.log(topArtistas);
 

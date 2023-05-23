@@ -5,6 +5,7 @@ Controladores que revisar:
 -Letras / Eventos / Galeria (literalmente debe ser copiar y pegar casi)
 -Busquedas
 
+-ArtistaDisco / -ArtistaCanciones
 
 
 
@@ -26,3 +27,7 @@ Controladores que revisar:
 
 (Estimación de esto: 1-3 dias)
 -Memoria
+
+
+(Estimación de esto: 1-2 días)
+-Gestion Playlists 

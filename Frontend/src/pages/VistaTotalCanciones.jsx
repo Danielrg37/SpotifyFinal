@@ -39,24 +39,6 @@ function VistaTotalCanciones() {
         }
     }, [token, tiempo]);
 
-console.log(topCanciones);
-
-
-  /*   useEffect(() => {
-        if (token) {
-            fetch(`https://api.spotify.com/v1/me/top/tracks?time_range=${tiempo}&limit=51`,
-                {
-                    method: "GET", headers:
-                    {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then(response => response.json())
-                .then(data => {
-                    setTopCanciones(data.items);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
-                });
-        }
-    }, [token, tiempo]); */
-
     return (
         <div className="container">
             <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">

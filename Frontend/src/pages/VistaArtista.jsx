@@ -31,10 +31,12 @@ function VistaArtista() {
     const { id } = useParams();
 
     useEffect(() => {
-        if (token) {
-            fetch(`https://api.spotify.com/v1/artists/${id}/albums?album_type=album&si=c14fd7cce6ec4d59`, {
+        if (token) {    
+            fetch(`http://localhost:5120/Artistadiscos/${id}`, {
+                method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'X-Access-Token': localStorage.getItem('token'),
+                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
                 }
             })
                 .then(response => response.json())
@@ -43,6 +45,8 @@ function VistaArtista() {
                 });
         }
     }, [token]);
+
+
 
     useEffect(() => {
         if (token) {

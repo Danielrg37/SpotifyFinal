@@ -57,52 +57,44 @@ function VistaPerfil() {
     
     
     useEffect(() => {
-      if (token) {
-        fetch(`https://api.spotify.com/v1/me/top/tracks?time_range=${tiempo}&limit=20`, {
-          method: "GET",
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }).then(response => response.json())
-          .then(data => {
-            setTopCanciones(data.items);
-            }); 
-      }
-    }, [token, tiempo]);
+        if (token) {
+          fetch(`http://localhost:5120/TopC?tiempo=${tiempo}`, {
+            method: "GET",
+            headers: {
+              'X-Access-Token': localStorage.getItem('token'),
+              'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              const limitedItems = data.items.slice(0, 20); // Get the first 20 items from the response
+              setTopCanciones(limitedItems);
+            });
+        }
+      }, [token, tiempo]);
+      
     
 
 
 
 
-    useEffect(() => {
+      useEffect(() => {
         if (token) {
-            fetch(`https://api.spotify.com/v1/me/top/artists?time_range=${tiempo}&limit=20`,
-                {
-                    method: "GET", headers:
-                    {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then(response => response.json())
-                .then(data => {
-                    setTopArtistas(data.items);// Revisa la respuesta completa del endpoint setTopArtistas(data.items); // Extrayendo los artistas de la respuesta 
-                });
+          fetch(`http://localhost:5120/TopArtista?tiempo=${tiempo}`, {
+            method: "GET",
+            headers: {
+              'X-Access-Token': localStorage.getItem('token'),
+              'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              const limitedItems = data.items.slice(0, 20); // Get the first 20 items from the response
+              setTopArtistas(limitedItems);
+            });
         }
-    }, [token, tiempo]);
-
-
-    useEffect(() => {
-        if (token) {
-            fetch("https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb", {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            })
-                .then(response => response.json())
-                .then(data => setArtistInfo(data));
-        }
-    }, [token]);
-
+      }, [token, tiempo]);
+      
 
      useEffect(() => {
         if (token) {
@@ -123,17 +115,12 @@ function VistaPerfil() {
 
     console.log("La petición se ha realizado.");
     console.log(`Bearer ${token}`);
- 
-
-
     console.log(userData); // muestra toda la información del usuario
     console.log(historial);
     console.log(topArtistas);
     console.log(topCanciones);
 
- 
         const iconsContainerRef = useRef(null);
-
         const iconsContainerRef2 = useRef(null);
       
         const moverIconos1 = (direccion) => {
@@ -147,7 +134,6 @@ function VistaPerfil() {
           }
         };
 
-         
         const moverIconos2 = (direccion) => {
             const container = iconsContainerRef2.current;
             const scrollCantidad = 275; // Adjust this value based on your desired scroll distance
@@ -158,9 +144,6 @@ function VistaPerfil() {
             container.scrollLeft += scrollCantidad;
           }
         };
-    
-
-    
 
     return (
         !userData ? (
