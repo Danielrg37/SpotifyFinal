@@ -7,16 +7,16 @@ namespace Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TopArtistasController : ControllerBase
+    public class TopArtistaController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public TopArtistasController(IHttpClientFactory httpClientFactory)
+        public TopArtistaController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
-        [HttpGet("{id}", Name = "TopArtistas")]
+        [HttpGet(Name = "TopArtista")]
         public async Task<IActionResult> Get(string tiempo)
         {
             var httpClient = _httpClientFactory.CreateClient();

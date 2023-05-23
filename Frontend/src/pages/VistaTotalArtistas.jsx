@@ -24,22 +24,23 @@ function VistaTotalArtistas() {
 
 
     
-     useEffect(() => {
+    useEffect(() => {   
         if (token) {
-       fetch(`http://localhost:5120/TopArtistas?tiempo=${tiempo}`,
-            {
-                method: "GET", 
-                    headers: {
-                        'X-Access-Token': localStorage.getItem('token'),
-                        'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+            fetch(`http://localhost:5120/TopArtista?tiempo=${tiempo}`,
+                {
+                    method: "GET",
+                        headers: {
+                            'X-Access-Token': localStorage.getItem('token'),
+                            'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                        }
                     }
-                }
-            ).then(response => response.json())
-            .then(data => {
-                setTopArtistas(data.items);
-            });
-        }   
-    }, [token, tiempo]);
+                ).then(response => response.json())
+                .then(data => {
+                    setTopArtistas(data.items);
+                });
+            }
+        }, [token, tiempo]);
+
 
 
 

@@ -16,6 +16,7 @@ const navigate = useNavigate();
 
 
 
+
 // return (
 //     <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
 //     <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" style={{ marginRight: 'auto' }}>
@@ -36,6 +37,8 @@ const navigate = useNavigate();
 //   </header>
 // )
 // } else 
+
+if(localStorage.getItem('token') != null) {
 return (
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -58,7 +61,20 @@ return (
 
 </header>
 )
-
+} else {
+return (
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        Placeholder
+    </a>
+    <ul class="nav nav-pills">
+        <Button className="green-color" onClick={() => navigate('login2')}>
+            Placeholder
+        </Button>
+    </ul>
+    </header>
+)
+}
 }
 
 export default BarraNav;
