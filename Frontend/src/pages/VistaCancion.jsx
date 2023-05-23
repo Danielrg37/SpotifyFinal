@@ -93,6 +93,32 @@ function VistaCancion() {
     }
   }, [token, cancion.name]);
  
+  useEffect(() => {
+    
+  async function fetchDescripcion() {
+    if (cancion.name) {
+      const url = `http://localhost:5120/Galeria/${encodeURIComponent(
+        cancion.name
+      )}`;
+      console.log(url);
+
+      const response = await fetch(url, {
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+          'Accept-Language': 'en-US,en;q=0.9',
+        },
+      });
+
+      const textResponse = await response.text(); // Get the plain text response
+      setDescripcion(textResponse); // Update the state with the plain text response
+    }
+  }
+
+  // Invoke async function to fetch the description
+  fetchDescripcion();
+}, [artista.name]);
+
 /* 
   const songTitle = cancion.name;
   const GENIUS_KEY = '-ImT2ynhgjGOA_ktoe31opdJw0huxaFal8txUqK5Vjui_hgwES2ceLIlFDSNdAGP';

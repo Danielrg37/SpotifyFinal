@@ -24,11 +24,24 @@ namespace Backend.Controllers
             var token = Request.Headers["X-Access-Token"];
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var url = $"https://api.spotify.com/v1/albums/{id}?si=c14fd7cce6ec4d59";
-            var response = await httpClient.GetAsync(url);
-            var content = await response.Content.ReadAsStringAsync();
+            // Retrieve album details
+            var albumUrl = $"https://api.spotify.com/v1/albums/{id}?si=c14fd7cce6ec4d59";
+            var albumResponse = await httpClient.GetAsync(albumUrl);
+            var albumContent = await albumResponse.Content.ReadAsStringAsync();
 
-            return Ok(content);
+            // Retrieve tracks for the album
+            var tracksUrl = $"https://api.spotify.com/v1/albums/{id}/tracks";
+            var tracksResponse = await httpClient.GetAsync(tracksUrl);
+            var tracksContent = await tracksResponse.Content.ReadAsStringAsync();
+
+            // Create an object to hold both album details and tracks
+            var result = new
+            {
+                Album = albumContent,
+                Tracks = tracksContent
+            };
+
+            return Ok(result);
         }
     }
 }

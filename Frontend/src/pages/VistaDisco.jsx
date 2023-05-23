@@ -19,27 +19,33 @@ function VistaDisco() {
 
     const { id } = useParams();
 
-     useEffect(() => {
+    useEffect(() => {
         if (token) {
-            fetch(`http://localhost:5120/Disco/${id}`, {
-               
-                    method: "GET", headers:
-                {
-                    'X-Access-Token': localStorage.getItem('token'),
-                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-                }
-            }).then(response => response.json())
-            .then((data) => {
-              setDisco(data);
+          fetch(`http://localhost:5120/Disco/${id}`, {
+            method: "GET",
+            headers: {
+              'X-Access-Token': localStorage.getItem('token'),
+              'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              const album = JSON.parse(data.album); // Parse the album JSON string into an object
+              const tracks = JSON.parse(data.tracks); // Parse the tracks JSON string into an object
+              setDisco(album);
+              setCancionesDisco(tracks.items);
               const baseUrl = "https://www.amazon.es/s?k=";
-              const searchQuery = `${data.artists[0].name}+${data.name}`;
+              const searchQuery = `${album.artists[0].name}+${album.name}`;
               const url = baseUrl + searchQuery;
               setUrl(url);
             })
             .catch(error => console.error(error));
-          }
-        }, [token]); 
+        }
+      }, [token]);
+      
          
+      
  
 
     // useEffect(() => {
