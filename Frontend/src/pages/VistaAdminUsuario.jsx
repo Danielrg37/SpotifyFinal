@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/admin/vista_admin.css';
 import { useNavigate } from 'react-router-dom';
 import BarraNav from './BarraNav';
+import img_zona2 from './../img/300x300.png';
 
 function VistaAdminUsuario() {
     return (
@@ -14,8 +15,7 @@ function VistaAdminUsuario() {
                 <div class="col-12 text-center" id="datos">
                     <div className="grafico-container">
                         <h4>Gráficas de usuarios</h4>
-                        <img src="https://i.ibb.co/0jJQY5Q/grafica-usuario.png" alt="grafica-usuario" border="0" width="80%" height="400"></img>
-
+                        <img src="https://via.placeholder.com/800x300" alt="grafica-usuario" border="0" width="80%" height="400"></img>
                     </div>
                 </div>
 
@@ -23,14 +23,14 @@ function VistaAdminUsuario() {
                     <div class="col-6 text-center" id="datos">
                         <div className="grafico-container">
                             <h4>Tabla de playlist de usuarios</h4>
-                            <img src="https://i.ibb.co/0jJQY5Q/grafica-usuario.png" alt="grafica-usuario" border="0" width="80%" height="400"></img>
+                            <img src={img_zona2} alt="grafica-usuario" border="0" width="80%" height="400"></img>
                         </div>
                     </div>
 
                     <div class="col-6 text-center" id="datos">
                         <div className="grafico-container">
                             <h4>Historial de cambios de usuarios</h4>
-                            <img src="https://i.ibb.co/0jJQY5Q/grafica-usuario.png" alt="grafica-usuario" border="0" width="80%" height="400"></img>
+                            <img src={img_zona2} alt="grafica-usuario" border="0" width="80%" height="400"></img>
                         </div>
                     </div>
 

@@ -1,12 +1,4 @@
-.grafico2-container {
-    background-color: #121212;
-    border-radius: 20px;
-    padding: 20px;
-    color: white;
-    object-fit: cover;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease-in-out;
-  }
+
 
 .grafico-container:hover {
     transform: scale(1.05);
@@ -17,6 +9,8 @@
   border-radius: 20px;
   padding: 20px;
   color: #121212;
+  object-fit: cover;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .grafico-container p {
