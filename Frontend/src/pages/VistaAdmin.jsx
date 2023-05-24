@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/admin/vista_admin.css';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
+import usuario from './../img/usuario.png';
+import img_zona2 from './../img/admin_menu1.png';
 
 function VistaArtista() {
 
@@ -31,9 +33,9 @@ function VistaArtista() {
                 <div class="col-6 text-center" id="datos">
                     <div className="grafico-container" style={{ height: '95vh' }}>
                         <Link to={`/adminUsuario`} className="custom-underline">
-                            <p style={{ fontSize: '22px' }}>Consultar usuarios e historial</p>
+                            <p style={{ fontSize: '30px' }}>Consultar usuarios e historial</p>
 
-                            <img src="https://i.ibb.co/0jJQY5Q/grafica-usuario.png" alt="grafica-usuario" border="0" width="80%" height="400"></img>
+                            <img src={usuario} alt="grafica-usuario" border="0" width="80%" height="400"></img>
 
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>
@@ -48,7 +50,7 @@ function VistaArtista() {
                 <div class="col-6 text-center" id="datos">
                     <div className="grafico-container" style={{ height: '95vh' }}>
                         <Link to={`/adminMenu2`} className="custom-underline">
-                            <p style={{ fontSize: '22px' }}>Consultar artistas/canciones...</p>
+                            <p style={{ fontSize: '30px' }}>Consultar artistas/canciones...</p>
 
                             <img src="https://i.ibb.co/0jJQY5Q/grafica-usuario.png" alt="grafica-usuario" border="0" width="80%" height="400"></img>
                             <div className="row mt-3">

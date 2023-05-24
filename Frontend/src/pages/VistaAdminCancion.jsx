@@ -7,8 +7,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import BarraBusqueda from './BarraBusquedaCancion';
-import { InputGroup, FormControl } from 'react-bootstrap';
+import { InputGroup, FormControl, ProgressBar } from 'react-bootstrap';
 import VistaArtista from './VistaArtista';
+import CommentSection from './ComentariosCaja';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -233,18 +234,6 @@ function VistaAdminArtista() {
         </div>
         {searchResults.length > 0 && (
         <div className="container">
-        <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-          <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-            Placeholder
-          </a>
-
-          <ul className="nav nav-pills">
-            <Button className="green-color" onClick={() => navigate('/registro')}>
-              Placeholder
-            </Button>
-          </ul>
-        </header>
-
         <div className='cancion-container'>
           <div className="row">
             <div className="col-4">
@@ -276,7 +265,6 @@ function VistaAdminArtista() {
               </div>
             </div>
           </div>
-          <h4 style={{textAlign: 'center'}}>Duración: {milisegundosAMinutosSegundos(stats[0]?.duration_ms)}</h4>
         </div>
 
         <div className="row mt-3">
