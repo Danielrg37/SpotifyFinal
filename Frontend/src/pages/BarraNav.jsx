@@ -57,23 +57,12 @@ function BarraNav() {
                 Placeholder
             </a>
             <ul className="nav nav-pills">
-                <Button className="green-color" onClick={() => navigate('login2')}>
-                    Placeholder
-                </Button>
-{/* 
-                <Button className="green-color" onClick={() => navigate('perfil')}>
-                    Perfil rápido
-                </Button>
 
-                <Button className="green-color" onClick={() => navigate('admin')}>
-                    Admin rápido
-                </Button>
- */}
                 <div className="dropdown" onMouseLeave={handleDropdownClose}>
                     <img src={userData?.images?.[0]?.url}
                         alt="Your Image"
                         className="dropdown-img"
-                        style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                        style={{ width: '62px', height: '62px', borderRadius: '50%', marginRight: '2em' }}
                         onMouseEnter={handleDropdownToggle}
                     />
                     {isDropdownOpen && (
