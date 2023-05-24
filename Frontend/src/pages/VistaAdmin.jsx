@@ -47,7 +47,7 @@ function VistaArtista() {
 
                 <div class="col-6 text-center" id="datos">
                     <div className="grafico-container" style={{ height: '95vh' }}>
-                        <Link to={`/adminCancion`} className="custom-underline">
+                        <Link to={`/adminMenu2`} className="custom-underline">
                             <p style={{ fontSize: '22px' }}>Consultar artistas/canciones...</p>
 
                             <img src="https://i.ibb.co/0jJQY5Q/grafica-usuario.png" alt="grafica-usuario" border="0" width="80%" height="400"></img>

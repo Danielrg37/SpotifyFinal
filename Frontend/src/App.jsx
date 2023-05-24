@@ -16,6 +16,7 @@ import VistaAdminCancion from './pages/VistaAdminCancion'
 import Loader from './pages/Loader'
 import BarraNav from './pages/BarraNav'
 import VistaAdminUsuario from './pages/VistaAdminUsuario'
+import VistaMenu from './pages/VistaMenu'
 
 
 
@@ -61,6 +62,7 @@ function App() {
           <Route path = 'nested' element={<CommentSection />} />
           <Route path = 'nav' element={<BarraNav />} />
           <Route path = '/adminUsuario' element={<VistaAdminUsuario />} />
+          <Route path = '/adminMenu2' element={<VistaMenu />} />
 
          
         </Routes>

@@ -132,7 +132,6 @@ function VistaArtista() {
                 .then(response => response.json())
                 .then(data => {
                     setEventos(data);
-                    console.log(data);
                 }
                 )
         }
@@ -166,8 +165,7 @@ function VistaArtista() {
       
  
 
-
-
+     
     
 
 
