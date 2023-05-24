@@ -78,9 +78,9 @@ function BarraNav() {
                     />
                     {isDropdownOpen && (
                         <div className="dropdown-content">
-                            <a href="#">Option 1</a>
-                            <a href="#">Option 2</a>
-                            <a href="#">Option 3</a>
+                            <a href="#" onClick={() => navigate('perfil')}>Perfil</a>
+                            <a href="#" onClick={() => navigate('login2')}>Login con Spotify</a>
+                           <a href="#" onClick={() => navigate('admin')}>Admin *tmp*</a>
                         </div>
                     )}
                 </div>
