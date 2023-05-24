@@ -8,7 +8,7 @@ import './css/admin/vista_admin.css';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import usuario from './../img/usuario.png';
-import img_zona2 from './../img/admin_menu1.png';
+import img_zona2 from './../img/300x300.png';
 
 function VistaArtista() {
 
@@ -52,7 +52,7 @@ function VistaArtista() {
                         <Link to={`/adminMenu2`} className="custom-underline">
                             <p style={{ fontSize: '30px' }}>Consultar artistas/canciones...</p>
 
-                            <img src="https://i.ibb.co/0jJQY5Q/grafica-usuario.png" alt="grafica-usuario" border="0" width="80%" height="400"></img>
+                            <img src={img_zona2} alt="grafica-usuario" border="0" width="80%" height="400"></img>
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>
                                     Acceder
