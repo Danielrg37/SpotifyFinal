@@ -33,3 +33,4 @@ C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\obj\Debug\net7.0\Backend
 C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\obj\Debug\net7.0\ref\Backend.dll
 C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\bin\Debug\net7.0\HtmlAgilityPack.dll
+C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\bin\Debug\net7.0\AngleSharp.dll

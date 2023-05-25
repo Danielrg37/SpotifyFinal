@@ -120,6 +120,22 @@ function VistaArtista() {
     }, [artista.name]);
  */
 
+    useEffect(() => {
+        if(artista.name){
+            fetch(`http://localhost:5120/galeria/${artista.name}`, {
+                method: 'GET',
+                headers: {
+                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setImagenes(data);
+                }
+                )
+        }
+    }, [artista.name]);
+
 
     useEffect(() => {
         if (artista.name) {
@@ -167,7 +183,6 @@ function VistaArtista() {
 
      
     
-
 
     return (
         !token && !artista || !albums && !canciones && !imagenes ? (
@@ -312,13 +327,6 @@ function VistaArtista() {
 
                     </div>
                 </div>
-
-
-
-
-
-
-
                 <footer>
                     <p class="float-end"><a href="#">Back to top</a></p>
                     <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
