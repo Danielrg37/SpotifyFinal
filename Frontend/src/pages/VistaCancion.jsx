@@ -121,6 +121,25 @@ function VistaCancion() {
 
   console.log(letras); */
 
+  useEffect(() => {
+      if(cancion.name && cancion.artists && cancion.artists.length > 0) {
+        fetch(`http://localhost:5120/letras/${encodeURIComponent(cancion.name)}/${encodeURIComponent(cancion.artists[0].name)}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            setLetras(data);
+          })
+          .catch(error => console.error(error));
+      }
+  }, [token, cancion.name, cancion.artists]);
+  
+
+
 
 
   function milisegundosAMinutosSegundos(milisegundos) {
