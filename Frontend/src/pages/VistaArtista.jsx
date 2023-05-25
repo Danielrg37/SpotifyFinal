@@ -46,8 +46,6 @@ function VistaArtista() {
         }
     }, [token]);
 
-
-
     useEffect(() => {
         if (token) {
             fetch(`https://api.spotify.com/v1/artists/${id}/top-tracks?market=ES`, {
@@ -61,8 +59,6 @@ function VistaArtista() {
                 });
         }
     }, [token]);
-
-
 
     useEffect(() => {
         if (token) {
@@ -82,44 +78,6 @@ function VistaArtista() {
 
     console.log(artista.name)
 
-  /*   useEffect(() => {
-        async function fetchImages() {
-            if (artista && artista.name) {
-                const url = `https://www.last.fm/music/${encodeURIComponent(
-                    artista.name
-                )}/+images?${new Date().getTime()}`;
-                console.log(url);
-
-                //send HTTP request using fetch
-                const response = await fetch(url, {
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-                        'Accept-Language': 'en-US,en;q=0.9',
-                    }
-                });
-
-                //parse HTML response using Cheerio
-                const html = await response.text();
-                const $ = cheerio.load(html);
-
-                //get all image URLs and add them to an array
-                const images = [];
-                $('.image-list-item img').each((i, element) => {
-                    const imageUrl = $(element).attr('src');
-
-                    images.push(imageUrl.replace('avatar170s', 'avatar1920s')); // actualizar la url de la imagen
-                });
-
-                //set state with array of image URLs
-                setImagenes(images);
-            }
-        }
-
-        //invoke async function to fetch images
-        fetchImages();
-    }, [artista.name]);
- */
-
     useEffect(() => {
         if(artista.name){
             fetch(`http://localhost:5120/galeria/${artista.name}`, {
@@ -135,7 +93,6 @@ function VistaArtista() {
                 )
         }
     }, [artista.name]);
-
 
     useEffect(() => {
         if (artista.name) {
@@ -153,7 +110,6 @@ function VistaArtista() {
         }
     }, [artista.name]);
 
-    
     useEffect(() => {
         async function fetchDescripcion() {
           if (artista && artista.name) {
@@ -179,11 +135,6 @@ function VistaArtista() {
         fetchDescripcion();
       }, [artista.name]);
       
- 
-
-     
-    
-
     return (
         !token && !artista || !albums && !canciones && !imagenes ? (
             <Loader />

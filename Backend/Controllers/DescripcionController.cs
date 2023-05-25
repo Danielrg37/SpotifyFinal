@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
@@ -39,18 +42,28 @@ namespace Backend.Controllers
                     doc.LoadHtml(html);
 
                     // Get the description from the HTML
-                    var description = "";
+                    var description = new StringBuilder();
                     var container = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'wiki-content')]");
                     if (container != null)
                     {
                         foreach (var paragraph in container.Descendants("p"))
                         {
-                            description += paragraph.InnerText + " ";
+                            description.Append(paragraph.InnerText + " ");
                         }
                     }
 
-                    // Return the description as JSON
-                    return new JsonResult(description);
+                    // Create a JObject with the description
+                    var jsonObject = new JObject();
+                    jsonObject["description"] = description.ToString();
+
+                    // Convert the JObject to a JSON string without escaping Unicode characters
+                    var jsonString = JsonConvert.SerializeObject(jsonObject, new JsonSerializerSettings
+                    {
+                        StringEscapeHandling = StringEscapeHandling.Default
+                    });
+
+                    // Return the JSON string as the response
+                    return Content(jsonString, "application/json");
                 }
             }
 

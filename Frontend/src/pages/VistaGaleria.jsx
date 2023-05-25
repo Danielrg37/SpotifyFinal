@@ -28,45 +28,24 @@ function GalleryComponent() {
                 }
             }, [token]);
 
-    useEffect(() => {
-        async function fetchImages() {
-            if (artista && artista.name) {
-                const url = `https://www.last.fm/music/${encodeURIComponent(
-                    artista.name
-                )}/+images?${new Date().getTime()}`;
-                console.log(url);
+            useEffect(() => {
+                if(artista.name){
+                    fetch(`http://localhost:5120/galeria/${artista.name}`, {
+                        method: 'GET',
+                        headers: {
+                            'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            setImagenes(data);
+                        }
+                        )
+                }
+            }, [artista.name]);
+        
+            console.log(imagenes);
 
-                // send HTTP request using fetch
-                const response = await fetch(url, {
-                    headers: {
-                        "User-Agent":
-                            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
-                        "Accept-Language": "en-US,en;q=0.9",
-                    },
-                });
-
-                // parse HTML response using Cheerio
-                const html = await response.text();
-                const $ = cheerio.load(html);
-
-                // get all image URLs and add them to an array
-                const images = [];
-                $(".image-list-item img").each((i, element) => {
-                    const imageUrl = $(element).attr("src");
-
-                    images.push({
-                        src: imageUrl.replace("avatar170s", "avatar1920s"),
-                    });
-                });
-
-                // set state with array of image URLs
-                setImagenes(images);
-            }
-        }
-
-        // invoke async function to fetch images
-        fetchImages();
-    }, [artista.name]);
 
     return (
         <div className="container">
@@ -93,33 +72,33 @@ function GalleryComponent() {
             </div>
           
             <div className="row">
-  <div className="col-md-6">
-    <div className="gallery-container">
-      <div className="gallery">
-        {imagenes.slice(0, Math.ceil(imagenes.length / 2)).map((imagen, index) => (
-          <div className="gallery-item" key={index}>
-            <img src={imagen.src} alt="" />
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-  <div className="col-md-6">
-    <div className="gallery-container">
-      <div className="gallery">
-        {imagenes.slice(Math.ceil(imagenes.length / 2)).map((imagen, index) => (
-          <div className="gallery-item" key={index}>
-            <img src={imagen.src} alt="" />
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-</div>
+            <div className="col-md-6">
+                <div className="gallery-container">
+                    <div className="gallery">
+                        {imagenes.slice(0, Math.ceil(imagenes.length / 2)).map((imagen, index) => (
+                            <div className="gallery-item" key={index}>
+                                <img src={imagen} alt="" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+            <div className="col-md-6">
+                <div className="gallery-container">
+                    <div className="gallery">
+                        {imagenes.slice(Math.ceil(imagenes.length / 2)).map((imagen, index) => (
+                            <div className="gallery-item" key={index}>
+                                <img src={imagen} alt="" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </div>
-
+  </div>
     );
 
 }
 
 export default GalleryComponent;
+

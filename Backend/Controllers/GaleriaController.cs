@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using AngleSharp.Html.Parser;
+using HtmlAgilityPack;
 using System.Collections.Generic;
 
 namespace Backend.Controllers
@@ -23,7 +23,7 @@ namespace Backend.Controllers
         {
             if (!string.IsNullOrEmpty(artistName))
             {
-                string url = $"https://www.last.fm/es/music/{Uri.EscapeDataString(artistName)}/+images?{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
+                string url = $"https://www.last.fm/music/{Uri.EscapeDataString(artistName)}/+images?{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
                 Console.WriteLine(url);
 
                 using (HttpClient client = _httpClientFactory.CreateClient())
@@ -34,18 +34,21 @@ namespace Backend.Controllers
                     var response = await client.GetAsync(url);
                     response.EnsureSuccessStatusCode();
 
-                    // Parse HTML response using AngleSharp
+                    // Parse HTML response using HtmlAgilityPack
                     var html = await response.Content.ReadAsStringAsync();
-                    var parser = new HtmlParser();
-                    var document = await parser.ParseDocumentAsync(html);
+                    var doc = new HtmlDocument();
+                    doc.LoadHtml(html);
 
-                    // Get the description from the HTML
+                    // Get the image URLs from the HTML
                     var images = new List<string>();
-                    var imageNodes = document.QuerySelectorAll(".image-list-item img");
-                    foreach (var imageNode in imageNodes)
+                    var imageNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'image-list-item')]//img");
+                    if (imageNodes != null)
                     {
-                        string imageUrl = imageNode.GetAttribute("src");
-                        images.Add(imageUrl.Replace("avatar170s", "avatar1920s"));
+                        foreach (var imageNode in imageNodes)
+                        {
+                            string imageUrl = imageNode.GetAttributeValue("src", "");
+                            images.Add(imageUrl);
+                        }
                     }
 
                     return Ok(images);
@@ -56,4 +59,3 @@ namespace Backend.Controllers
         }
     }
 }
-
