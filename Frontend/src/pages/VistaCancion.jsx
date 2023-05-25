@@ -11,7 +11,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { ProgressBar } from 'react-bootstrap';
 import Loader from './Loader';
 import CommentSection from './ComentariosCaja';
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
 
 
 
@@ -137,7 +137,7 @@ function VistaCancion() {
           .catch(error => console.error(error));
       }
   }, [token, cancion.name, cancion.artists]);
-  
+
 
 
 
@@ -151,6 +151,26 @@ function VistaCancion() {
   console.log(cancion);
 
 
+  const data = {
+    labels: [
+      'Red',
+      'Green',
+      'Yellow',
+      'Grey',
+      'Blue'
+    ],
+    datasets: [{
+      label: 'My First Dataset',
+      data: [11, 16, 7, 3, 14],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(75, 192, 192)',
+        'rgb(255, 205, 86)',
+        'rgb(201, 203, 207)',
+        'rgb(54, 162, 235)'
+      ]
+    }]
+  };
 
   console.log(letras);
 
@@ -264,7 +284,7 @@ function VistaCancion() {
                   </div>
 
                   <div class="col-6">
-
+                    
                   </div>
                 </div>
               </div>
