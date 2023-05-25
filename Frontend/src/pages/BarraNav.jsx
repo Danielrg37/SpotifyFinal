@@ -57,7 +57,7 @@ function BarraNav() {
                 Placeholder
             </a>
             <ul className="nav nav-pills">
-
+                
                 <div className="dropdown" onMouseLeave={handleDropdownClose}>
                     <img src={userData?.images?.[0]?.url}
                         alt="Your Image"
@@ -70,6 +70,7 @@ function BarraNav() {
                             <a href="#" onClick={() => navigate('perfil')}>Perfil</a>
                             <a href="#" onClick={() => navigate('login2')}>Login con Spotify</a>
                            <a href="#" onClick={() => navigate('admin')}>Admin *tmp*</a>
+                           <a href="#" onClick={() => navigate('menuPlaylist')}>Crear playlists</a>
                         </div>
                     )}
                 </div>

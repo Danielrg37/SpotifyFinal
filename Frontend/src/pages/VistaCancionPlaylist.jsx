@@ -1,8 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { InputGroup } from 'react-bootstrap';
-import { FormControl } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
-import { Container } from 'react-bootstrap';
+import { Container, Button, FormControl, InputGroup} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import "./css/busqueda/busqueda.css";
 import BarraNav from './BarraNav';
@@ -124,6 +122,9 @@ function VistaCancionC() {
         }
     };
 
+    const embedUrl = `https://open.spotify.com/embed/track/${cancion.id}`;
+
+
     return (
         <div className='container'>
             <BarraNav />
@@ -142,39 +143,44 @@ function VistaCancionC() {
                             setSearchInput(event.target.value);
                         }}
                     />
-                    <Button className="color-verde" onClick={() => nuevaPlaylist()}>Buscar</Button>
+                    <Button className="color-verde" onClick={() => nuevaPlaylist()}>Crear playlist</Button>
                 </InputGroup>
                 <div className="row mt-3">
-                    <div className='disco-container'>
-                        <h1 style={{textAlign: 'center'}}>Playlist generada</h1>
-                        <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden' }}>
-                            <div className="row">
-                                <div className="row artist-container">
-                                    <div className="col-5 bg-dark artist-image">
-                                        {Object.keys(cancion).length > 0 &&
-                                            <img src={cancion.album.images[0].url} alt="Imagen del cancion" />
-                                        }
-                                    </div>
-
-                                    <div className="col-7 bg-dark artist-details">
-                                        {Object.keys(cancion).length > 0 && playlist_id &&
-
-
-<iframe src={`https://open.spotify.com/embed/playlist/${playlist_id}?show-tracklist=true`} width="100%" height="400" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-
-                                        }
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div className='cancion-container'>
+          <div className="row">
+            <div className="col-4">
+              <img src={cancion.album?.images?.[1]?.url} alt="Artista 1" className="img-fluid" />
+            </div>
+            <div className="col-8">
+              <h2>
+                {cancion.artists && cancion.artists.length > 0 &&
+                  <span>
+                    {cancion.artists.map((artista) => (
+                      <Link key={artista.id} className="custom-underline" to={`/artista/${artista.id}`}>
+                        {artista.name}
+                      </Link>
+                    )).reduce((prev, curr) => [prev, ", ", curr])}
+                  </span>
+                }
+              </h2>
+              <h1>{cancion.name}</h1>
+              <div className="row mt-5">
+                <iframe
+                  id="spotify-iframe"
+                  src={embedUrl}
+                  width="100%"
+                  height="175"
+                  frameBorder="0"
+                  allowtransparency="true"
+                  allow="encrypted-media"
+                />
+              </div>
+            </div>
+            </div>
+            </div>
                 </div>
             </Container>
         </div>
-
-
-
     );
 }
 
