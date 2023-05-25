@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using HtmlAgilityPack;
+using AngleSharp.Html.Parser;
 using System.Collections.Generic;
 
 namespace Backend.Controllers
@@ -23,7 +23,7 @@ namespace Backend.Controllers
         {
             if (!string.IsNullOrEmpty(artistName))
             {
-                string url = $"https://www.last.fm/music/{Uri.EscapeDataString(artistName)}/+images?{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
+                string url = $"https://www.last.fm/es/music/{Uri.EscapeDataString(artistName)}/+images?{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
                 Console.WriteLine(url);
 
                 using (HttpClient client = _httpClientFactory.CreateClient())
@@ -34,21 +34,18 @@ namespace Backend.Controllers
                     var response = await client.GetAsync(url);
                     response.EnsureSuccessStatusCode();
 
-                    // Parse HTML response using HtmlAgilityPack
+                    // Parse HTML response using AngleSharp
                     var html = await response.Content.ReadAsStringAsync();
-                    var doc = new HtmlDocument();
-                    doc.LoadHtml(html);
+                    var parser = new HtmlParser();
+                    var document = await parser.ParseDocumentAsync(html);
 
-                    // Get the image URLs from the HTML
+                    // Get the description from the HTML
                     var images = new List<string>();
-                    var imageNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'image-list-item')]//img");
-                    if (imageNodes != null)
+                    var imageNodes = document.QuerySelectorAll(".image-list-item img");
+                    foreach (var imageNode in imageNodes)
                     {
-                        foreach (var imageNode in imageNodes)
-                        {
-                            string imageUrl = imageNode.GetAttributeValue("src", "");
-                            images.Add(imageUrl);
-                        }
+                        string imageUrl = imageNode.GetAttribute("src");
+                        images.Add(imageUrl.Replace("avatar170s", "avatar1920s"));
                     }
 
                     return Ok(images);
