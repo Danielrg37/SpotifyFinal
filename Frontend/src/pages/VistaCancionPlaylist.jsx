@@ -1,9 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Button, FormControl, InputGroup} from 'react-bootstrap';
+import { Container, Button, FormControl, InputGroup, Form} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import "./css/busqueda/busqueda.css";
 import BarraNav from './BarraNav';
+import { Modal } from 'react-bootstrap';
+
 
 
 function VistaCancionC() {
@@ -14,6 +16,19 @@ function VistaCancionC() {
     const [cancion, setCancion] = useState({});
     const [user_id, setUser_id] = useState('');
     const [playlist_id, setPlaylist_id] = useState('');
+
+    const [showModal, setShowModal] = useState(false);
+
+    const handleCloseModal = () => setShowModal(false);
+    const handleShowModal = () => setShowModal(true);
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        console.log(file);
+        
+    }
+
+    
+
 
 
 
@@ -127,8 +142,40 @@ function VistaCancionC() {
 
     return (
         <div className='container'>
+  <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal.Body>
+        <Modal.Header>
+            <Modal.Title>Crear playlist</Modal.Title>
+        </Modal.Header>
+        <FormControl
+          placeholder="Nombre de la playlist"
+          aria-label="Nombre de la playlist"
+          type="input"
+        />
+        <FormControl
+          placeholder="Descripción de la playlist"
+          aria-label="Descripción de la playlist"
+          type="input"
+          className='mt-3'
+        />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          className='mt-3'
+        />
+      </Modal.Body>
+        <Modal.Footer>
+          <Button className='color-verde' onClick={handleCloseModal}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
             <BarraNav />
             <Container>
+
                 <InputGroup className="mb-3" size="lg">
                     <FormControl
                         placeholder="Busca tu cancion favorito"
@@ -143,7 +190,7 @@ function VistaCancionC() {
                             setSearchInput(event.target.value);
                         }}
                     />
-                    <Button className="color-verde" onClick={() => nuevaPlaylist()}>Crear playlist</Button>
+                    <Button className="color-verde" onClick={() => handleShowModal()}>Crear playlist</Button>
                 </InputGroup>
                 <div className="row mt-3">
                 <div className='cancion-container'>
@@ -181,6 +228,8 @@ function VistaCancionC() {
                 </div>
             </Container>
         </div>
+
+        
     );
 }
 
