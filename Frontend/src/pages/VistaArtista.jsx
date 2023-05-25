@@ -30,9 +30,43 @@ function VistaArtista() {
     const token = localStorage.getItem('token');
     const { id } = useParams();
 
+useEffect(() => {
+  if (token) {    
+    fetch(`http://localhost:5120/ADiscos/${id}`, {
+      method: 'GET',
+      headers: {
+        'X-Access-Token': localStorage.getItem('token'),
+        'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Filter albums and EPs where the artist is the primary artist and not part of "appear on" list
+        const filteredAlbums = data.items.filter(item => {
+          const primaryArtists = item.artists.filter(artist => artist.type === 'artist' && artist.id === id);
+          const appearOnArtists = item.artists.filter(artist => artist.type === 'artist' && artist.id !== id);
+          return (
+            (item.album_type === 'album' || item.album_type === 'ep') &&
+            primaryArtists.length > 0 &&
+            appearOnArtists.length === 0
+          );
+        });
+
+        setAlbums(filteredAlbums);
+      });
+  }
+}, [token]);
+
+console.log(albums);
+
+      
+      
+      console.log(albums);
+      
+
     useEffect(() => {
-        if (token) {    
-            fetch(`http://localhost:5120/Artistadiscos/${id}`, {
+        if (token) {
+            fetch(`http://localhost:5120/ACanciones/${id}`, {
                 method: 'GET',
                 headers: {
                     'X-Access-Token': localStorage.getItem('token'),
@@ -40,25 +74,14 @@ function VistaArtista() {
                 }
             })
                 .then(response => response.json())
-                .then(data => {
-                    setAlbums(data.items);
-                });
-        }
-    }, [token]);
-
-    useEffect(() => {
-        if (token) {
-            fetch(`https://api.spotify.com/v1/artists/${id}/top-tracks?market=ES`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
+                .then(data => { 
                     setCanciones(data.tracks);
                 });
         }
     }, [token]);
+
+   
+
 
     useEffect(() => {
         if (token) {
@@ -134,6 +157,8 @@ function VistaArtista() {
         // Invoke async function to fetch the description
         fetchDescripcion();
       }, [artista.name]);
+
+      
       
     return (
         !token && !artista || !albums && !canciones && !imagenes ? (
