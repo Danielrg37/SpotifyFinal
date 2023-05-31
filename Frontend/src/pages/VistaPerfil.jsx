@@ -209,18 +209,19 @@ function VistaPerfil() {
                     </ButtonGroup>
                 </div>
             </div>
-            <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap', userSelect: 'none' }}>
-                <div class="gradient-container" ref={iconsContainerRef}>
-                    {topCanciones.map((cancion, index) => (
-                        <div key={index} className="d-inline-block mx-2">
-                            <Link to={`/cancion/${cancion.id}`}>
-                                {cancion.album && cancion.album.images && <img src={cancion.album.images[1]?.url} className="img-fluid" style={{ width: '250px', height: '230px' }} />}
-                            </Link>
-                            <p style={{fontSize: '22px'}}>{cancion.name}</p>
-                        </div>
-                    ))}
-                </div>
+            <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap', userSelect: 'none', display: 'flex' }}>
+    <div className="gradient-container" ref={iconsContainerRef} style={{ display: 'flex', flexWrap: 'nowrap', alignItems: 'center' }}>
+        {topCanciones.map((cancion, index) => (
+            <div key={index} className="mx-2">
+                <Link to={`/cancion/${cancion.id}`}>
+                    {cancion.album && cancion.album.images && <img src={cancion.album.images[1]?.url} className="img-fluid" style={{ width: '250px', height: '230px' }} />}
+                </Link>
+                <p style={{ fontSize: '22px', textAlign: 'center', maxWidth: '250px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{cancion.name}</p>
             </div>
+        ))}
+    </div>
+</div>
+
 
             <div className="row mt-5">
                 <div className="col">
@@ -240,19 +241,19 @@ function VistaPerfil() {
                     </ButtonGroup>
                 </div>
             </div>
-            <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap', height: '300px', userSelect: 'none' }}>
-
-  <div className="gradient-container" ref={iconsContainerRef2} >
-                    {topArtistas.map((artista, index) => (
-                        <div key={index} className="d-inline-block mx-2">
-                            <Link to={`/artista/${artista.id}`}>
-                                {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" style={{ width: '250px', height: '230px' }} />}
-                            </Link>
-                            <p style={{fontSize: '22px'}}>{artista.name}</p>
-                        </div>
-                    ))}
-                </div>
+            <div className="col-12" style={{ overflowX: 'hidden', overflowY: 'hidden', whiteSpace: 'nowrap', height: '300px', userSelect: 'none', display: 'flex' }}>
+    <div className="gradient-container" ref={iconsContainerRef2} style={{ display: 'flex', flexWrap: 'nowrap', alignItems: 'center' }}>
+        {topArtistas.map((artista, index) => (
+            <div key={index} className="mx-2">
+                <Link to={`/artista/${artista.id}`}>
+                    {artista.images && <img src={artista.images[1]?.url} alt={`Canción ${index}`} className="img-fluid rounded-circle" style={{ width: '250px', height: '230px' }} />}
+                </Link>
+                <p style={{ fontSize: '22px', textAlign: 'center' }}>{artista.name}</p>
             </div>
+        ))}
+    </div>
+</div>
+
 
 
             <div className="row mt-5">
