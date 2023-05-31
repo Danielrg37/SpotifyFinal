@@ -6,6 +6,7 @@ import './css/home/home.css';
 
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import logo from './../img/logo.png';
 
 
 
@@ -53,16 +54,19 @@ function BarraNav() {
 
     return (
         <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                Placeholder
-            </a>
+            <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <img src={logo} alt="Logo" style={{ width: '72px', height: '72px', borderRadius: '50%', marginRight: '2em'}} />
+                <span className="fs-4">SpotiStats</span>
+            </Link>
+
+
             <ul className="nav nav-pills">
                 
                 <div className="dropdown" onMouseLeave={handleDropdownClose}>
                     <img src={userData?.images?.[0]?.url}
                         alt="Your Image"
                         className="dropdown-img"
-                        style={{ width: '62px', height: '62px', borderRadius: '50%', marginRight: '2em' }}
+                        style={{ width: '72px', height: '72px', borderRadius: '50%', marginRight: '2em' }}
                         onMouseEnter={handleDropdownToggle}
                     />
                     {isDropdownOpen && (

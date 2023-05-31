@@ -55,3 +55,11 @@ body {
 .dropdown-img {
   cursor: pointer;
 }
+
+.footer{
+  background-color: #121212;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 20px;
+}

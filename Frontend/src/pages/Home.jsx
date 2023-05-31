@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import imagenBack from './../img/foto2.png';
 import imagen2 from './../img/foto3.png';
 import BarraNav from './BarraNav';
+import Footer from './Footer';
 
 function Home() {
     const [token, setToken] = useState("")
@@ -70,11 +71,7 @@ function Home() {
                 </div>
             </div>
 
-            <footer>
-                <p class="float-end"><a href="#">Back to top</a></p>
-                <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
-
-            </footer>
+            <Footer />
         </div>
     );
 }
