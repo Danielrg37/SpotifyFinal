@@ -151,7 +151,8 @@ console.log(albums);
             });
       
             const textResponse = await response.text(); // Get the plain text response
-            setDescripcion(textResponse.replace(/{"descripcion":"|"}/g, '')); // Update the state with the plain text response
+            setDescripcion(textResponse.replace(/{"descripcion":"|"}/g, '').replace(/\\u0026quot;/g, '"'));
+            // Update the state with the plain text response
 
           }
         }

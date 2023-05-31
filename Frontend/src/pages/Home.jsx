@@ -38,8 +38,8 @@ function Home() {
             <div className="containers_info">
                 <div class="row">
                     <div class="col-md-8 col-lg-6 text-center">
-                        <h1 class="display-5 fw-bold">Lorem ipsum dolor sit ame</h1>
-                        <p class="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro pariatur, excepturi nulla, fugit ducimus in voluptatem est ipsum rem aliquam minima accusantium a assumenda similique vitae quibusdam laudantium reprehenderit totam!</p>
+                        <h1 class="display-5 fw-bold">Ten más control de tus gustos</h1>
+                        <p class="fs-3">¡Descubre un nuevo mundo de datos sobre tus gustos musicales en Spotify! Regístrate ahora para acceder a información detallada sobre tus artistas, géneros y canciones favoritas. ¡Haz clic abajo y adéntrate en el apasionante universo de la música!</p>
                         <Button className="green-color d-block mx-auto mb-3 mb-md-0" style={{ width: '100%', height: '4rem' }} onClick={() => navigate('/login')}>
                             Placeholder
                         </Button>
@@ -62,7 +62,7 @@ function Home() {
                         <h1>Consulta tus tops de Spotify</h1>
                         <p>¿Quieres saber cuáles son tus canciones y artistas más escuchados en Spotify? Aquí podrás acceder a esta información de forma fácil y rápida.</p>
                         <h1 className='mt-5'>Obten más información de tus artistas y canciones favoritos</h1>
-                        <p>Descubre más sobre tus artistas y canciones favoritos aquí. Obtén información detallada sobre ellos y sus canciones</p>
+                        <p>Descubre más sobre tus artistas y canciones favoritos aquí. Obtén información detallada sobre ellos y sus canciones.</p>
                         <h1 className='mt-5'>Infórmate acerca de conciertos u noticias</h1>
                         <p>No te pierdas los eventos o conciertos de tus artistas favoritos. Aquí, podrás estar al tanto de las últimas noticias y fechas de conciertos en todo el mundo.</p>
 
