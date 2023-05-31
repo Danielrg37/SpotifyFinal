@@ -11,6 +11,10 @@ import { Doughnut } from 'react-chartjs-2';
 import { ProgressBar } from 'react-bootstrap';
 import Loader from './Loader';
 import CommentSection from './ComentariosCaja';
+import { Chart, registerables } from 'chart.js';
+
+import { PolarArea } from 'react-chartjs-2';
+
 
 
 
@@ -30,6 +34,9 @@ function VistaCancion() {
   const { id } = useParams();
   const embedUrl = `https://open.spotify.com/embed/track/${id}`;
 
+  useEffect(() => {
+    Chart.register(...registerables); // Register the necessary scales
+  }, []);
 
   useEffect(() => {
     if (token) {  
@@ -61,12 +68,13 @@ function VistaCancion() {
     }
   }, [token]);
 
-
-  useEffect(() => {
+useEffect(() => {
     if (token) {
-      fetch(`https://api.spotify.com/v1/audio-features/${id}?si=c14fd7cce6ec4d59`, {
+      fetch(`http://localhost:5120/Features/${id}`, {
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`
+          'X-Access-Token': localStorage.getItem('token'),
+          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
         }
       })
         .then(response => response.json())
@@ -123,26 +131,11 @@ function VistaCancion() {
 
   console.log(letras); */
 
-  
-
-
-
-
   function milisegundosAMinutosSegundos(milisegundos) {
     let minutos = Math.floor(milisegundos / 60000);
     let segundos = ((milisegundos % 60000) / 1000).toFixed(0);
     return minutos + ":" + (segundos < 10 ? '0' : '') + segundos;
   }
-
-
-  const canvasRef = useRef(null);
-
-
-
-
-
-
- 
 
   console.log(letras);
 
@@ -256,7 +249,8 @@ function VistaCancion() {
                   </div>
 
                   <div class="col-6">
-                  <canvas ref={canvasRef} />
+                
+
                   </div>
                 </div>
               </div>
