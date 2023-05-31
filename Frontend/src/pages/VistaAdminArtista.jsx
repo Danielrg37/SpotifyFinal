@@ -203,6 +203,7 @@ function VistaAdminArtista() {
   }, [artista.name]);
 
 
+  
   useEffect(() => {
     async function fetchDescripcion() {
       if (artista && artista.name) {
@@ -210,7 +211,7 @@ function VistaAdminArtista() {
           artista.name
         )}`;
         console.log(url);
-
+  
         const response = await fetch(url, {
           headers: {
             'User-Agent':
@@ -218,15 +219,26 @@ function VistaAdminArtista() {
             'Accept-Language': 'en-US,en;q=0.9',
           },
         });
-
+  
         const textResponse = await response.text(); // Get the plain text response
-        setDescripcion(textResponse); // Update the state with the plain text response
+        let unicodeReplacedText = textResponse.replace(/\\\\u([\d\w]{4})/gi, function (match, grp) {
+          return String.fromCharCode(parseInt(grp, 16));
+        });
+        
+        let replacedText = unicodeReplacedText.replace(/{"descripcion":"|"}/g, '').replace(/\\u0026quot;/g, '"').replace(/\\u0026#x27;/g, "'");
+        setDescripcion(replacedText);
+        
+        
+
+        // Update the state with the plain text response
+
       }
     }
-
+  
     // Invoke async function to fetch the description
     fetchDescripcion();
   }, [artista.name]);
+
 
 
 

@@ -41,9 +41,7 @@ function Home() {
                     <div class="col-md-8 col-lg-6 text-center">
                         <h1 class="display-5 fw-bold">Ten más control de tus gustos</h1>
                         <p class="fs-3">¡Descubre un nuevo mundo de datos sobre tus gustos musicales en Spotify! Regístrate ahora para acceder a información detallada sobre tus artistas, géneros y canciones favoritas. ¡Haz clic abajo y adéntrate en el apasionante universo de la música!</p>
-                        <Button className="green-color d-block mx-auto mb-3 mb-md-0" style={{ width: '100%', height: '4rem' }} onClick={() => navigate('/login')}>
-                            Placeholder
-                        </Button>
+                    
                     </div>
                     <div class="col-md-12 col-lg-6 d-flex align-items-center justify-content-center">
                         <img src={imagenBack}  alt="Imagen del artista" style={{ width: '100%', height: '100%', borderRadius: '50px'}} />
