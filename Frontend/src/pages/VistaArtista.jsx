@@ -15,6 +15,7 @@ import cheerio from 'cheerio';
 import Loader from './Loader';
 
 
+
 function VistaArtista() {
 
 
@@ -150,7 +151,8 @@ console.log(albums);
             });
       
             const textResponse = await response.text(); // Get the plain text response
-            setDescripcion(textResponse); // Update the state with the plain text response
+            setDescripcion(textResponse.replace(/{"descripcion":"|"}/g, '')); // Update the state with the plain text response
+
           }
         }
       
@@ -158,6 +160,12 @@ console.log(albums);
         fetchDescripcion();
       }, [artista.name]);
 
+
+    
+    
+
+       
+      
       
       
     return (

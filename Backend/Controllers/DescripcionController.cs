@@ -33,33 +33,33 @@ namespace Backend.Controllers
                     client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
                     client.DefaultRequestHeaders.Add("Accept-Language", "en-US,en;q=0.9");
 
-                    var response = await client.GetAsync(url);
-                    response.EnsureSuccessStatusCode();
+                    var respuesta = await client.GetAsync(url);
+                    respuesta.EnsureSuccessStatusCode();
 
                     // Parse HTML response using HtmlAgilityPack
-                    var html = await response.Content.ReadAsStringAsync();
+                    var html = await respuesta.Content.ReadAsStringAsync();
                     var doc = new HtmlDocument();
                     doc.LoadHtml(html);
 
                     // Get the description from the HTML
-                    var description = new StringBuilder();
+                    var descripcion = new StringBuilder();
                     var container = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'wiki-content')]");
                     if (container != null)
                     {
                         foreach (var paragraph in container.Descendants("p"))
                         {
-                            description.Append(paragraph.InnerText + " ");
+                            descripcion.Append(paragraph.InnerText + " ");
                         }
                     }
 
                     // Create a JObject with the description
                     var jsonObject = new JObject();
-                    jsonObject["description"] = description.ToString();
+                    jsonObject["descripcion"] = descripcion.ToString();
 
                     // Convert the JObject to a JSON string without escaping Unicode characters
                     var jsonString = JsonConvert.SerializeObject(jsonObject, new JsonSerializerSettings
                     {
-                        StringEscapeHandling = StringEscapeHandling.Default
+                        StringEscapeHandling = StringEscapeHandling.EscapeHtml
                     });
 
                     // Return the JSON string as the response
