@@ -59,16 +59,28 @@ function BarraNav() {
                 <span className="fs-4">SpotiStats</span>
             </Link>
 
-
             <ul className="nav nav-pills">
-                
-                <div className="dropdown" onMouseLeave={handleDropdownClose}>
-                    <img src={userData?.images?.[0]?.url}
-                        alt="Your Image"
-                        className="dropdown-img"
-                        style={{ width: '72px', height: '72px', borderRadius: '50%', marginRight: '2em' }}
-                        onMouseEnter={handleDropdownToggle}
-                    />
+  <div className="dropdown" onMouseLeave={handleDropdownClose}>
+    {localStorage.getItem("token") ? (
+      
+
+      <img
+      src="https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png"
+      alt="Placeholder"
+      className="dropdown-img"
+      style={{ width: '72px', height: '72px', borderRadius: '50%', marginRight: '2em' }}
+      onMouseEnter={handleDropdownToggle}
+    />
+    ) : (
+        <img
+        src={userData?.images?.[0]?.url}
+        alt="Your Image"
+        className="dropdown-img"
+        style={{ width: '72px', height: '72px', borderRadius: '50%', marginRight: '2em' }}
+        onMouseEnter={handleDropdownToggle}
+      />
+    )}
+                      
                     {isDropdownOpen && (
                         <div className="dropdown-content">
                             <a href="#" onClick={() => navigate('perfil')}>Perfil</a>
