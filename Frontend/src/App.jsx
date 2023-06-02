@@ -61,6 +61,8 @@ function App() {
           <Route path='/adminUsuario' element={<VistaAdminUsuario />} />
           <Route path='/adminMenu2' element={<VistaMenu />} />
           <Route path='/menuPlaylist' element={<VistaMenuPlaylist />} />
+          <Route path='/loader' element={<Loader />} />
+          <Route path='/barraNav' element={<BarraNav />} />
 
 
         </Routes>

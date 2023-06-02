@@ -12,6 +12,7 @@ import logo from './../img/logo.png';
 
 
 
+
 function BarraNav() {
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -30,6 +31,43 @@ function BarraNav() {
         const token = localStorage.getItem('token');
         setToken(token);
     }, []);
+
+
+
+    const CLIENT_ID = "ff923ecf1dad4ad3b0d5e8e5ec0deaf7";
+const REDIRECT_URI = "http://localhost:5173";
+const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
+const RESPONSE_TYPE = "token";
+const SCOPES = [
+  "user-read-private",
+  "user-read-email",
+  "user-top-read",
+  "user-library-read",
+  "user-read-recently-played",
+  "playlist-modify-public",
+  "playlist-modify-private",
+  "playlist-read-private",
+  "playlist-read-collaborative",
+  "user-follow-read",
+  "user-follow-modify",
+  "user-read-playback-state",
+  "user-modify-playback-state",
+  "user-read-currently-playing",
+  "user-read-playback-position",
+];
+
+
+
+    const handleLogin = () => {
+      localStorage.removeItem('token');
+      window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPES.join("%20")}`;
+    };
+  
+  
+  
+    if (token) {
+      localStorage.setItem('token', token);
+    }
 
 
     useEffect(() => {
@@ -84,7 +122,7 @@ function BarraNav() {
                     {isDropdownOpen && (
                         <div className="dropdown-content">
                             <a href="#" onClick={() => navigate('perfil')}>Perfil</a>
-                            <a href="#" onClick={() => navigate('login2')}>Login con Spotify</a>
+                            <a href="#" onClick={handleLogin}>Login con Spotify</a>
                            <a href="#" onClick={() => navigate('admin')}>Admin *tmp*</a>
                            <a href="#" onClick={() => navigate('menuPlaylist')}>Crear playlists</a>
                         </div>

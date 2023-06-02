@@ -128,6 +128,7 @@ console.log(albums);
             })
                 .then(response => response.json())
                 .then(data => {
+                 
                     setEventos(data);
                 }
                 )
@@ -169,6 +170,7 @@ console.log(albums);
       
          console.log(eventos);
       
+         
       
       
     return (
@@ -304,16 +306,22 @@ console.log(albums);
                 </div>
 
                 <div className="row mt-4">
-                    <div className="col-12">
-                        <div className="eventos-container">
+  <div className="col-12">
+    <div className="eventos-container">
+      <h1>Eventos</h1>
+      {eventos.length === 0 ? (
+        <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+          <h1 style={{ fontSize: '3rem', fontWeight: 'bold', color: '#555' }}>No hay eventos</h1>
+        </div>
+      ) : (
+        <div className="d-flex flex-wrap">
+         <p>{eventos}</p>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
 
-                            <h1>Eventos</h1>
-
-                                                        
-                        </div>
-
-                    </div>
-                </div>
                 <footer>
                     <p class="float-end"><a href="#">Back to top</a></p>
                     <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>

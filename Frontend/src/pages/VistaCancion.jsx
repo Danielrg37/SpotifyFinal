@@ -25,6 +25,7 @@ function VistaCancion() {
   const [albums, setAlbums] = useState([]);
   const [stats, setStats] = useState([]);
   const [letras, setLetras] = useState([]);
+  const [artista, setArtista] = useState([]);
 
 
   const token = localStorage.getItem('token');
@@ -45,6 +46,7 @@ function VistaCancion() {
         .then(data => {
           console.log(data);
           setCancion(data);
+          setArtista(data.artists[0].name);
           return fetch(data.album.href, {
               headers: {
                 'Authorization': `Bearer ${token}`
@@ -56,6 +58,7 @@ function VistaCancion() {
           console.log(data);
           if (data.album_type === "album" || (data.album_type === "single" && data.tracks.total > 1)) {
             setAlbums([data]);
+
           }
         })
         .catch(error => console.error(error));
@@ -84,12 +87,12 @@ useEffect(() => {
 
   useEffect(() => {
     if (cancion.name) {
-      fetch(`http://localhost:5120/letras/${cancion.name} ${cancion.artists}`, {
+      fetch(`http://localhost:5120/letras/${artista}-${cancion.name}`), {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+        }
+      }
         .then(response => response.json())
         .then(data => {
           console.log(data);
@@ -97,7 +100,10 @@ useEffect(() => {
         })
         .catch(error => console.error(error));
     }
-  }, [token, cancion.name]);
+  }, [cancion]);
+
+
+
  
 
 /* 
