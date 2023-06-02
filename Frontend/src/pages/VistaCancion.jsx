@@ -11,9 +11,6 @@ import { Doughnut } from 'react-chartjs-2';
 import { ProgressBar } from 'react-bootstrap';
 import Loader from './Loader';
 import CommentSection from './ComentariosCaja';
-import { Chart, registerables } from 'chart.js';
-
-import { PolarArea } from 'react-chartjs-2';
 
 
 
@@ -34,10 +31,7 @@ function VistaCancion() {
   const { id } = useParams();
   const embedUrl = `https://open.spotify.com/embed/track/${id}`;
 
-  useEffect(() => {
-    Chart.register(...registerables); // Register the necessary scales
-  }, []);
-
+ 
   useEffect(() => {
     if (token) {  
       fetch(`http://localhost:5120/Cancion/${id}`, {

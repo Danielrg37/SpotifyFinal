@@ -165,7 +165,9 @@ console.log(albums);
     
     
 
-       
+       console.log(descripcion);
+      
+         console.log(eventos);
       
       
       
@@ -307,7 +309,7 @@ console.log(albums);
 
                             <h1>Eventos</h1>
 
-
+                                                        
                         </div>
 
                     </div>

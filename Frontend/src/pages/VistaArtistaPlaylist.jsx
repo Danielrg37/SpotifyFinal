@@ -13,7 +13,7 @@ function VistaCancionC() {
     const [searchInput, setSearchInput] = useState('');
     const [token, setToken] = useState('');
     const [recomendaciones, setRecomendaciones] = useState([]);
-    const [cancion, setCancion] = useState({});
+    const [artista, setArtista] = useState({});
     const [user_id, setUser_id] = useState('');
     const [playlist_id, setPlaylist_id] = useState('');
 
@@ -39,7 +39,7 @@ function VistaCancionC() {
 
     useEffect(() => {
         if (token) {
-            fetch(`https://api.spotify.com/v1/search?q=${searchInput}&type=track&limit=4`, {
+            fetch(`https://api.spotify.com/v1/search?q=${searchInput}&type=artist&limit=4`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -47,7 +47,7 @@ function VistaCancionC() {
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
-                    setCancion(data.tracks.items[0]);
+                    setArtista(data.artists.items[0]);
                 })
                 .catch(error => {
                     console.log(error);
@@ -72,23 +72,6 @@ function VistaCancionC() {
         }
     }, [token]); 
 
-    useEffect(() => {
-        if (token) {
-            fetch(`https://localhost:5120/recomendaciones/${cancion.id}`, {
-                method: 'GET',
-                headers: {
-                    'X-Access-Token': localStorage.getItem('token'),
-                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    setRecomendaciones(data);
-                }
-                );
-        }
-    }, [token, cancion]);
     
 
 
@@ -137,7 +120,7 @@ function VistaCancionC() {
         }
     };
 
-    const embedUrl = `https://open.spotify.com/embed/track/${cancion.id}`;
+   
 
 
     return (
@@ -193,41 +176,36 @@ function VistaCancionC() {
                     <Button className="color-verde" onClick={() => handleShowModal()}>Crear playlist</Button>
                 </InputGroup>
                 <div className="row mt-3">
-                <div className='cancion-container'>
-          <div className="row">
-            <div className="col-4">
-              <img src={cancion.album?.images?.[1]?.url} alt="Artista 1" className="img-fluid" />
-            </div>
-            <div className="col-8">
-              <h2>
-                {cancion.artists && cancion.artists.length > 0 &&
-                  <span>
-                    {cancion.artists.map((artista) => (
-                      <Link key={artista.id} className="custom-underline" to={`/artista/${artista.id}`}>
-                        {artista.name}
-                      </Link>
-                    )).reduce((prev, curr) => [prev, ", ", curr])}
-                  </span>
-                }
-              </h2>
-              <h1>{cancion.name}</h1>
-              <div className="row mt-5">
-                <iframe
-                  id="spotify-iframe"
-                  src={embedUrl}
-                  width="100%"
-                  height="175"
-                  frameBorder="0"
-                  allowtransparency="true"
-                  allow="encrypted-media"
-                />
-              </div>
-            </div>
-            </div>
-            </div>
+                <div className='artista-container'>
+                    <div className="row">
+                        <div className="col-4">
+                            <img src={artista?.images?.[1]?.url} alt="Artista 1" className="img-fluid rounded-circle" style={{ width: '250px', height: '250px' }} />
+                        </div>
+                        <div className="col-8">
+                            <h1>{artista.name}</h1>
+                        </div>
+                    </div>
+                    {/* <div class="row mt-3">
+                    <div class="col-md-4 text-center" id="datos">
+                        <h4>Veces reproducido</h4>
+                        <p>Placeholder</p>
+                    </div>
+                    <div class="col-md-4 text-center" id="datos">
+                        <h4>Tiempo total de reproducción</h4>
+                        <p>Placeholder horas</p>
+                    </div>
+                    <div class="col-md-4 text-center" id="datos">
+                        <h4>Última vez escuchado</h4>
+                        <p>Placeholder</p>
+                    </div>
+                </div> */}
                 </div>
+
+            </div>
+        
             </Container>
-        </div>
+      
+                </div>
 
         
     );

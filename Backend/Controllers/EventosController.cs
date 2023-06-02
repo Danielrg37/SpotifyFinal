@@ -43,19 +43,34 @@ namespace Backend.Controllers
                     var doc = new HtmlDocument();
                     doc.LoadHtml(html);
 
-               var web = new HtmlWeb();
-                var doc2 = web.Load(url);
-                
-                var eventoNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'events-list-item')]//a[contains(@class, 'events-list-item-title-link')]");
-                for(int i = 0; i < eventoNodes.Count; i++)
+           var tableNode = doc.DocumentNode.SelectSingleNode("//table[@class='events-list']");
+            if (tableNode != null)
+            {
+                // Process the table rows and cells
+                var rows = tableNode.SelectNodes(".//tr");
+                if (rows != null)
                 {
-                    eventos.Add("a");
-                }
+                    foreach (var row in rows)
+                    {
+                        var cells = row.SelectNodes(".//td");
+                        if (cells != null)
+                        {
+                            var rowData = new List<string>();
+                            foreach (var cell in cells)
+                            {
+                                rowData.Add(cell.InnerText.Trim());
+                            }
+                            eventos.Add(string.Join(", ", rowData));
+                        }
+                    }
                 }
             }
+                }
+              
+          
+}
 
-                return Ok(eventos);
+  return Ok(eventos);
         }
     }
 }
-
