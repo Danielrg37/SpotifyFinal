@@ -11,6 +11,8 @@ import { Doughnut } from 'react-chartjs-2';
 import { ProgressBar } from 'react-bootstrap';
 import Loader from './Loader';
 import CommentSection from './ComentariosCaja';
+import Chart from 'chart.js/auto';
+
 
 
 
@@ -85,6 +87,9 @@ useEffect(() => {
 
   console.log(stats);
 
+
+
+/*   
   useEffect(() => {
     if (cancion.name) {
       fetch(`http://localhost:5120/letras/${artista}-${cancion.name}`), {
@@ -101,9 +106,54 @@ useEffect(() => {
         .catch(error => console.error(error));
     }
   }, [cancion]);
+ */
 
 
-
+  useEffect(() => {
+    const data = [
+      { label: 'Bailabilidad', value: stats.danceability },
+      { label: 'Energía', value: stats.energy },
+      { label: 'Positividad', value: stats.valence },
+      { label: 'Acusticidad', value: stats.acousticness }
+    ];
+  
+    const ctx = document.getElementById('grafico').getContext('2d');
+    let chartInstancia = null;
+  
+    if (ctx) {
+      if (chartInstancia) {
+        chartInstancia.destroy(); // Destruir gráfico existente
+      }
+  
+      chartInstancia = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+          labels: data.map((row) => row.label),
+          datasets: [
+            {
+              data: data.map((row) => row.value),
+              backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0'
+              ]
+            }
+          ]
+        }
+      });
+    }
+  
+    return () => {
+      if (chartInstancia) {
+        chartInstancia.destroy(); // Destruir gráfico al desmontar el componente
+      }
+    };
+  }, [stats]);
+  
+  
+  
+  
  
 
 /* 
@@ -249,7 +299,7 @@ useEffect(() => {
                   </div>
 
                   <div class="col-6">
-                
+                  <canvas id="grafico" width="400" height="400"></canvas>
 
                   </div>
                 </div>
