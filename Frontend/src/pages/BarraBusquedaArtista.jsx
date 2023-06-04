@@ -9,6 +9,7 @@ import { Row } from 'react-bootstrap';
 import "./css/busqueda/busqueda.css";
 import VistaArtista from './VistaArtista';
 
+
 function BarraBusqueda() {
 
   const [searchInput, setSearchInput] = useState('');
@@ -98,9 +99,10 @@ function BarraBusqueda() {
        
 
       </Container>
-
+    
     </div>
     
+  
 
 
 

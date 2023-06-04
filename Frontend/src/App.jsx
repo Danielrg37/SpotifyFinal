@@ -8,7 +8,6 @@ import VistaCancion from './pages/VistaCancion'
 import VistaArtista from './pages/VistaArtista'
 import VistaDisco from './pages/VistaDisco'
 import Admin from './pages/VistaAdmin'
-import SpotifyLogin from './pages/SpotifyLogin'
 import BarraBusqueda from './pages/BarraBusquedaCancion'
 import GalleryComponent from './pages/VistaGaleria'
 import VistaAdminArtista from './pages/VistaAdminArtista'
@@ -47,7 +46,6 @@ function App() {
           <Route path='/playlistA' element={<VistaArtistaP />} />
           <Route path='/disco' element={<VistaDisco />} />
           <Route path='/admin' element={<Admin />} />
-          <Route path='/login2' element={<SpotifyLogin />} />
           <Route path='/cancion/:id' element={<VistaCancion />} />
           <Route path='/artista/:id' element={<VistaArtista />} />
           <Route path='/disco/:id' element={<VistaDisco />} />

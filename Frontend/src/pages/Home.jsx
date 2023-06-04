@@ -68,8 +68,9 @@ function Home() {
                     </div>
                 </div>
             </div>
-
+        <div className="row mt-5">
             <Footer />
+        </div>
         </div>
     );
 }
