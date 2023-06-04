@@ -174,6 +174,10 @@ console.log(albums);
           pais
         };
       };
+
+
+      console.log(eventos);
+
     
       
     return (
@@ -306,25 +310,22 @@ console.log(albums);
         {eventos.map((evento, index) => {
           const { fecha, nombre, artistasInvitados, lugar, pais } = formatEvent(evento);
           return (
-            <li key={index} className="list-group-item">
-              <div>
-                <strong>Fecha:</strong> <p>{fecha}</p>
-              </div>
-              <div>
-                <strong>Nombre:</strong> <p>{nombre}</p>
-              </div>
-              {artistasInvitados.length > 0 && (
-                <div>
-                  <strong>Artistas Invitados:</strong> <p>{artistasInvitados.join(', ')}</p>
+
+       
+            <div className="row">
+                     <p>{eventos}</p>
+                <div className="col-2">
+                    <p style={{color: '#1D8954'}}>{fecha}</p>
                 </div>
-              )}
-              <div>
-                <strong>Lugar:</strong> <p>{lugar}</p> 
-              </div>
-              <div>
-                <strong>País:</strong> <p>{pais}</p>
-              </div>
-            </li>
+                <div className="col-6">
+                    <p style={{color: '#1D8954'}}>{nombre}</p>
+                </div>
+                
+                <div className="col-4">
+                    <p style={{color: '#1D8954'}}>{pais}</p>
+                    </div>
+                </div>
+        
           );
         })}
       </ul>

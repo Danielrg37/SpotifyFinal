@@ -2,9 +2,8 @@ using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Backend.Controllers
@@ -20,15 +19,14 @@ namespace Backend.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-      
-       [HttpGet("{artistName}", Name = "Eventos")]
+        [HttpGet("{artistName}", Name = "Eventos")]
         public async Task<IActionResult> FetchEventos(string artistName)
         {
             var eventos = new List<string>();
             if (!string.IsNullOrEmpty(artistName))
             {
                 string url = $"https://www.last.fm/es/music/{Uri.EscapeDataString(artistName)}/+events?{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
-                Console.WriteLine(url);
+                System.Console.WriteLine(url);
 
                 using (HttpClient client = new HttpClient())
                 {
@@ -43,34 +41,36 @@ namespace Backend.Controllers
                     var doc = new HtmlDocument();
                     doc.LoadHtml(html);
 
-           var tableNode = doc.DocumentNode.SelectSingleNode("//table[@class='events-list']");
-            if (tableNode != null)
-            {
-                // Process the table rows and cells
-                var rows = tableNode.SelectNodes(".//tr");
-                if (rows != null)
-                {
-                    foreach (var row in rows)
+                    var tableNode = doc.DocumentNode.SelectSingleNode("//table[@class='events-list']");
+                    if (tableNode != null)
                     {
-                        var cells = row.SelectNodes(".//td");
-                        if (cells != null)
+                        // Process the table rows and cells
+                        var rows = tableNode.SelectNodes(".//tr");
+                        if (rows != null)
                         {
-                            var rowData = new List<string>();
-                            foreach (var cell in cells)
+                            foreach (var row in rows)
                             {
-                                rowData.Add(cell.InnerText.Trim());
+                                var cells = row.SelectNodes(".//td");
+                                if (cells != null)
+                                {
+                                    var rowData = new List<string>();
+                                    foreach (var cell in cells)
+                                    {
+                                        var cellClassName = cell.GetAttributeValue("class", "").ToLower();
+                                        if (cellClassName != "events-list-item-acts" && cellClassName != "events-list-item-attendees")
+                                        {
+                                            rowData.Add(cell.InnerText.Trim());
+                                        }
+                                    }
+                                    eventos.Add(string.Join(", ", rowData));
+                                }
                             }
-                            eventos.Add(string.Join(", ", rowData));
                         }
                     }
                 }
             }
-                }
-              
-          
-}
 
-  return Ok(eventos);
+            return Ok(eventos);
         }
     }
 }
