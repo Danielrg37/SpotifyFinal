@@ -10,6 +10,10 @@ Controladores que revisar:
 
 -Hacer funcionar esos de arriba que me están dando pelea, el resto ya va y casi mudado todo o me queda cambiar el fetch nicee
 
+
+
+
+
 (Estimación de esto: 3 días)
 -Mejorar zona Admin 3/4 (Queda solo zona usuario, pero es rápido)
 
