@@ -17,72 +17,63 @@ namespace Backend.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-       [HttpGet("{cancion}/{artista}", Name = "letras")]
-public async Task<IActionResult> GetLetra(string cancion, object artista)
+       [HttpGet("{cancion}-{artista}", Name = "letras")]
+public async Task<IActionResult> GetLetra(string cancion, string artista)
 {
+
+
     string accessToken = "1GT5ShgPRGEQmrGnR0Pd0uL4K1fiaytQusPvhKH9NfLo6MdWuzNI-9E_eZhZ4Djp"; // Replace with your Genius API access token
 
-    var httpClient = _httpClientFactory.CreateClient();
+    var client = _httpClientFactory.CreateClient();
+    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-    var searchUrl = $"https://api.genius.com/search?q={cancion} {artista}";
-    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-    var searchResponse = await httpClient.GetAsync(searchUrl);
-    var searchContent = await searchResponse.Content.ReadAsStringAsync();
-    var searchResult = JsonSerializer.Deserialize<GeniusSearchResult>(searchContent);
-
-    if (searchResult.response.hits.Length == 0)
+    var request = new HttpRequestMessage(HttpMethod.Get, $"https://api.genius.com/search?q={cancion}-{artista}");
+    var response = await client.SendAsync(request);
+    if (response.IsSuccessStatusCode)
     {
-        return NotFound("No matching songs found.");
+        using var responseStream = await response.Content.ReadAsStreamAsync();
+        var result = await JsonSerializer.DeserializeAsync<GeniusResponse>(responseStream);
+        return Ok(result);
     }
-
-    var songId = searchResult.response.hits[0].result.id;
-
-    var songUrl = $"https://api.genius.com/songs/{songId}?text_format=plain";
-    var songResponse = await httpClient.GetAsync(songUrl);
-    var songContent = await songResponse.Content.ReadAsStringAsync();
-    var songResult = JsonSerializer.Deserialize<GeniusSongResult>(songContent);
-    var songLyrics = songResult.response.song.description;
-
-    return Ok(songLyrics);
+    else
+    {
+        return NotFound();
+    }
 }
 
-    
-    }
+      public class GeniusResponse
+{
+    public GeniusMeta meta { get; set; }
+    public GeniusSearchResult response { get; set; }
+}
 
-    public class GeniusSearchResult
-    {
-        public GeniusResponse response { get; set; }
-    }
+public class GeniusMeta
+{
+    public int status { get; set; }
+}
 
-    public class GeniusResponse
-    {
-        public GeniusHit[] hits { get; set; }
-    }
+public class GeniusSearchResult
+{
+    public List<GeniusHit> hits { get; set; }
+}
 
-    public class GeniusHit
-    {
-        public GeniusResult result { get; set; }
-    }
+public class GeniusHit
+{
+    public GeniusResult result { get; set; }
+}
 
-  public class GeniusResult
+public class GeniusResult
 {
     public int id { get; set; }
+    public string title { get; set; }
+    // Agrega más propiedades según la estructura de la respuesta de la API de Genius
 }
 
-
-    public class GeniusSongResult
-    {
-        public SongData response { get; set; }
     }
 
-    public class SongData
-    {
-        public SongResult song { get; set; }
-    }
 
-    public class SongResult
-    {
-        public string description { get; set; }
-    }
+  
+
 }
+    

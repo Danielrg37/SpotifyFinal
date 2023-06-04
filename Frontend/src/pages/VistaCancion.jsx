@@ -91,15 +91,15 @@ useEffect(() => {
 
 
 
-/*   
+ 
   useEffect(() => {
     if (cancion.name) {
-      fetch(`http://localhost:5120/letras/${artista}-${cancion.name}`), {
+      fetch(`http://localhost:5120/letras/${artista}-${cancion.name}`, {
         method: 'GET',
         headers: {
-          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+          'Origin': 'http://localhost:5173'  // Reemplaza con la URL y el puerto de tu aplicación frontend
         }
-      }
+      })
         .then(response => response.json())
         .then(data => {
           console.log(data);
@@ -107,9 +107,9 @@ useEffect(() => {
         })
         .catch(error => console.error(error));
     }
-  }, [cancion]);
- */
-
+  }, [cancion.name]);
+  
+console.log(`http://localhost:5120/letras/${artista}-${cancion.name}`);
 
   useEffect(() => {
     const data = [

@@ -14,7 +14,7 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 import Loader from './Loader';
 import Footer from './Footer';
-
+import BarraNav from './BarraNav';
 
 
 function VistaArtista() {
@@ -164,32 +164,24 @@ console.log(albums);
       }, [artista.name]);
 
 
+      const formatEvent = (evento) => {
+        const [fecha, , nombre, artistasInvitados, lugar, pais, _] = evento.split(',').map(item => item.trim());
+        return {
+          fecha,
+          nombre,
+          artistasInvitados: artistasInvitados ? artistasInvitados.split(',').map(item => item.trim()) : [],
+          lugar,
+          pais
+        };
+      };
     
-    
-
-       console.log(descripcion);
-      
-         console.log(eventos);
-      
-         
-      
       
     return (
         !token && !artista || !albums && !canciones && !imagenes ? (
             <Loader />
         ) : (
             <div className="container">
-                <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                    <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        Placeholder
-                    </a>
-
-                    <ul className="nav nav-pills">
-                        <Button className="green-color" onClick={() => navigate('/registro')}>
-                            Placeholder
-                        </Button>
-                    </ul>
-                </header>
+                <BarraNav />
 
                 <div className='artista-container'>
                     <div className="row">
@@ -310,16 +302,33 @@ console.log(albums);
   <div className="col-12">
     <div className="eventos-container">
       <h1>Eventos</h1>
-      {eventos.length === 0 ? (
-        <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-          <h1 style={{ fontSize: '3rem', fontWeight: 'bold', color: '#555' }}>No hay eventos</h1>
-        </div>
-      ) : (
-        <div className="d-flex flex-wrap">
-         <p>{eventos}</p>
-        </div>
-      )}
-    </div>
+      <ul className="list-group">
+        {eventos.map((evento, index) => {
+          const { fecha, nombre, artistasInvitados, lugar, pais } = formatEvent(evento);
+          return (
+            <li key={index} className="list-group-item">
+              <div>
+                <strong>Fecha:</strong> <p>{fecha}</p>
+              </div>
+              <div>
+                <strong>Nombre:</strong> <p>{nombre}</p>
+              </div>
+              {artistasInvitados.length > 0 && (
+                <div>
+                  <strong>Artistas Invitados:</strong> <p>{artistasInvitados.join(', ')}</p>
+                </div>
+              )}
+              <div>
+                <strong>Lugar:</strong> <p>{lugar}</p> 
+              </div>
+              <div>
+                <strong>País:</strong> <p>{pais}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      </div>
   </div>
 </div>
 
