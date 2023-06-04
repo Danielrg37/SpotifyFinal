@@ -165,11 +165,10 @@ console.log(albums);
 
 
       const formatEvent = (evento) => {
-        const [fecha, , nombre, artistasInvitados, lugar, pais, _] = evento.split(',').map(item => item.trim());
+        const [fecha,nombre, lugar, pais]= evento.split(',').map(item => item.trim());
         return {
           fecha,
           nombre,
-          artistasInvitados: artistasInvitados ? artistasInvitados.split(',').map(item => item.trim()) : [],
           lugar,
           pais
         };
@@ -312,22 +311,24 @@ console.log(albums);
           return (
 
        
-            <div className="row">
-                     <p>{eventos}</p>
-                <div className="col-2">
-                    <p style={{color: '#1D8954'}}>{fecha}</p>
-                </div>
-                <div className="col-6">
-                    <p style={{color: '#1D8954'}}>{nombre}</p>
-                </div>
-                
-                <div className="col-4">
-                    <p style={{color: '#1D8954'}}>{pais}</p>
+            <li key={index} className="list-group-item">
+                <div className="row">
+                    <div className="col-4">
+                        <h3>{fecha}</h3>
+                        <p>{nombre}</p>
                     </div>
-                </div>
+
+                    <div className="col-4">
+                        <h3>{lugar}</h3>
+                        <p>{pais}</p>
+                    </div>
+
+        </div>
+            </li>
+                    )
+          }
+        )}
         
-          );
-        })}
       </ul>
       </div>
   </div>
