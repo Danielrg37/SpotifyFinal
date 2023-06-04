@@ -204,7 +204,9 @@ function VistaCancionC() {
             </div>
         
             </Container>
-      
+            <div className="row mt-5">
+            <Footer />
+        </div>
                 </div>
 
         

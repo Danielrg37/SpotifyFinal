@@ -8,6 +8,8 @@ import './css/tops/topx.css';
 
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import BarraNav from './BarraNav';
+import Footer from './Footer';
 
 
 function VistaTotalCanciones() {
@@ -41,17 +43,7 @@ function VistaTotalCanciones() {
 
     return (
         <div className="container">
-            <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    Placeholder
-                </a>
-
-                <ul className="nav nav-pills">
-                    <Button className="green-color" onClick={() => navigate('/registro')}>
-                        Placeholder
-                    </Button>
-                </ul>
-            </header>
+            <BarraNav />
 
             <div className="row">
                 <div className="col-12 mb-4">
@@ -100,16 +92,9 @@ function VistaTotalCanciones() {
 
 
 
-            <footer className="mt-5 pt-5 border-top">
-                <div className="row">
-                    <div className="col-6">
-                        <p>Placeholder</p>
-                    </div>
-                    <div className="col-6">
-                        <p className="float-end"><a href="#">Back to top</a></p>
-                    </div>
-                </div>
-            </footer>
+<div className="row mt-5">
+            <Footer />
+        </div>
         </div>
     );
 }

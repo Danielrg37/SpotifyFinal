@@ -10,6 +10,8 @@ import BarraBusqueda from './BarraBusquedaCancion';
 import { InputGroup, FormControl, ProgressBar } from 'react-bootstrap';
 import VistaArtista from './VistaArtista';
 import CommentSection from './ComentariosCaja';
+import Footer from './Footer';
+import BarraNav from './BarraNav';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -199,16 +201,7 @@ function VistaAdminArtista() {
 
   return (
     <div className="container">
-      <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-          Placeholder
-        </a>
-        <ul className="nav nav-pills">
-          <Button className="green-color" onClick={() => navigate('/registro')}>
-            Placeholder
-          </Button>
-        </ul>
-      </header>
+      <BarraNav />
 
       <div className="containers_info">
         <div className="row">
@@ -388,11 +381,9 @@ function VistaAdminArtista() {
 
      
 
-        <footer>
-          <p class="float-end"><a href="#">Back to top</a></p>
-          <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
-
-        </footer>
+        <div className="row mt-5">
+            <Footer />
+        </div>
       </div>
         )}
       </div>

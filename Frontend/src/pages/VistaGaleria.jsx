@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import cheerio from "cheerio";
 import { Button } from "react-bootstrap";
 import "./css/galeria/vista_galeria.css";
+import BarraNav from "./BarraNav";
+import Footer from "./Footer";
 
 function GalleryComponent() {
     const [imagenes, setImagenes] = useState([]);
@@ -49,22 +51,7 @@ function GalleryComponent() {
 
     return (
         <div className="container">
-            <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a
-                    href="/"
-                    className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-                >
-                    Placeholder
-                </a>
-                <ul className="nav nav-pills">
-                    <Button
-                        className="green-color"
-                        onClick={() => navigate("/registro")}
-                    >
-                        Placeholder
-                    </Button>
-                </ul>
-            </header>
+          <BarraNav />
             <div className="row gallery-container">
                 <div className="col-12">
                     <h1 className="text-center nombre">{artista.name}</h1>
@@ -94,6 +81,9 @@ function GalleryComponent() {
                     </div>
                 </div>
             </div>
+        </div>
+        <div className="row mt-5">
+            <Footer />
         </div>
   </div>
     );

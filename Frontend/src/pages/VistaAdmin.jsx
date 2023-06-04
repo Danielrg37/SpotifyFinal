@@ -9,23 +9,14 @@ import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import usuario from './../img/usuario.png';
 import img_zona2 from './../img/300x300.png';
+import BarraNav from './BarraNav';
 
 function VistaArtista() {
 
     return (
 
         <div className="container">
-            <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    Placeholder
-                </a>
-
-                <ul className="nav nav-pills">
-                    <Button className="green-color" onClick={() => navigate('/registro')}>
-                        Placeholder
-                    </Button>
-                </ul>
-            </header>
+            <BarraNav />
 
 
             <div class="row mt-5">
@@ -62,6 +53,9 @@ function VistaArtista() {
                     </div>
                 </div>
             </div>
+            <div className="row mt-5">
+            <Footer />
+        </div>
         </div>
     );
 }

@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import cheerio from 'cheerio';
 import Loader from './Loader';
+import Footer from './Footer';
 
 
 
@@ -322,11 +323,9 @@ console.log(albums);
   </div>
 </div>
 
-                <footer>
-                    <p class="float-end"><a href="#">Back to top</a></p>
-                    <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
-
-                </footer>
+<div className="row mt-5">
+            <Footer />
+        </div>
             </div>
         ));
 

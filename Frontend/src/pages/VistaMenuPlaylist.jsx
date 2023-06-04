@@ -9,22 +9,13 @@ import Footer from './Footer';
 import  img_artistas  from './../img/admin_artistas.jpg';
 import img_canciones  from './../img/admin_canciones.jpg';
 import img_discos from './../img/admin_discos.png';
+import BarraNav from './BarraNav';
 
 function VistaMenu() {
 
     return (
         <div className="container">
-            <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    Placeholder
-                </a>
-
-                <ul className="nav nav-pills">
-                    <Button className="green-color" onClick={() => navigate('/registro')}>
-                        Placeholder
-                    </Button>
-                </ul>
-            </header>
+            <BarraNav />
 
             <div className="row mt-5">
                 <div className="col-6 text-center" id="datos">
@@ -55,6 +46,9 @@ function VistaMenu() {
                     </div>
                 </div>
             </div>
+            <div className="row mt-5">
+            <Footer />
+        </div>
         </div>
     );
 }

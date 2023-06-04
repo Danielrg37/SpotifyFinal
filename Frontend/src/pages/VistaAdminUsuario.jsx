@@ -6,6 +6,7 @@ import './css/admin/vista_admin.css';
 import { useNavigate } from 'react-router-dom';
 import BarraNav from './BarraNav';
 import img_zona2 from './../img/300x300.png';
+import Footer from './Footer';
 
 function VistaAdminUsuario() {
     return (
@@ -37,6 +38,9 @@ function VistaAdminUsuario() {
 
                 </div>
             </div>
+            <div className="row mt-5">
+            <Footer />
+        </div>
         </div>
 
     )
