@@ -3,6 +3,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Genius.Models;
+using HtmlAgilityPack;
 
 namespace Backend.Controllers
 {
@@ -17,63 +19,81 @@ namespace Backend.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-       [HttpGet("{cancion}-{artista}", Name = "letras")]
-public async Task<IActionResult> GetLetra(string cancion, string artista)
+        [HttpGet("{cancion}-{artista}", Name = "letras")]
+        public async Task<IActionResult> GetLetra(string cancion, string artista)
+        {
+            string accessToken = "1GT5ShgPRGEQmrGnR0Pd0uL4K1fiaytQusPvhKH9NfLo6MdWuzNI-9E_eZhZ4Djp"; // Replace with your Genius API access token
+
+            var client = _httpClientFactory.CreateClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var request = new HttpRequestMessage(HttpMethod.Get, $"https://api.genius.com/search?q={cancion}-{artista}&access_token={accessToken}");
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                var result = await JsonSerializer.DeserializeAsync<GeniusResponse>(responseStream);
+                if (result.response.hits.Count > 0)
+                {
+                    var songId = result.response.hits[0].result.id;
+                    var lyrics = await FetchLyricsAsync(songId);
+                    if (!string.IsNullOrEmpty(lyrics))
+                    {
+                        return Ok(lyrics);
+                    }
+                }
+            }
+
+            return NotFound();
+        }
+
+      private async Task<string> FetchLyricsAsync(int songId)
 {
+    var geniusUrl = $"https://genius.com/songs/{songId}";
+    var httpClient = _httpClientFactory.CreateClient();
+    var response = await httpClient.GetAsync(geniusUrl);
+    response.EnsureSuccessStatusCode();
 
+    var html = await response.Content.ReadAsStringAsync();
+    var doc = new HtmlDocument();
+    doc.LoadHtml(html);
 
-    string accessToken = "1GT5ShgPRGEQmrGnR0Pd0uL4K1fiaytQusPvhKH9NfLo6MdWuzNI-9E_eZhZ4Djp"; // Replace with your Genius API access token
-
-    var client = _httpClientFactory.CreateClient();
-    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-    var request = new HttpRequestMessage(HttpMethod.Get, $"https://api.genius.com/search?q={cancion}-{artista}");
-    var response = await client.SendAsync(request);
-    if (response.IsSuccessStatusCode)
+    var lyrics = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'Lyrics__Container-sc-1ynbvzw-5 Dzxov')]");
+    if (lyrics != null)
     {
-        using var responseStream = await response.Content.ReadAsStreamAsync();
-        var result = await JsonSerializer.DeserializeAsync<GeniusResponse>(responseStream);
-        return Ok(result);
-    }
-    else
-    {
-        return NotFound();
-    }
-}
-
-      public class GeniusResponse
-{
-    public GeniusMeta meta { get; set; }
-    public GeniusSearchResult response { get; set; }
-}
-
-public class GeniusMeta
-{
-    public int status { get; set; }
-}
-
-public class GeniusSearchResult
-{
-    public List<GeniusHit> hits { get; set; }
-}
-
-public class GeniusHit
-{
-    public GeniusResult result { get; set; }
-}
-
-public class GeniusResult
-{
-    public int id { get; set; }
-    public string title { get; set; }
-    // Agrega más propiedades según la estructura de la respuesta de la API de Genius
-}
-
+        return lyrics.InnerText;
     }
 
-
-  
-
+    return null;
 }
-    
+
+
+        public class GeniusResponse
+        {
+            public GeniusMeta meta { get; set; }
+            public GeniusSearchResult response { get; set; }
+        }
+
+        public class GeniusMeta
+        {
+            public int status { get; set; }
+        }
+
+        public class GeniusSearchResult
+        {
+            public List<GeniusHit> hits { get; set; }
+        }
+
+        public class GeniusHit
+        {
+            public GeniusResult result { get; set; }
+        }
+
+        public class GeniusResult
+        {
+            public int id { get; set; }
+            public string title { get; set; }
+            // Add more properties according to the Genius API response structure
+        }
+    }
+}

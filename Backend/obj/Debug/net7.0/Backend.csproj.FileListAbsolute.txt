@@ -34,3 +34,7 @@ C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\obj\Debug\net7.0\ref\Bac
 C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\bin\Debug\net7.0\HtmlAgilityPack.dll
 C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\bin\Debug\net7.0\AngleSharp.dll
+C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\bin\Debug\net7.0\Genius.dll
+C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\bin\Debug\net7.0\Jil.dll
+C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\bin\Debug\net7.0\Sigil.dll
+C:\Users\Administrator\Downloads\SpotifyFinal-1\Backend\bin\Debug\net7.0\System.Runtime.InteropServices.PInvoke.dll
