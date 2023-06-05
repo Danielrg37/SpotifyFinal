@@ -163,19 +163,9 @@ console.log(albums);
         fetchDescripcion();
       }, [artista.name]);
 
-
-      const formatEvent = (evento) => {
-        const [fecha,nombre, lugar, pais]= evento.split(',').map(item => item.trim());
-        return {
-          fecha,
-          nombre,
-          lugar,
-          pais
-        };
-      };
+     
 
 
-      console.log(eventos);
 
     
       
@@ -294,6 +284,7 @@ console.log(albums);
                                     <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 3</h4>
                                     <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
                                     <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 4</h4>
+                                    <p>{eventos}</p>
                                     <p style={{ borderBottom: '1px solid white', marginBottom: "20px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
                                 </div>
                             </div>
@@ -304,32 +295,13 @@ console.log(albums);
                 <div className="row mt-4">
   <div className="col-12">
     <div className="eventos-container">
-      <h1>Eventos</h1>
-      <ul className="list-group">
-        {eventos.map((evento, index) => {
-          const { fecha, nombre, artistasInvitados, lugar, pais } = formatEvent(evento);
-          return (
+    <h1>Eventos</h1>
 
-       
-            <li key={index} className="list-group-item">
-                <div className="row">
-                    <div className="col-4">
-                        <h3>{fecha}</h3>
-                        <p>{nombre}</p>
-                    </div>
+                                                        
+<p>{eventos}</p>
 
-                    <div className="col-4">
-                        <h3>{lugar}</h3>
-                        <p>{pais}</p>
-                    </div>
-
-        </div>
-            </li>
-                    )
-          }
-        )}
-        
-      </ul>
+     
+     
       </div>
   </div>
 </div>

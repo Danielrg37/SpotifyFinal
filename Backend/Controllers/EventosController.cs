@@ -62,7 +62,7 @@ namespace Backend.Controllers
                                             rowData.Add(cell.InnerText.Trim());
                                         }
                                     }
-                                    eventos.Add(string.Join(", ", rowData));
+                                    eventos.Add(string.Join("./ ", rowData));
                                 }
                             }
                         }
