@@ -58,10 +58,11 @@ namespace Backend.Controllers
     var doc = new HtmlDocument();
     doc.LoadHtml(html);
 
-    var lyrics = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'Lyrics__Container-sc-1ynbvzw-5 Dzxov')]");
-    if (lyrics != null)
+  var lyricsNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'Lyrics__Container-sc-1ynbvzw-5')]");
+    if (lyricsNodes != null)
     {
-        return lyrics.InnerText;
+        var lyrics = string.Join("\n\n", lyricsNodes.Select(node => node.InnerText));
+        return lyrics;
     }
 
     return null;
