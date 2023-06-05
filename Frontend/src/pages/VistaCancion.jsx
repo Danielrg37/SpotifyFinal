@@ -93,22 +93,36 @@ useEffect(() => {
 
 
  
-  useEffect(() => {
-    if (cancion.name) {
-      fetch(`http://localhost:5120/letras/${artista}-${cancion.name}`, {
-        method: 'GET',
-        headers: {
-          'Origin': 'http://localhost:5173'  // Reemplaza con la URL y el puerto de tu aplicación frontend
-        }
+ useEffect(() => {
+  if (cancion.name) {
+    fetch(`http://localhost:5120/letras/${artista}-${cancion.name}`, {
+      method: 'GET',
+      headers: {
+        'Origin': 'http://localhost:5173'  // Reemplaza con la URL y el puerto de tu aplicación frontend
+      }
+    })
+      .then(response => response.text()) // Read the response as text, not JSON
+      .then(data => {
+        const lyrics = data.replace(/&quot;/g, '"'); // Replace HTML entity &quot; with "
+        const decodedLyrics = decodeURIComponent(lyrics);
+
+        // Split the lyrics into lines
+        const lines = decodedLyrics.split('\n');
+
+        // Render the lyrics with line breaks
+        const lyricsMarkup = lines.map((line, index) => (
+          <div key={index}>{line}<br/></div>
+        ));
+
+        // Set the lyrics in your state
+        setLetras(lyricsMarkup);
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          setLetras(data);
-        })
-        .catch(error => console.error(error));
-    }
-  }, [cancion.name]);
+      .catch(error => console.error(error));
+  }
+}, [cancion.name]);
+
+  
+  
   
 console.log(`http://localhost:5120/letras/${artista}-${cancion.name}`);
 
@@ -308,42 +322,7 @@ console.log(`http://localhost:5120/letras/${artista}-${cancion.name}`);
               <h2>Letra</h2>
               <div class="lyrics-container">
   <div class="lyrics-column">
-    <p>[Intro: María Escarmiento]<br></br>
-    Ah-ah-ah-ah, ah-ah-ah-ah-ah<br></br>
-    Ah, ah, ah-ah<br></br>
-    Ah, ah-ah-ah</p>
-
-    <p>[Estribillo: María Escarmiento]<br></br>
-    Ni yo misma sabía cómo lloraba tanto<br></br>
-    Ese día que te llamé (Eah)<br></br>
-    Llevaba ya horas sentada en un banco<br></br>
-    Sola, sin poderme mover (Ahj-ah)<br></br>
-    Te la suda todo, y esto va para largo<br></br>
-    Esta vez no voy a poder (Poder)<br></br>
-    Me ganaste y salté (Uh, uh, uh, uh, uh)</p>
-
- 
-
-    <p>[Estribillo: María Escarmiento]<br></br>
-    Ni yo misma sé cómo lloraba tanto<br></br>
-    Ese día que te llamé (Ah-ah)<br></br>
-    Llevaba ya horas sentada en un banco (Oh)<br></br>
-    Sola, sin poderme mover<br></br>
-    Te la suda todo, y esto va para largo<br></br>
-  Esta vez no voy a poder (Poder)<br></br>
-    Me ganaste y salté (Salté)</p>
-
-  
-
-    <p>[Estribillo: María Escarmiento]<br></br>
-    Ni yo misma sé cómo lloraba tanto<br></br>
-    Ese día que te llamé<br></br>
-    Llevaba ya horas sentada en un banco<br></br>
-  Sola, sin poderme mover<br></br>
-    Ya yo misma sé cómo lloraba tanto<br></br>
-    Ese día que te llamé<br></br>
-    Ni yo misma sé cómo lloraba tanto<br></br>
-    Tanto, tan-tan-tan-tan-tanto</p>
+  <p>{letras}</p>
   </div>
 
 
