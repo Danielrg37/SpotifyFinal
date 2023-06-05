@@ -121,20 +121,21 @@ console.log(albums);
 
     useEffect(() => {
         if (artista.name) {
-            fetch(`http://localhost:5120/eventos/${artista.name}`, {
-                method: 'GET',
-                headers: {
-                    'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                 
-                    setEventos(data);
-                }
-                )
+          fetch(`http://localhost:5120/eventos/${artista.name}`, {
+            method: 'GET',
+            headers: {
+              'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+        
+        
+            setEventos(data);
+          });
         }
-    }, [artista.name]);
+      }, [artista.name]);
+      
 
     useEffect(() => {
         async function fetchDescripcion() {
@@ -164,8 +165,22 @@ console.log(albums);
       }, [artista.name]);
 
      
+      const formatEvent = (evento) => {
+        const [fecha, detalles, lugar, pais] = evento.split('./').map(item => item.trim());
+        const [nombre, ...artistas] = detalles.split(', ');
+        const formattedNombre = nombre.trim();
+        return {
+          fecha,
+          nombre: formattedNombre,
+          artistas: artistas.join(', '),
+          lugar,
+          pais
+        };
+      };
+      
+      
 
-
+      console.log(eventos);
 
     
       
@@ -274,37 +289,40 @@ console.log(albums);
 
 
                             <div class="col-md-6 text-center">
-                                <div className='noticias-container'>
-                                    <h1 style={{ textAlign: "left" }}>Noticias</h1>
+                                <div className='eventos-container'>
+                                    <h1 style={{ textAlign: "left" }}>Eventos</h1>
 
-                                    <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 1</h4>
-                                    <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                                    <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 2</h4>
-                                    <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                                    <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 3</h4>
-                                    <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                                    <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 4</h4>
-                                    <p>{eventos}</p>
-                                    <p style={{ borderBottom: '1px solid white', marginBottom: "20px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                                </div>
+                                    <ul className="list-group">
+        {eventos.map((evento, index) => {
+          const { fecha, nombre, artistasInvitados, lugar, pais } = formatEvent(evento);
+          return (
+
+       
+            <li key={index} className="list-group-item">
+                <div className="row">
+                    <div className="col-4">
+                        <h3>{fecha}</h3>
+                        <p>{nombre}</p>
+                        
+                    </div>
+
+                    <div className="col-4">
+                        <h3>{lugar}</h3>
+                        <p>{pais}</p>
+                    </div>
+
+        </div>
+            </li>
+                    )
+          }
+        )}
+        
+      </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div className="row mt-4">
-  <div className="col-12">
-    <div className="eventos-container">
-    <h1>Eventos</h1>
-
-                                                        
-<p>{eventos}</p>
-
-     
-     
-      </div>
-  </div>
-</div>
+            </div>
 
 <div className="row mt-5">
             <Footer />

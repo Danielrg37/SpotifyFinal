@@ -45,32 +45,38 @@ namespace Backend.Controllers
                     if (tableNode != null)
                     {
                         // Process the table rows and cells
-                        var rows = tableNode.SelectNodes(".//tr");
-                        if (rows != null)
-                        {
-                            foreach (var row in rows)
-                            {
-                                var cells = row.SelectNodes(".//td");
-                                if (cells != null)
-                                {
-                                    var rowData = new List<string>();
-                                    foreach (var cell in cells)
-                                    {
-                                        var cellClassName = cell.GetAttributeValue("class", "").ToLower();
-                                        if (cellClassName != "events-list-item-acts" && cellClassName != "events-list-item-attendees")
-                                        {
-                                            rowData.Add(cell.InnerText.Trim());
-                                        }
-                                    }
-                                    eventos.Add(string.Join("./ ", rowData));
-                                }
-                            }
-                        }
+           var rows = tableNode.SelectNodes(".//tr");
+if (rows != null)
+{
+    foreach (var row in rows)
+    {
+        var cells = row.SelectNodes(".//td");
+        if (cells != null)
+        {
+            var rowData = new List<string>();
+            foreach (var cell in cells)
+            {
+                var cellClassName = cell.GetAttributeValue("class", "").ToLower();
+                if (cellClassName == "events-list-item-event")
+                {
+                    var actsDiv = cell.SelectSingleNode(".//div[contains(@class, 'events-list-item-acts')]");
+                    if (actsDiv != null)
+                    {
+                        actsDiv.RemoveAll();
+                    }
+                }
+                rowData.Add(cell.InnerText.Trim());
+            }
+            eventos.Add(string.Join("./ ", rowData));
+        }
+    }
+}
+
                     }
                 }
             }
-
             return Ok(eventos);
         }
     }
 }
+
