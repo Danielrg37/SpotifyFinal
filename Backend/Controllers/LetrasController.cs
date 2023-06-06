@@ -61,8 +61,10 @@ namespace Backend.Controllers
   var lyricsNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'Lyrics__Container-sc-1ynbvzw-5')]");
     if (lyricsNodes != null)
     {
-        var lyrics = string.Join("\n\n", lyricsNodes.Select(node => node.InnerText));
-        return lyrics;
+ var lyrics = string.Join("\n\n", lyricsNodes.Select(node => string.Join("\n", node.DescendantsAndSelf().Where(n => n.NodeType == HtmlNodeType.Text).Select(n => n.InnerText.Trim()))));
+return lyrics;
+
+
     }
 
     return null;

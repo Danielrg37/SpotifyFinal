@@ -164,6 +164,7 @@ function VistaCancionC() {
           onChange={handleImageUpload}
           className='mt-3'
 
+          
         />
       </Modal.Body>
         <Modal.Footer>
