@@ -7,12 +7,12 @@ using System.Data.SqlClient;
 namespace Backend.Controllers
 {
     [ApiController]
-    [Route("conexion")]
-    public class ConexionController : ControllerBase
+    [Route("conexion_usuarios")]
+    public class UsuariosController : ControllerBase
     {
         private readonly string conexion;
 
-        public ConexionController()
+        public UsuariosController()
         {
             // Cadena de conexión
             conexion = "Data Source=EC2AMAZ-HD3BM03\\MSSQLSERVER01;Initial Catalog=Spotify;User ID=EC2AMAZ-HD3BM03\\Administrator;Integrated Security=True";
@@ -160,51 +160,8 @@ namespace Backend.Controllers
                 }
             }
         }
-
-
-        
-      [HttpPost("usuarios/editar")]
-        public IActionResult Comentarios([FromBody] EditarUsuarioRequest request)
-        {
-            using (SqlConnection conexion5 = ObtenerConexion())
-            {
-                try
-                {
-                    // Abrir la conexión
-                    conexion5.Open();
-
-                    // Crear el comando SQL para editar el usuario
-                    string sqlQuery = "UPDATE Usuarios SET nombreUsuario = @NombreUsuario, email = @Email WHERE id = @Id";
-                    SqlCommand comando3 = new SqlCommand(sqlQuery, conexion5);
-                    comando3.Parameters.AddWithValue("@Id", request.Id);
-                    comando3.Parameters.AddWithValue("@NombreUsuario", request.NombreUsuario);
-                    comando3.Parameters.AddWithValue("@Email", request.Email);
-
-                    // Ejecutar el comando
-                    int rowsAffected = comando3.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        // El usuario se editó exitosamente
-                        return Ok("Usuario editado exitosamente");
-                    }
-                    else
-                    {
-                        // No se encontró el usuario o no se pudo editar
-                        return NotFound("No se encontró el usuario o no se pudo editar");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Error al editar el usuario
-                    return BadRequest("Error al editar el usuario: " + ex.Message);
-                }
-            }
-        }
     }
-
     
-
 
     public class Usuario
     {
@@ -225,3 +182,4 @@ namespace Backend.Controllers
         public string Email { get; set; }
     }
 }
+ 
