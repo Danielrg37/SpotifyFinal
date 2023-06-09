@@ -14,6 +14,7 @@ import CommentSection from './ComentariosCaja';
 import Chart from 'chart.js/auto';
 import Footer from './Footer';
 import BarraNav from './BarraNav';  
+import 'chartjs-plugin-datalabels';
 
 
 
@@ -31,6 +32,7 @@ function VistaCancion() {
   const [stats, setStats] = useState([]);
   const [letras, setLetras] = useState([]);
   const [artista, setArtista] = useState([]);
+  const [noLetras, setNoLetras] = useState(false);
 
 
   const token = localStorage.getItem('token');
@@ -101,10 +103,13 @@ useEffect(() => {
         'Origin': 'http://localhost:5173'  // Reemplaza con la URL y el puerto de tu aplicación frontend
       }
     })
-      .then(response => response.text()) // Read the response as text, not JSON
+      .then(response => response.text()) // Convertir la respuesta a texto
       .then(data => {
-        const lyrics = data.replace(/&quot;/g, '"'); // Replace HTML entity &quot; with "
+       
+        const lyrics = data.replace(/&quot;/g, '"').replace(/{"descripcion":"|"}/g, '').replace(/\\u0026quot;/g, '"'); // Replace HTML entity &quot; with "
         const decodedLyrics = decodeURIComponent(lyrics);
+
+      
 
         // Split the lyrics into lines
         const lines = decodedLyrics.split('\n');
@@ -114,59 +119,85 @@ useEffect(() => {
           <div key={index}>{line}<br/></div>
         ));
 
+     
+
         // Set the lyrics in your state
         setLetras(lyricsMarkup);
+
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        setError(true);
+        console.error(error);
+      
+        
+      });
   }
 }, [cancion.name]);
+  
 
-  
-  
   
 console.log(`http://localhost:5120/letras/${artista}-${cancion.name}`);
 
-  useEffect(() => {
-    const data = [
-      { label: 'Bailabilidad', value: stats.danceability },
-      { label: 'Energía', value: stats.energy },
-      { label: 'Positividad', value: stats.valence },
-      { label: 'Acusticidad', value: stats.acousticness }
-    ];
+
+
+useEffect(() => {
   
-    const ctx = document.getElementById('grafico').getContext('2d');
-    let chartInstancia = null;
-  
-    if (ctx) {
-      if (chartInstancia) {
-        chartInstancia.destroy(); // Destruir gráfico existente
+  const data = {
+    labels: ['Bailabilidad', 'Energía', 'Positividad', 'Acusticidad'],
+    datasets: [
+      {
+        data: [
+          stats[0]?.danceability * 100,
+          stats[0]?.energy * 100,
+          stats[0]?.speechiness * 100,
+          stats[0]?.acousticness * 100
+        ],
+        backgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#4BC0C0'
+        ]
       }
-  
-      chartInstancia = new Chart(ctx, {
-        type: 'polarArea',
-        data: {
-          labels: data.map((row) => row.label),
-          datasets: [
-            {
-              data: data.map((row) => row.value),
-              backgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56',
-                '#4BC0C0'
-              ]
-            }
-          ]
-        }
-      });
+    ]
+  };
+
+  const ctx = document.getElementById('grafico').getContext('2d');
+  let chartInstance = null;
+
+  if (ctx) {
+    if (chartInstance) {
+      chartInstance.destroy(); // Destruir gráfico existente
     }
-  
-    return () => {
-      if (chartInstancia) {
-        chartInstancia.destroy(); // Destruir gráfico al desmontar el componente
+
+    chartInstance = new Chart(ctx, {
+      type: 'polarArea',
+      data: data,
+      options: {
+        plugins: {
+          datalabels: {
+            color: '#000',
+            font: {
+              size: 12,
+              weight: 'bold'
+            },
+            formatter: (value, context) => {
+              return value.toString(); // Formato del valor, puedes personalizarlo según tus necesidades
+            }
+          }
+        }
       }
-    };
-  }, [stats]);
+    });
+  }
+
+  return () => {
+    if (chartInstance) {
+      chartInstance.destroy(); // Destruir gráfico al desmontar el componente
+    }
+  };
+}, [stats]);
+
+
   
   
   
@@ -204,7 +235,7 @@ console.log(`http://localhost:5120/letras/${artista}-${cancion.name}`);
     return minutos + ":" + (segundos < 10 ? '0' : '') + segundos;
   }
 
-  console.log(letras);
+  
 
   return (
     !cancion && !cancion.album && !cancion.album.images ? (
@@ -306,7 +337,9 @@ console.log(`http://localhost:5120/letras/${artista}-${cancion.name}`);
                   </div>
 
                   <div class="col-6">
-                  <canvas id="grafico" width="400" height="400"></canvas>
+                  <div className="op-container">
+  <canvas id="grafico" width="400" height="400"></canvas>
+</div>
 
                   </div>
                 </div>
@@ -322,6 +355,7 @@ console.log(`http://localhost:5120/letras/${artista}-${cancion.name}`);
               <h2>Letra</h2>
               <div class="lyrics-container">
   <div class="lyrics-column">
+    
   <p>{letras}</p>
   </div>
 
