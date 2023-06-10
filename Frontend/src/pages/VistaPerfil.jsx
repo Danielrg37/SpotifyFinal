@@ -11,6 +11,7 @@ import Loader from './Loader';
 import axios from 'axios';
 import { useRef } from 'react';
 import BarraNav from './BarraNav';
+import Footer from './Footer';
 
 
 function VistaPerfil() {
@@ -288,11 +289,9 @@ function VistaPerfil() {
                     </div>
                 </div>
             </div>
-            <footer>
-                <p class="float-end"><a href="#">Back to top</a></p>
-                <p>Placeholder <a href="#">Placeholder</a> · <a href="#"></a></p>
-
-            </footer>
+            <div className="row mt-5">
+            <Footer />
+        </div>
         </div>
     ));
 };

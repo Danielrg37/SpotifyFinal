@@ -38,6 +38,18 @@ function VistaAdminArtista() {
   const [token, setToken] = useState(null);
   const [searchInput, setSearchInput] = useState('');
   const [artista, setArtista] = useState({});
+  
+  const [albums, setAlbums] = useState([]);
+  const [canciones, setCanciones] = useState([]);
+  const [noticias, setNoticias] = useState([]);
+  const [imagenes, setImagenes] = useState([]);
+  const [descripcion, setDescripcion] = useState([]);
+  const [textoCortado, setTextoCortado] = useState([]);
+  const [eventos, setEventos] = useState([]);
+
+  console.log(artista);
+  var id = artista.id;
+  console.log(id);
 
 
 
@@ -80,17 +92,7 @@ function VistaAdminArtista() {
 
 
   // Socorro
-  const [albums, setAlbums] = useState([]);
-  const [canciones, setCanciones] = useState([]);
-  const [noticias, setNoticias] = useState([]);
-  const [imagenes, setImagenes] = useState([]);
-  const [descripcion, setDescripcion] = useState([]);
-  const [textoCortado, setTextoCortado] = useState([]);
-  const [eventos, setEventos] = useState([]);
 
-  console.log(artista);
-  var id = artista.id;
-  console.log(id);
 
   useEffect(() => {
     if (token && id !== undefined) {
@@ -407,7 +409,7 @@ function VistaAdminArtista() {
         )}
       </div>
       <div className="row mt-5">
-            <Footer />
+      <Footer style={{ marginTop: 'auto' }} />
         </div>
     </div>
   );

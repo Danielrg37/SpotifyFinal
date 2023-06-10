@@ -17,9 +17,72 @@ function BarraNav() {
     setIsDropdownOpen(false);
   };
 
+  const checkTokenExpiration = () => {
+    const expirationTime = localStorage.getItem('tokenExpiration');
+    if (expirationTime && Date.now() >= Number(expirationTime)) {
+      // Token has expired
+      refreshAccessToken();
+    }
+  };
+
+  const refreshAccessToken = () => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!refreshToken) {
+      // No refresh token available, user needs to log in again
+      handleLogout();
+      return;
+    }
+
+    // Make a request to your server to refresh the access token
+    fetch('http://localhost:5120/refresh-token', {
+      method: 'POST',
+      body: JSON.stringify({ refreshToken }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.access_token) {
+          // Refresh successful, update the token and expiration time
+          setToken(data.access_token);
+          localStorage.setItem('token', data.access_token);
+          const expirationTime = Date.now() + data.expires_in * 1000;
+          localStorage.setItem('tokenExpiration', expirationTime);
+        } else {
+          // Refresh failed, user needs to log in again
+          handleLogout();
+        }
+      })
+      .catch(error => {
+        console.error('Error refreshing access token:', error);
+        handleLogout();
+      });
+  };
+
+  const handleLogout = () => {
+    // Clear the token and related data from local storage
+    localStorage.removeItem('token');
+    localStorage.removeItem('tokenExpiration');
+    localStorage.removeItem('refreshToken');
+    setToken(null);
+  };
+
+  useEffect(() => {
+    checkTokenExpiration();
+  }, []);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const expirationTime = localStorage.getItem('tokenExpiration');
     setToken(token);
+    if (token && expirationTime) {
+      setToken(token);
+      if (Date.now() >= Number(expirationTime)) {
+        // Token has expired, refresh it
+        refreshAccessToken();
+      }
+    }
   }, []);
 
   const CLIENT_ID = 'ff923ecf1dad4ad3b0d5e8e5ec0deaf7';
@@ -46,6 +109,8 @@ function BarraNav() {
 
   const handleLogin = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('tokenExpiration');
+    localStorage.removeItem('refreshToken');
     window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPES.join(
       '%20'
     )}`;
@@ -56,8 +121,8 @@ function BarraNav() {
       fetch(`http://localhost:5120/Perfil`, {
         method: 'GET',
         headers: {
-          'X-Access-Token': localStorage.getItem('token'),
-          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+          'X-Access-Token': token,
+          Origin: 'http://localhost:5173' // Replace with your front-end application's URL and port
         }
       })
         .then(response => response.json())
@@ -100,20 +165,14 @@ function BarraNav() {
 
           {isDropdownOpen && (
             <div className="dropdown-content">
-              <a href="#" onClick={() => navigate('perfil')}>
-                Perfil
-              </a>
+              <Link to="/perfil">Perfil</Link>
               {!token && (
                 <a href="#" onClick={handleLogin}>
                   Login con Spotify
                 </a>
               )}
-              <a href="#" onClick={() => navigate('admin')}>
-                Admin *tmp*
-              </a>
-              <a href="#" onClick={() => navigate('menuPlaylist')}>
-                Crear playlists
-              </a>
+              <Link to="/admin">Admin</Link>
+              <Link to="/menuPlaylist">Crear Playlist</Link>
             </div>
           )}
         </div>
@@ -123,4 +182,3 @@ function BarraNav() {
 }
 
 export default BarraNav;
-

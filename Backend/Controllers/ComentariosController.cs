@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+/* using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,11 +8,11 @@ namespace Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UsuariosController : ControllerBase
+    public class ComentariosController : ControllerBase
     {
         private readonly string conexion;
 
-        public UsuariosController()
+        public ComentariosController()
         {
             // Cadena de conexión
             conexion = "Data Source=EC2AMAZ-HD3BM03\\MSSQLSERVER01;Initial Catalog=Spotify;User ID=EC2AMAZ-HD3BM03\\Administrator;Integrated Security=True";
@@ -186,4 +186,4 @@ namespace Backend.Controllers
         public string Email { get; set; }
     }
 }
- 
+  */

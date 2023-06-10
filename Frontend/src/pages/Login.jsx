@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/registro/registro.css";
 import BarraNav from "./BarraNav";
 import Footer from "./Footer";
+import { useEffect } from "react";
 
 function Login() {
   const [nombreUsuario, setNombreUsuario] = useState("");
@@ -14,14 +15,28 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Aquí podrías hacer la llamada a tu API para enviar los datos del formulario
+
+   
     console.log(`Nombre de usuario: ${nombreUsuario}, Contraseña: ${contrasena}`);
     navigate("/");
   };
 
+  useEffect(() => { 
+    fetch(`http://localhost:5120/usuarios`, {
+      method: 'GET',
+      headers: {
+        'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }, []);
+
   return (
     <div className="container">
-      
+      <BarraNav />
       <div className="p-5 mb-4 rounded-3 registro-container">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import "./css/busqueda/busqueda.css";
 import BarraNav from './BarraNav';
 import { Modal } from 'react-bootstrap';
-
+import Footer from './Footer';
 
 
 function VistaCancionC() {

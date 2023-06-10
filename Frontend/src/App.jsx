@@ -25,6 +25,7 @@ import VistaTotalArtistas from './pages/VistaTotalArtistas'
 import VistaTotalCanciones from './pages/VistaTotalCanciones'
 import VistaCancionP from './pages/VistaCancionPlaylist'
 import VistaArtistaP from './pages/VistaArtistaPlaylist'
+import VistaAdminDisco from './pages/VistaAdminDisco'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import CommentSection from './pages/ComentariosCaja'
@@ -56,6 +57,7 @@ function App() {
           <Route path='/galeria/:id' element={<GalleryComponent />} />
           <Route path='/adminArtista' element={<VistaAdminArtista />} />
           <Route path='/adminCancion' element={<VistaAdminCancion />} />
+          <Route path='/adminDisco' element={<VistaAdminDisco />} />
           <Route path='/adminUsuario' element={<VistaAdminUsuario />} />
           <Route path='/adminMenu2' element={<VistaMenu />} />
           <Route path='/menuPlaylist' element={<VistaMenuPlaylist />} />
