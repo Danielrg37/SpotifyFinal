@@ -39,6 +39,21 @@ function VistaCancion() {
   const { id } = useParams();
   const embedUrl = `https://open.spotify.com/embed/track/${id}`;
 
+
+  const [CancionID, setCancionID] = useState("");
+  const [ArtistaID, setArtistaID] = useState("");
+  const [DiscoID, setDiscoID] = useState("");
+  const [UsuarioID, setUsuarioID] = useState("");
+
+
+  useEffect(() => {
+    setCancionID(id);
+    setArtistaID("-");
+    setDiscoID("-");
+  }, [id]);
+  
+
+
  
   useEffect(() => {
     if (token) {  
@@ -133,7 +148,54 @@ useEffect(() => {
       });
   }
 }, [cancion.name]);
-  
+
+useEffect(() => {
+  if (localStorage.getItem('nombreUsuario')) {
+    fetch(`http://localhost:5120/usuarios/usuarios`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Origin": "http://localhost:5173",
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
+      if (usuario) {
+        const usuarioID = usuario.Id;
+        console.log(usuarioID);
+        setUsuarioID(usuarioID);
+      }
+    })
+    .catch(error => console.error(error));
+  }
+}, []);
+
+useEffect(() => {
+  if (localStorage.getItem('nombreUsuario')) {
+    fetch("http://localhost:5120/acciones/acciones_anadir", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Origin": "http://localhost:5173",
+      },
+      body: JSON.stringify({
+        CancionID: cancion.id,
+        ArtistaID: "-",
+        DiscoID: "-",
+        UsuarioID: UsuarioID,
+        NombreUsuario: localStorage.getItem('nombreUsuario')
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => console.error(error));
+  }
+}, [cancion.name]);
+
+
 
   
 console.log(`http://localhost:5120/letras/${artista}-${cancion.name}`);

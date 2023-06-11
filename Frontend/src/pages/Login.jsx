@@ -6,11 +6,12 @@ import "./css/registro/registro.css";
 import BarraNav from "./BarraNav";
 import Footer from "./Footer";
 import { useEffect } from "react";
+import { useContext } from "react";
+
 
 function Login() {
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [contrasena, setContrasena] = useState("");
-
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -25,12 +26,8 @@ function Login() {
         },
       });
 
-    
-
       if (response.ok) {
         const usuarios = await response.json();
-
-        console.log(usuarios);
 
         // Verificar si el usuario existe en la lista
         const usuarioValido = usuarios.find(
@@ -41,6 +38,8 @@ function Login() {
         if (usuarioValido) {
           // Las credenciales son válidas
           console.log("¡Inicio de sesión exitoso!");
+       
+          localStorage.setItem("nombreUsuario", nombreUsuario);
           navigate("/");
         } else {
           // Las credenciales son inválidas

@@ -2,12 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import logo from './../img/logo.png';
+import { useContext } from "react";
+
+
 
 function BarraNav() {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [userData, setUserData] = useState({});
   const [token, setToken] = useState(null);
+  const [nombreUsuario, setNombreUsuario] = useState("");
+
+
+
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -134,6 +141,11 @@ function BarraNav() {
     }
   }, [token]);
 
+  useEffect(() => {
+    const nombreUsuario = localStorage.getItem('nombreUsuario');
+    setNombreUsuario(nombreUsuario);
+  }, []);
+
   return (
     <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
@@ -142,6 +154,10 @@ function BarraNav() {
       </Link>
 
       <ul className="nav nav-pills">
+        <li className="nav-item">
+        <div>{nombreUsuario}</div>
+        </li>
+       
         <div className="dropdown" onMouseLeave={handleDropdownClose}>
           {token && userData && (
             <img

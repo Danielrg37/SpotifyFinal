@@ -6,8 +6,9 @@ import "./css/home/home.css";
 
 function Footer() {
   return (
+ 
     <footer>
-
+    <div className="row-mt-5">
       <ul className="nav justify-content-center border-bottom pb-3 mb-3">
         <li className="nav-item">
         <Link to="/home" className="nav-link px-2 green-color2">
@@ -28,7 +29,9 @@ function Footer() {
         </li>
       </ul>
       <p className="text-center text-secondary">© 2023 SpotiStats</p>
+      </div>
     </footer>
+  
   );
 }
 

@@ -207,7 +207,7 @@ namespace Backend.Controllers
             }
         }
     }
-     
+
 
     public class Usuario
     {
@@ -230,7 +230,14 @@ namespace Backend.Controllers
         public int Id { get; set; }
         public string NombreUsuario { get; set; }
         public string Email { get; set; }
+
+
+    }
+
+    public class BuscarUsuarioRequest
+    {
+        public string NombreUsuario { get; set; }
     }
 }
- 
+
 }

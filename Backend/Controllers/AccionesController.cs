@@ -97,6 +97,43 @@ namespace Backend.Controllers
             }
         }
 
+   [HttpPost("acciones_anadir")]
+public IActionResult AñadirAcciones(Acciones acciones)
+        {
+            using (SqlConnection conexion4 = ObtenerConexion())
+            {
+                try
+                {
+                    // Abrir la conexión
+                    conexion4.Open();
+
+                    // Consulta SQL para insertar un usuario
+                    string sql = "INSERT INTO Acciones (CancionID, ArtistaID, DiscoID, UsuarioID, NombreUsuario) VALUES (@CancionID, @ArtistaID, @DiscoID, @UsuarioID, @NombreUsuario)";
+
+                    // Ejecutar la consulta
+                    using (SqlCommand comando = new SqlCommand(sql, conexion4))
+                    {
+                        comando.Parameters.Add("@CancionID", SqlDbType.VarChar, 50).Value = acciones.CancionID;
+                        comando.Parameters.Add("@ArtistaID", SqlDbType.VarChar, 50).Value = acciones.ArtistaID;
+                        comando.Parameters.Add("@DiscoID", SqlDbType.VarChar, 50).Value = acciones.DiscoID;
+                        comando.Parameters.Add("@UsuarioID", SqlDbType.VarChar, 50).Value = acciones.UsuarioID;
+                        comando.Parameters.Add("@NombreUsuario", SqlDbType.VarChar, 50).Value = acciones.NombreUsuario;
+
+                        // Obtener el ID generado
+                        acciones.CancionID = comando.ExecuteScalar().ToString();
+
+                        // La acción se ha insertado correctamente
+                        return Ok("Acción insertada correctamente");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Error al insertar la acción
+                    return BadRequest("Error al insertar la acción: " + ex.Message);
+                }
+            }
+        }
+
         public class Acciones 
         {
          public string CancionID { get; set; }

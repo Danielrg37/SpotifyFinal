@@ -18,33 +18,40 @@ function VistaMenu() {
             <BarraNav />
 
             <div className="row mt-5">
-                <div className="col-6 text-center" id="datos">
-                    <div className="grafico-container" style={{ height: '95vh' }}>
-                        <Link to={`/playlistC`} className="custom-underline">
-                        <p style={{ fontSize:  '30px'}}>Crear playlist en base a canción</p>
-                            <img src={img_canciones} alt="" style={{ width: '100%', height: '78%' }} />
+            <div class="col-6 text-center" id="datos">
+                    <div className="grafico-container" style={{ height: '70vh' }}>
+                        <Link to={`/adminUsuario`} className="custom-underline">
+                            <p style={{ fontSize: '30px' }}>Consultar usuarios e historial</p>
+
+                            <img src={img_artistas} alt="grafica-usuario" border="0" width="80%" height="400"></img>
+
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>
                                     Acceder
                                 </button>
                             </div>
                         </Link>
+
                     </div>
                 </div>
 
-                <div className="col-6 text-center" id="datos">
-                    <div className="grafico-container" style={{ height: '95vh' }}>
-                        <Link to={`/playlistA`} className="custom-underline">
-                            <p style={{ fontSize:  '30px'}}>Crear playlist en base a artista</p>
-                           <img src={img_artistas} alt="grafica-usuario" border="0" width="100%" height="420"></img>
+                <div class="col-6 text-center" id="datos">
+                    <div className="grafico-container" style={{ height: '70vh' }}>
+                        <Link to={`/adminUsuario`} className="custom-underline">
+                            <p style={{ fontSize: '30px' }}>Consultar usuarios e historial</p>
+
+                            <img src={img_canciones} alt="grafica-usuario" border="0" width="80%" height="400"></img>
+
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>
                                     Acceder
                                 </button>
                             </div>
                         </Link>
+
                     </div>
                 </div>
+
             </div>
             <div className="row mt-5">
             <Footer />

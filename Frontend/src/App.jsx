@@ -27,6 +27,7 @@ import VistaCancionP from './pages/VistaCancionPlaylist'
 import VistaArtistaP from './pages/VistaArtistaPlaylist'
 import VistaAdminDisco from './pages/VistaAdminDisco'
 
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import CommentSection from './pages/ComentariosCaja'
 
@@ -34,7 +35,9 @@ function App() {
   return (
     <div id="router">
       <Router>
+    
         <Routes>
+       
           <Route path='/' element={<Home />} />
           <Route path='/home' element={<Home />} />
           <Route path='/registro' element={<Registro />} />
@@ -64,8 +67,11 @@ function App() {
           <Route path='/loader' element={<Loader />} />
           <Route path='/barraNav' element={<BarraNav />} />
 
+         
+
 
         </Routes>
+
       </Router>
     </div>
   );
