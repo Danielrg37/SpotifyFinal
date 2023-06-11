@@ -180,7 +180,64 @@ console.log(albums);
       
       
 
-      console.log(eventos);
+      const [UsuarioID, setUsuarioID] = useState("");
+        const [CancionID, setCancionID] = useState("");
+        const [ArtistaID, setArtistaID] = useState("");
+        const [DiscoID, setDiscoID] = useState("");
+
+        useEffect(() => {
+            setCancionID("-");
+            setArtistaID(id);
+            setDiscoID("-");
+          }, [id]);
+
+
+      useEffect(() => {
+        if (localStorage.getItem('nombreUsuario')) {
+          fetch(`http://localhost:5120/usuarios/usuarios`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Origin": "http://localhost:5173",
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+            const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
+            if (usuario) {
+              const usuarioID = usuario.Id;
+              console.log(usuarioID);
+              setUsuarioID(usuarioID);
+            }
+          })
+          .catch(error => console.error(error));
+        }
+      }, []);
+  
+      
+      useEffect(() => {
+        if (localStorage.getItem('nombreUsuario')) {
+          fetch("http://localhost:5120/acciones/acciones_anadir", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Origin": "http://localhost:5173",
+            },
+            body: JSON.stringify({
+              CancionID: "-",
+              ArtistaID: id,
+              DiscoID: "-",
+              UsuarioID: UsuarioID,
+              NombreUsuario: localStorage.getItem('nombreUsuario')
+            }),
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => console.error(error));
+        }
+      }, [artista]);
 
     
       

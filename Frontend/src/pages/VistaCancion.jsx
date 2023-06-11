@@ -46,12 +46,7 @@ function VistaCancion() {
   const [UsuarioID, setUsuarioID] = useState("");
 
 
-  useEffect(() => {
-    setCancionID(id);
-    setArtistaID("-");
-    setDiscoID("-");
-  }, [id]);
-  
+
 
 
  
@@ -171,8 +166,11 @@ useEffect(() => {
   }
 }, []);
 
+
+
+
 useEffect(() => {
-  if (localStorage.getItem('nombreUsuario')) {
+  if (localStorage.getItem('nombreUsuario') && UsuarioID != undefined && cancion.id != undefined) {
     fetch("http://localhost:5120/acciones/acciones_anadir", {
       method: "POST",
       headers: {
@@ -194,6 +192,8 @@ useEffect(() => {
     .catch(error => console.error(error));
   }
 }, [cancion.name]);
+
+
 
 
 

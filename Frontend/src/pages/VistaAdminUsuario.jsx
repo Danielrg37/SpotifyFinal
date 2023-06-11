@@ -111,49 +111,49 @@ function VistaAdminUsuario() {
           </div>
         </div>
         <div className="col-6 text-center" id="datos">
-  <div className="acciones-container">
-    <h4>Historial de acciones</h4>
-    <div className="row">
-      <div className="table-responsive">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>CancionID</th>
-              <th>ArtistaID</th>
-              <th>DiscoID</th>
-              <th>UsuarioID</th>
-              <th>Nombre de Usuario</th>
-              <th>Ver más</th>
-            </tr>
-          </thead>
-          <tbody>
-            {acciones.map((accion, index) => (
-              <tr key={index}>
-                <td>{accion.cancionID ? accion.cancionID : '-'}</td>
-                <td>{accion.artistaID ? accion.artistaID : '-'}</td>
-                <td>{accion.discoID ? accion.discoID : '-'}</td>
-                <td>{accion.usuarioID ? accion.usuarioID : '-'}</td>
-                <td>{accion.nombreUsuario ? accion.nombreUsuario : '-'}</td>
-                <td>
-  {accion.cancionID ? (
-    <a href={`http://localhost:5173/cancion/${accion.cancionID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
-  ) : accion.artistaID ? (
-    <a href={`http://localhost:5173/artista/${accion.artistaID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
-  ) : accion.discoID ? (
-    <a href={`http://localhost:5173/disco/${accion.discoID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
-  ) : (
-    '-'
-  )}
-</td>
+          <div className="acciones-container">
+            <h4>Historial de acciones</h4>
+            <div className="row">
+              <div className="table-responsive">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>CancionID</th>
+                      <th>ArtistaID</th>
+                      <th>DiscoID</th>
 
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
+                      <th>Nombre de Usuario</th>
+                      <th>Ver más</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {acciones.map((accion, index) => (
+                      <tr key={index}>
+                        <td>{accion.cancionID ? accion.cancionID : '-'}</td>
+                        <td>{accion.artistaID ? accion.artistaID : '-'}</td>
+                        <td>{accion.discoID ? accion.discoID : '-'}</td>
+
+                        <td>{accion.nombreUsuario ? accion.nombreUsuario : '-'}</td>
+                        <td>
+                          {accion.cancionID ? (
+                            <a href={`http://localhost:5173/cancion/${accion.cancionID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
+                          ) : accion.artistaID ? (
+                            <a href={`http://localhost:5173/artista/${accion.artistaID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
+                          ) : accion.discoID ? (
+                            <a href={`http://localhost:5173/disco/${accion.discoID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
+                          ) : (
+                            '-'
+                          )}
+                        </td>
+
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="row mt-5">
         <Footer />

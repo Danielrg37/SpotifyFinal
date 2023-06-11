@@ -45,6 +45,66 @@ function VistaDisco() {
             .catch(error => console.error(error));
         }
       }, [token]);
+
+        const [UsuarioID, setUsuarioID] = useState("");
+        const [CancionID, setCancionID] = useState("");
+        const [ArtistaID, setArtistaID] = useState("");
+        const [DiscoID, setDiscoID] = useState("");
+
+        useEffect(() => {
+            setCancionID("-");
+            setArtistaID("-");
+            setDiscoID(id);
+          }, [id]);
+
+
+      useEffect(() => {
+        if (localStorage.getItem('nombreUsuario')) {
+          fetch(`http://localhost:5120/usuarios/usuarios`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Origin": "http://localhost:5173",
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+            const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
+            if (usuario) {
+              const usuarioID = usuario.Id;
+              console.log(usuarioID);
+              setUsuarioID(usuarioID);
+            }
+          })
+          .catch(error => console.error(error));
+        }
+      }, []);
+  
+      
+      useEffect(() => {
+        if (localStorage.getItem('nombreUsuario')) {
+          fetch("http://localhost:5120/acciones/acciones_anadir", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Origin": "http://localhost:5173",
+            },
+            body: JSON.stringify({
+              CancionID: "-",
+              ArtistaID: "-",
+              DiscoID: id,
+              UsuarioID: UsuarioID,
+              NombreUsuario: localStorage.getItem('nombreUsuario')
+            }),
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => console.error(error));
+        }
+      }, [disco]);
+      
       
          
     console.log(disco);
