@@ -59,7 +59,7 @@ namespace Backend.Controllers
                     conexion3.Open();   
 
                     // Crear el comando SQL
-                    string sqlQuery = "SELECT id, nombreUsuario, email FROM Usuarios";
+                    string sqlQuery = "SELECT idUsuario, nombreUsuario, contrasena, correo FROM Usuarios";
                     SqlCommand comando = new SqlCommand(sqlQuery, conexion3);
 
                     // Ejecutar la consulta y obtener los resultados
@@ -70,9 +70,10 @@ namespace Backend.Controllers
                         {
                             Usuario usuario = new Usuario
                             {
-                                Id = Convert.ToInt32(lector["id"]),
+                                Id = Convert.ToInt32(lector["idUsuario"]),
                                 NombreUsuario = lector["nombreUsuario"].ToString(),
-                                Email = lector["email"].ToString()
+                                Contraseña = lector["contrasena"].ToString(),
+                                Email = lector["correo"].ToString()
                             };
                             usuarios.Add(usuario);
                         }
@@ -142,6 +143,7 @@ namespace Backend.Controllers
                     comando3.Parameters.AddWithValue("@Id", request.Id);
                     comando3.Parameters.AddWithValue("@NombreUsuario", request.NombreUsuario);
                     comando3.Parameters.AddWithValue("@Email", request.Email);
+                    comando3.Parameters.AddWithValue("@CreatedAt",  DateTime.Now);
 
                     // Ejecutar el comando
                     int rowsAffected = comando3.ExecuteNonQuery();
@@ -164,6 +166,46 @@ namespace Backend.Controllers
                 }
             }
         }
+    
+
+    [HttpPost("usuarios/crear")]
+    public IActionResult CrearUsuario([FromBody] Usuario usuario)
+    {
+        using (SqlConnection conexion6 = ObtenerConexion())
+        {
+            try
+            {
+                // Abrir la conexión
+                conexion6.Open();
+
+                // Crear el comando SQL para crear el usuario
+                string sqlQuery = "INSERT INTO Usuarios (nombreUsuario, contrasena, correo, createdAt) VALUES (@NombreUsuario, @Contraseña, @Email, @CreatedAt)";
+                SqlCommand comando4 = new SqlCommand(sqlQuery, conexion6);
+                comando4.Parameters.AddWithValue("@NombreUsuario", usuario.NombreUsuario);
+                comando4.Parameters.AddWithValue("@Contraseña", usuario.Contraseña);
+                comando4.Parameters.AddWithValue("@Email", usuario.Email);
+                comando4.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
+
+                // Ejecutar el comando
+                int rowsAffected = comando4.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    // El usuario se creó exitosamente
+                    return Ok("Usuario creado exitosamente");
+                }
+                else
+                {
+                    // No se pudo crear el usuario
+                    return NotFound("No se pudo crear el usuario");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Error al crear el usuario
+                return BadRequest("Error al crear el usuario: " + ex.Message);
+            }
+        }
     }
      
 
@@ -171,7 +213,11 @@ namespace Backend.Controllers
     {
         public int Id { get; set; }
         public string NombreUsuario { get; set; }
+
+        public string Contraseña { get; set; }
         public string Email { get; set; }
+
+        public DateTime CreatedAt { get; set; }
     }
 
     public class BorrarUsuarioRequest
@@ -187,3 +233,4 @@ namespace Backend.Controllers
     }
 }
  
+}

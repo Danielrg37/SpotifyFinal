@@ -13,26 +13,46 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-   
-    console.log(`Nombre de usuario: ${nombreUsuario}, Contraseña: ${contrasena}`);
-    navigate("/");
-  };
-
-  useEffect(() => { 
-    fetch(`http://localhost:5120/usuarios`, {
-      method: 'GET',
-      headers: {
-        'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-      }
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+    try {
+      // Obtener todos los usuarios del backend
+      const response = await fetch("http://localhost:5120/usuarios/usuarios", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-  }, []);
+
+    
+
+      if (response.ok) {
+        const usuarios = await response.json();
+
+        console.log(usuarios);
+
+        // Verificar si el usuario existe en la lista
+        const usuarioValido = usuarios.find(
+          (usuario) =>
+            usuario.nombreUsuario === nombreUsuario && usuario.contraseña === contrasena
+        );
+
+        if (usuarioValido) {
+          // Las credenciales son válidas
+          console.log("¡Inicio de sesión exitoso!");
+          navigate("/");
+        } else {
+          // Las credenciales son inválidas
+          console.log("¡Nombre de usuario o contraseña incorrectos!");
+        }
+      } else {
+        console.log("Error al obtener la lista de usuarios");
+      }
+    } catch (error) {
+      console.error("Error al realizar la verificación de inicio de sesión:", error);
+    }
+  };
 
   return (
     <div className="container">
@@ -65,9 +85,13 @@ function Login() {
               required
             />
           </div>
-          <div style={{ textAlign: 'center' }}>
-            <Button className="green-color" style={{ width: '8rem', height: '3rem', justifyContent: 'center' }} onClick={() => navigate('/')}>
-              Placeholder
+          <div style={{ textAlign: "center" }}>
+            <Button
+              className="green-color"
+              style={{ width: "8rem", height: "3rem", justifyContent: "center" }}
+              type="submit"
+            >
+              Iniciar sesión
             </Button>
           </div>
         </form>

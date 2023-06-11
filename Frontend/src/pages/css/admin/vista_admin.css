@@ -25,6 +25,10 @@
   color: #121212;
 }
 
+.grafico-container tr, th, td {
+  color: #121212;
+}
+
   
 .disco-container p {
   color: #121212;
@@ -33,6 +37,52 @@
 .disco-container h1 {
   color: #121212;
 }
+
+
+
+
+.playlists-container{
+  background-color:   #F7F7F7;
+  border-radius: 20px;
+  padding: 20px;
+  color: #121212;
+  object-fit: cover;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.playlists-container h1 {
+  color: #121212;
+}
+
+.playlists-container h4 {
+  color: #121212;
+}
+
+.playlists-container p {
+  color: #121212;
+}
+
+.acciones-container{
+  background-color:   #F7F7F7;
+  border-radius: 20px;
+  padding: 20px;
+  color: #121212;
+  object-fit: cover;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.acciones-container h1 {
+  color: #121212;
+}
+
+.acciones-container h4 {
+  color: #121212;
+}
+
+.acciones-container p {
+  color: #121212;
+}
+
 
 
 

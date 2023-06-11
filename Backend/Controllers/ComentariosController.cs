@@ -1,4 +1,4 @@
-/* using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -48,8 +48,9 @@ namespace Backend.Controllers
         }
     
     
-        [HttpGet("usuarios")]
-        public IActionResult ObtenerUsuarios()
+        [HttpGet("comentarios")]    
+
+        public IActionResult ObtenerComentarios()
         {
             using (SqlConnection conexion3 = ObtenerConexion())
             {
@@ -58,132 +59,58 @@ namespace Backend.Controllers
                     // Abrir la conexión
                     conexion3.Open();   
 
+                    // Consulta SQL para obtener los usuarios
+                    string sql = "SELECT * FROM Comentarios";
+
                     // Crear el comando SQL
-                    string sqlQuery = "SELECT id, nombreUsuario, email FROM Usuarios";
-                    SqlCommand comando = new SqlCommand(sqlQuery, conexion3);
+                    SqlCommand comando = new SqlCommand(sql, conexion3);
 
-                    // Ejecutar la consulta y obtener los resultados
-                    List<Usuario> usuarios = new List<Usuario>();
-                    using (SqlDataReader lector = comando.ExecuteReader())
+                    // Ejecutar el comando y obtener los datos
+                    SqlDataReader datos = comando.ExecuteReader();
+
+                    // Lista para almacenar los usuarios
+                    List<Comentario> comentarios = new List<Comentario>();
+
+                    // Verificar si hay datos para leer
+                    while (datos.Read())
                     {
-                        while (lector.Read())
-                        {
-                            Usuario usuario = new Usuario
-                            {
-                                Id = Convert.ToInt32(lector["id"]),
-                                NombreUsuario = lector["nombreUsuario"].ToString(),
-                                Email = lector["email"].ToString()
-                            };
-                            usuarios.Add(usuario);
-                        }
+                        // Crear un objeto para almacenar los datos
+                        Comentario comentario = new Comentario();
+
+                        // Obtener los datos de la fila actual
+                        comentario.Id = Convert.ToInt32(datos["id"]);
+                        comentario.IdUsuario = Convert.ToInt32(datos["id_usuario"]);
+                        comentario.IdCancion = Convert.ToInt32(datos["id_cancion"]);
+                        comentario.Texto = datos["texto"].ToString();
+                        comentario.Fecha = Convert.ToDateTime(datos["fecha"]);
+
+                        // Agregar el usuario a la lista
+                        comentarios.Add(comentario);
                     }
 
-                    // Retornar los usuarios como resultado
-                    return Ok(usuarios);
+                    // Cerrar la conexión
+                    conexion3.Close();
+
+                    // Retornar la lista de usuarios
+                    return Ok(comentarios);
                 }
                 catch (Exception ex)
                 {
-                    // Error al consultar la base de datos
-                    return BadRequest("Error al consultar la base de datos: " + ex.Message);
+                    // Error al obtener los usuarios
+                    return BadRequest("Error al obtener los usuarios: " + ex.Message);
                 }
             }
         }
 
-        [HttpPost("usuarios/borrar")]
-        public IActionResult BorrarUsuario([FromBody] BorrarUsuarioRequest request)
-        {
-            using (SqlConnection conexion4 = ObtenerConexion())
-            {
-                try
-                {
-                    // Abrir la conexión
-                    conexion4.Open();
-
-                    // Crear el comando SQL para borrar el usuario
-                    string sqlQuery = "DELETE FROM Usuarios WHERE id = @Id";
-                    SqlCommand comando2 = new SqlCommand(sqlQuery, conexion4);
-                    comando2.Parameters.AddWithValue("@Id", request.Id);
-
-                    // Ejecutar el comando
-                    int rowsAffected = comando2.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        // El usuario se borró exitosamente
-                        return Ok("Usuario borrado exitosamente");
-                    }
-                    else
-                    {
-                        // No se encontró el usuario o no se pudo borrar
-                        return NotFound("No se encontró el usuario o no se pudo borrar");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Error al borrar el usuario
-                    return BadRequest("Error al borrar el usuario: " + ex.Message);
-                }
-            }
-        }
-
-        [HttpPost("usuarios/editar")]
-        public IActionResult EditarUsuario([FromBody] EditarUsuarioRequest request)
-        {
-            using (SqlConnection conexion5 = ObtenerConexion())
-            {
-                try
-                {
-                    // Abrir la conexión
-                    conexion5.Open();
-
-                    // Crear el comando SQL para editar el usuario
-                    string sqlQuery = "UPDATE Usuarios SET nombreUsuario = @NombreUsuario, email = @Email WHERE id = @Id";
-                    SqlCommand comando3 = new SqlCommand(sqlQuery, conexion5);
-                    comando3.Parameters.AddWithValue("@Id", request.Id);
-                    comando3.Parameters.AddWithValue("@NombreUsuario", request.NombreUsuario);
-                    comando3.Parameters.AddWithValue("@Email", request.Email);
-
-                    // Ejecutar el comando
-                    int rowsAffected = comando3.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        // El usuario se editó exitosamente
-                        return Ok("Usuario editado exitosamente");
-                    }
-                    else
-                    {
-                        // No se encontró el usuario o no se pudo editar
-                        return NotFound("No se encontró el usuario o no se pudo editar");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Error al editar el usuario
-                    return BadRequest("Error al editar el usuario: " + ex.Message);
-                }
-            }
-        }
-    }
-     
-
-    public class Usuario
-    {
-        public int Id { get; set; }
-        public string NombreUsuario { get; set; }
-        public string Email { get; set; }
     }
 
-    public class BorrarUsuarioRequest
-    {
-        public int Id { get; set; }
-    }
-
-    public class EditarUsuarioRequest
-    {
-        public int Id { get; set; }
-        public string NombreUsuario { get; set; }
-        public string Email { get; set; }
-    }
 }
-  */
+
+public class Comentario
+{
+    public int Id { get; set; }
+    public int IdUsuario { get; set; }
+    public int IdCancion { get; set; }
+    public string Texto { get; set; }
+    public DateTime Fecha { get; set; }
+}

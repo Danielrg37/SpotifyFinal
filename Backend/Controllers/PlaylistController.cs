@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 namespace Backend.Controllers
 {
     [ApiController]
-    [Route("conexion")]
+    [Route("playlist")]
     public class PlaylistController : ControllerBase
     {
         private readonly string conexion;
@@ -44,7 +44,7 @@ namespace Backend.Controllers
             }
         }
 
-        [HttpGet("playlist")]
+        [HttpGet("playlists")]
         public IActionResult ObtenerPlaylist()
         {
             using (SqlConnection conexion3 = ObtenerConexion())
@@ -55,7 +55,7 @@ namespace Backend.Controllers
                     conexion3.Open();   
 
                     // Crear el comando SQL
-                    string sqlQuery = "SELECT id, nombre, descripción, embedUrl FROM Playlist";
+                    string sqlQuery = "SELECT idUsuario, nombrePlaylist, createdAt, idPlaylist FROM Playlists";
                     SqlCommand comando = new SqlCommand(sqlQuery, conexion3);
 
                     // Ejecutar la consulta y obtener los resultados
@@ -65,10 +65,10 @@ namespace Backend.Controllers
                     while (reader.Read())
                     {
                         Playlist playlist = new Playlist();
-                        playlist.Id = reader.GetInt32(0);
+                        playlist.IdUsuario = reader.GetInt32(0);
                         playlist.Nombre = reader.GetString(1);
-                        playlist.Descripción = reader.GetString(2);
-                        playlist.EmbedUrl = reader.GetString(3);
+                        playlist.createdAt = reader.GetDateTime(2);
+                        playlist.IdPlaylist = reader.GetString(3);
                         listaPlaylist.Add(playlist);
                     }
 
@@ -88,133 +88,19 @@ namespace Backend.Controllers
         
 
 
-/* 
-        [HttpPost("usuarios/borrar")]
-        public IActionResult BorrarUsuario([FromBody] BorrarUsuarioRequest request)
-        {
-            using (SqlConnection conexion4 = ObtenerConexion())
-            {
-                try
-                {
-                    // Abrir la conexión
-                    conexion4.Open();
-
-                    // Crear el comando SQL para borrar el usuario
-                    string sqlQuery = "DELETE FROM Usuarios WHERE id = @Id";
-                    SqlCommand comando2 = new SqlCommand(sqlQuery, conexion4);
-                    comando2.Parameters.AddWithValue("@Id", request.Id);
-
-                    // Ejecutar el comando
-                    int rowsAffected = comando2.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        // El usuario se borró exitosamente
-                        return Ok("Usuario borrado exitosamente");
-                    }
-                    else
-                    {
-                        // No se encontró el usuario o no se pudo borrar
-                        return NotFound("No se encontró el usuario o no se pudo borrar");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Error al borrar el usuario
-                    return BadRequest("Error al borrar el usuario: " + ex.Message);
-                }
-            }
-        }
-
-        [HttpPost("usuarios/editar")]
-        public IActionResult EditarUsuario([FromBody] EditarUsuarioRequest request)
-        {
-            using (SqlConnection conexion5 = ObtenerConexion())
-            {
-                try
-                {
-                    // Abrir la conexión
-                    conexion5.Open();
-
-                    // Crear el comando SQL para editar el usuario
-                    string sqlQuery = "UPDATE Usuarios SET nombreUsuario = @NombreUsuario, email = @Email WHERE id = @Id";
-                    SqlCommand comando3 = new SqlCommand(sqlQuery, conexion5);
-                    comando3.Parameters.AddWithValue("@Id", request.Id);
-                    comando3.Parameters.AddWithValue("@NombreUsuario", request.NombreUsuario);
-                    comando3.Parameters.AddWithValue("@Email", request.Email);
-
-                    // Ejecutar el comando
-                    int rowsAffected = comando3.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        // El usuario se editó exitosamente
-                        return Ok("Usuario editado exitosamente");
-                    }
-                    else
-                    {
-                        // No se encontró el usuario o no se pudo editar
-                        return NotFound("No se encontró el usuario o no se pudo editar");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Error al editar el usuario
-                    return BadRequest("Error al editar el usuario: " + ex.Message);
-                }
-            }
-        }
-
-
-        
-      [HttpPost("usuarios/editar")]
-        public IActionResult Comentarios([FromBody] EditarUsuarioRequest request)
-        {
-            using (SqlConnection conexion5 = ObtenerConexion())
-            {
-                try
-                {
-                    // Abrir la conexión
-                    conexion5.Open();
-
-                    // Crear el comando SQL para editar el usuario
-                    string sqlQuery = "UPDATE Usuarios SET nombreUsuario = @NombreUsuario, email = @Email WHERE id = @Id";
-                    SqlCommand comando3 = new SqlCommand(sqlQuery, conexion5);
-                    comando3.Parameters.AddWithValue("@Id", request.Id);
-                    comando3.Parameters.AddWithValue("@NombreUsuario", request.NombreUsuario);
-                    comando3.Parameters.AddWithValue("@Email", request.Email);
-
-                    // Ejecutar el comando
-                    int rowsAffected = comando3.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        // El usuario se editó exitosamente
-                        return Ok("Usuario editado exitosamente");
-                    }
-                    else
-                    {
-                        // No se encontró el usuario o no se pudo editar
-                        return NotFound("No se encontró el usuario o no se pudo editar");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Error al editar el usuario
-                    return BadRequest("Error al editar el usuario: " + ex.Message);
-                }
-            }
-        } */
-    }
-}
 
 
 
 public class Playlist
 {
-    public int Id { get; set; }
+    public int IdUsuario { get; set; }
     public string Nombre { get; set; }
-    public string Descripción { get; set; }
-    public string EmbedUrl { get; set; }
+ 
+    public DateTime createdAt { get; set; }
+
+    public string IdPlaylist { get; set; }
+
 }
-  
+
+    }
+}
