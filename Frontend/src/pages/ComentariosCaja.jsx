@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Image, Button, Form } from 'react-bootstrap';
 import React from 'react';
 import ben from "./../img/ben.png";
@@ -7,7 +7,7 @@ import "./css/comentarios/comentarios.css";
 
 const CommentSection = () => {
   const [respuesta, setRespuesta] = useState('');
-  const [mostrarForm, setmostrarForm] = useState(false);
+  const [mostrarForm, setMostrarForm] = useState(false);
   const [comentarios, setComentarios] = useState([]);
 
   const ManejarRespuesta = (event) => {
@@ -28,74 +28,67 @@ const CommentSection = () => {
 
     // Reset the reply text and hide the reply form
     setRespuesta('');
-    setmostrarForm(false);
+    setMostrarForm(false);
   };
 
   const BotonResponder = () => {
-    setmostrarForm(true);
+    setMostrarForm(true);
   };
 
+  useEffect(() => {
+    fetch('http://localhost:5120/comentarios/comentarios', {
+      method: 'GET',
+      headers: {
+        Origin: 'http://localhost:5173',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setComentarios(data);
+      });
+  }, []);
+
   
+
+  const comentariosFiltrados = comentarios.filter((comentario) => comentario.idCancion === idCancion);
+
   return (
     <div className='comentarios-container'>
-       <div className="d-flex justify-content-center">
-
-          <button className='btn btn-success rounded-pill w-100 mt-2 mb-2' onClick={BotonResponder}>
-            Nuevo comentario
-          </button>
-        </div>
-      <Card className='comentarios-container'> 
+      <div className="d-flex justify-content-center">
+        <button className='btn btn-success rounded-pill w-100 mt-2 mb-2' onClick={BotonResponder}>
+          Nuevo comentario
+        </button>
+      </div>
+      <Card className='comentarios-container'>
         <Card.Body>
-          <div className="d-flex flex-start comentarios-container">
-            <Image
-              className="rounded-circle shadow-1-strong me-3"
-              src={ben}
-              alt="avatar"
-              width="65"
-              height="65"
-            />
-  
-            <div className="flex-grow-1 flex-shrink-1 comentarios-container">
-              <div>
-                <div className="d-flex justify-content-between align-items-center">
-                  <p className="mb-1" style={{ color: 'black'}}>
-                    Ben Yart{' '}
-                    <span className="small">- Hace 2 horas</span>
-                  </p>
-                </div>
-                <p className="small mb-0" style={{ color: 'black'}}>
-                  Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo Mañaneo
-                </p>
-              </div>
-            </div>
-          </div>
-  
           {/* Nested comment */}
-          <div className="d-flex flex-start mt-4 comentarios-container">
-            <Image
-              className="rounded-circle shadow-1-strong me-3"
-              src={fernando}
-              alt="avatar"
-              width="65"
-              height="65"
-            />
-  
-            <div className="flex-grow-1 flex-shrink-1">
-              <div>
-                <div className="d-flex justify-content-between align-items-center">
-                  <p className="mb-1" style={{ color: 'black'}}>
-                    Lorem ipsum{' '}
-                    <span className="small">- Hace 3 horas</span>
+          {comentariosFiltrados.map((comentario, index) => (
+            <div className="d-flex flex-start mt-4 comentarios-container" key={index}>
+              <Image
+                className="rounded-circle shadow-1-strong me-3"
+                src={fernando}
+                alt="avatar"
+                width="65"
+                height="65"
+              />
+
+              <div className="flex-grow-1 flex-shrink-1">
+                <div>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p className="mb-1" style={{ color: 'black' }}>
+                      {comentario.Escritor} <span className="small">- {comentario.Momento}</span>
+                    </p>
+                  </div>
+                  <p className="small mb-0" style={{ color: 'black' }}>
+                    {comentario.Comentario}
                   </p>
                 </div>
-                <p className="small mb-0" style={{ color: 'black'}}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, officia!
-                </p>
               </div>
             </div>
-          </div>
+          ))}
           {/* End of nested comment */}
-  
+
           {/* Reply form */}
           {mostrarForm && (
             <Form onSubmit={AñadirRespuesta}>
@@ -108,7 +101,7 @@ const CommentSection = () => {
                   onChange={ManejarRespuesta}
                 />
               </Form.Group>
-              <Button className='btn btn-success rounded-pill w-43 mt-2 mb-2'  type="submit">
+              <Button className='btn btn-success rounded-pill w-43 mt-2 mb-2' type="submit">
                 Responder
               </Button>
             </Form>
@@ -116,36 +109,7 @@ const CommentSection = () => {
           {/* End of reply form */}
         </Card.Body>
       </Card>
-  
-      {/* Display comments */}
-      {comentarios.map((comentario, index) => (
-        <Card className="mt-4 comentarios-container" key={index}>
-          <Card.Body>
-            <div className="d-flex flex-start">
-              <Image
-                className="rounded-circle shadow-1-strong me-3"
-                src={ben}
-                alt="avatar"
-                width="65"
-                height="65"
-              />
-  
-              <div className="flex-grow-1 flex-shrink-1">
-                <div>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <p className="mb-1" style={{ color: 'black'}}>
-                      {comentario.Escritor} <span style={{ color: 'black'}} className="small">- {comentario.Momento}</span>
-                    </p>
-                  </div>
-                  <p className="small mb-0" style={{ color: 'black'}}>{comentario.Comentario}</p>
-                        </div>
-                          </div>
-                          </div>
-                          </Card.Body>
-                          </Card>
-      ))}
-      {/* End of display comments */}
-        </div>
+    </div>
   );
 };
 
