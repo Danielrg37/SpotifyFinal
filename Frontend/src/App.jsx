@@ -31,6 +31,8 @@ import VistaAdminDisco from './pages/VistaAdminDisco'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import CommentSection from './pages/ComentariosCaja'
 
+import Error404 from './pages/Error404'
+
 function App() {
   return (
     <div id="router">
@@ -66,6 +68,7 @@ function App() {
           <Route path='/menuPlaylist' element={<VistaMenuPlaylist />} />
           <Route path='/loader' element={<Loader />} />
           <Route path='/barraNav' element={<BarraNav />} />
+          <Route path="*" element={<Error404 />} />
 
          
 

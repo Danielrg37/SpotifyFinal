@@ -19,7 +19,7 @@ function VistaMenu() {
 
             <div className="row mt-5">
             <div class="col-6 text-center" id="datos">
-                    <div className="grafico-container" style={{ height: '70vh' }}>
+                    <div className="grafico-container" style={{ height: '60vh' }}>
                         <Link to={`/adminUsuario`} className="custom-underline">
                             <p style={{ fontSize: '30px' }}>Consultar usuarios e historial</p>
 
@@ -36,7 +36,7 @@ function VistaMenu() {
                 </div>
 
                 <div class="col-6 text-center" id="datos">
-                    <div className="grafico-container" style={{ height: '70vh' }}>
+                    <div className="grafico-container" style={{ height: '60vh' }}>
                         <Link to={`/adminUsuario`} className="custom-underline">
                             <p style={{ fontSize: '30px' }}>Consultar usuarios e historial</p>
 

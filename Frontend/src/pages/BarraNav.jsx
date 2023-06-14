@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import logo from './../img/logo.png';
-import { useContext } from "react";
-
+import { useContext } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 
 function BarraNav() {
   const navigate = useNavigate();
@@ -11,9 +11,7 @@ function BarraNav() {
   const [userData, setUserData] = useState({});
   const [token, setToken] = useState(null);
   const [nombreUsuario, setNombreUsuario] = useState("");
-
-
-
+  const [showModal, setShowModal] = useState(false);
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -113,7 +111,7 @@ function BarraNav() {
     'user-read-playback-position',
   ];
 
-  const handleLogin = () => {
+  const handleLoginWithSpotify = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('tokenExpiration');
     localStorage.removeItem('refreshToken');
@@ -145,6 +143,23 @@ function BarraNav() {
     setNombreUsuario(nombreUsuario);
   }, []);
 
+  const handleLoginRedirect = () => {
+    handleLoginWithSpotify();
+  };
+
+  useEffect(() => {
+    if (showModal) {
+      setTimeout(() => {
+        navigate('/'); // Redirigir a la página deseada después de mostrar el modal
+      }, 5000);
+    }
+  }, [showModal, navigate]);
+
+  const handleLoginWithModal = () => {
+    handleLoginWithSpotify();
+    setShowModal(true); // Mostrar el modal
+  };
+
   return (
     <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
@@ -154,7 +169,7 @@ function BarraNav() {
 
       <ul className="nav nav-pills">
         <li className="nav-item">
-        <div>{nombreUsuario}</div>
+          <div>{nombreUsuario}</div>
         </li>
        
         <div className="dropdown" onMouseLeave={handleDropdownClose}>
@@ -182,7 +197,7 @@ function BarraNav() {
             <div className="dropdown-content">
               <Link to="/perfil">Perfil</Link>
               {!token && (
-                <a href="#" onClick={handleLogin}>
+                <a href="#" onClick={handleLoginWithModal}>
                   Login con Spotify
                 </a>
               )}
@@ -192,6 +207,15 @@ function BarraNav() {
           )}
         </div>
       </ul>
+
+      {/* Modal */}
+      {showModal && (
+        <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '5px', textAlign: 'center' }}>
+            <h3>Usuario logueado correctamente</h3>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

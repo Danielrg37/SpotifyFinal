@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/registro/registro.css";
 import BarraNav from "./BarraNav";
-import Footer from "./Footer";
-import { useEffect } from "react";
-import { useContext } from "react";
 
 
 function Login() {
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [contrasena, setContrasena] = useState("");
+  const [showModal, setShowModal] = useState(false); // Estado para controlar la visibilidad del modal
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -38,9 +36,13 @@ function Login() {
         if (usuarioValido) {
           // Las credenciales son válidas
           console.log("¡Inicio de sesión exitoso!");
-       
+
           localStorage.setItem("nombreUsuario", nombreUsuario);
-          navigate("/");
+          setShowModal(true); // Mostrar el modal
+          setTimeout(() => {
+            setShowModal(false); // Ocultar el modal después de 2 segundos
+            navigate("/"); // Redireccionar a la página principal
+          }, 2000);
         } else {
           // Las credenciales son inválidas
           console.log("¡Nombre de usuario o contraseña incorrectos!");
@@ -54,9 +56,11 @@ function Login() {
   };
 
   return (
+    
     <div className="container">
       <BarraNav />
-      <div className="p-5 mb-4 rounded-3 registro-container">
+   
+      <div className="p-5 mb-5 rounded-6 registro-container mt-5">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="nombreUsuario" className="form-label">
@@ -85,18 +89,28 @@ function Login() {
             />
           </div>
           <div style={{ textAlign: "center" }}>
-            <Button
-              className="green-color"
-              style={{ width: "8rem", height: "3rem", justifyContent: "center" }}
+            <button
+              className="btn btn-outline-success rounded-pill"
+              style={{ width: "25em", height: "3rem", justifyContent: "center", marginTop: "1rem" }}
               type="submit"
             >
               Iniciar sesión
-            </Button>
+            </button>
           </div>
         </form>
       </div>
-      <Footer></Footer>
+     
+      {/* Modal */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Inicio de sesión exitoso</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>¡Usuario logueado correctamente!</p>
+        </Modal.Body>
+      </Modal>
     </div>
+  
   );
 }
 
