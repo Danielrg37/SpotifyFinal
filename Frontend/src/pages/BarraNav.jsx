@@ -5,6 +5,7 @@ import logo from './../img/logo.png';
 import { useContext } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
+
 function BarraNav() {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
