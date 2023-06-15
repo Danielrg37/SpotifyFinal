@@ -39,7 +39,7 @@ function BarraNav() {
     }
 
     // Make a request to your server to refresh the access token
-    fetch('http://localhost:5120/refresh-token', {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/refresh-token', {
       method: 'POST',
       body: JSON.stringify({ refreshToken }),
       headers: {
@@ -91,7 +91,7 @@ function BarraNav() {
   }, []);
 
   const CLIENT_ID = 'ff923ecf1dad4ad3b0d5e8e5ec0deaf7';
-  const REDIRECT_URI = 'http://localhost:5173';
+  const REDIRECT_URI = 'http://ec2-3-230-86-196.compute-1.amazonaws.com:5173/';
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
   const RESPONSE_TYPE = 'token';
   const SCOPES = [
@@ -123,7 +123,7 @@ function BarraNav() {
 
   useEffect(() => {
     if (token) {
-      fetch(`http://localhost:5120/Perfil`, {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Perfil`, {
         method: 'GET',
         headers: {
           'X-Access-Token': token,

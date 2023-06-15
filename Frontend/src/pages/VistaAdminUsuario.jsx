@@ -14,7 +14,7 @@ function VistaAdminUsuario() {
   const [acciones, setAcciones] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5120/usuarios/usuarios', {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios', {
       method: 'GET',
       headers: {
         Origin: 'http://localhost:5173',
@@ -28,7 +28,7 @@ function VistaAdminUsuario() {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:5120/playlist/playlists', {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/playlist/playlists', {
       method: 'GET',
       headers: {
         Origin: 'http://localhost:5173',
@@ -42,7 +42,7 @@ function VistaAdminUsuario() {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:5120/acciones/acciones', {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones', {
       method: 'GET',
       headers: {
         Origin: 'http://localhost:5173',

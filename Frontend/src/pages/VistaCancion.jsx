@@ -52,7 +52,7 @@ function VistaCancion() {
  
   useEffect(() => {
     if (token) {  
-      fetch(`http://localhost:5120/Cancion/${id}`, {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Cancion/${id}`, {
         method: "GET",
         headers: {
           'X-Access-Token': localStorage.getItem('token'),
@@ -84,7 +84,7 @@ function VistaCancion() {
 
 useEffect(() => {
     if (token) {
-      fetch(`http://localhost:5120/Features/${id}`, {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Features/${id}`, {
         method: "GET",
         headers: {
           'X-Access-Token': localStorage.getItem('token'),
@@ -107,7 +107,7 @@ useEffect(() => {
  
  useEffect(() => {
   if (cancion.name) {
-    fetch(`http://localhost:5120/letras/${artista}-${cancion.name}`, {
+    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/letras/${artista}-${cancion.name}`, {
       method: 'GET',
       headers: {
         'Origin': 'http://localhost:5173'  // Reemplaza con la URL y el puerto de tu aplicación frontend
@@ -146,7 +146,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (localStorage.getItem('nombreUsuario')) {
-    fetch(`http://localhost:5120/usuarios/usuarios`, {
+    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -171,7 +171,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (localStorage.getItem('nombreUsuario') && UsuarioID != undefined && cancion.id != undefined) {
-    fetch("http://localhost:5120/acciones/acciones_anadir", {
+    fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones_anadir", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -198,7 +198,7 @@ useEffect(() => {
 
 
   
-console.log(`http://localhost:5120/letras/${artista}-${cancion.name}`);
+console.log(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/letras/${artista}-${cancion.name}`);
 
 
 

@@ -12,7 +12,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
     {
-        builder.WithOrigins("http://localhost:5173")  // Replace with your front-end application's URL and port
+        builder.WithOrigins("http://localhost:5173")
+                .WithOrigins("http://ec2-3-230-86-196.compute-1.amazonaws.com:5173")  // Replace with your front-end application's URL and port
                .AllowAnyMethod()
                .AllowAnyHeader();
     });

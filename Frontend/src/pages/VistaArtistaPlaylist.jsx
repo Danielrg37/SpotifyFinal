@@ -53,7 +53,7 @@ function VistaArtistaP() {
 
   useEffect(() => {
     if (token && artista.id) {
-      fetch(`http://localhost:5120/recomendacionesArtista/${artista.id}`, {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/recomendacionesArtista/${artista.id}`, {
         method: 'GET',
         headers: {
           'X-Access-Token': localStorage.getItem('token'),

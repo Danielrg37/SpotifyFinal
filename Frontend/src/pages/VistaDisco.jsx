@@ -23,7 +23,7 @@ function VistaDisco() {
 
     useEffect(() => {
         if (token) {
-          fetch(`http://localhost:5120/Disco/${id}`, {
+          fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Disco/${id}`, {
             method: "GET",
             headers: {
               'X-Access-Token': localStorage.getItem('token'),
@@ -60,7 +60,7 @@ function VistaDisco() {
 
       useEffect(() => {
         if (localStorage.getItem('nombreUsuario')) {
-          fetch(`http://localhost:5120/usuarios/usuarios`, {
+          fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -83,7 +83,7 @@ function VistaDisco() {
       
       useEffect(() => {
         if (localStorage.getItem('nombreUsuario')) {
-          fetch("http://localhost:5120/acciones/acciones_anadir", {
+          fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones_anadir", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

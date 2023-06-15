@@ -6256,25 +6256,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Danie\\.nuget\\packages\\": {}
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Clase\\SpotifyFinal-2\\Backend\\Backend.csproj",
+      "projectUniqueName": "C:\\Users\\Administrator\\3D Objects\\SpotifyFinal\\Backend\\Backend.csproj",
       "projectName": "Backend",
-      "projectPath": "D:\\Clase\\SpotifyFinal-2\\Backend\\Backend.csproj",
-      "packagesPath": "C:\\Users\\Danie\\.nuget\\packages\\",
-      "outputPath": "D:\\Clase\\SpotifyFinal-2\\Backend\\obj\\",
+      "projectPath": "C:\\Users\\Administrator\\3D Objects\\SpotifyFinal\\Backend\\Backend.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Administrator\\3D Objects\\SpotifyFinal\\Backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Danie\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -6349,7 +6348,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

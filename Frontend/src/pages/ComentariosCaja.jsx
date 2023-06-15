@@ -36,7 +36,7 @@ const CommentSection = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:5120/comentarios/comentarios', {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/comentarios', {
       method: 'GET',
       headers: {
         Origin: 'http://localhost:5173',

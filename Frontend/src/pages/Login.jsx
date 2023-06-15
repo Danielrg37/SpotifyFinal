@@ -17,7 +17,7 @@ function Login() {
 
     try {
       // Obtener todos los usuarios del backend
-      const response = await fetch("http://localhost:5120/usuarios/usuarios", {
+      const response = await fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

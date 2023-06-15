@@ -25,7 +25,7 @@ function BarraBusqueda() {
 
   useEffect(() => {
     if (token) {
-      fetch(`http://localhost:5120/BusquedaA/${searchInput}`, {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/BusquedaA/${searchInput}`, {
         method: "GET",
         headers: {
           'X-Access-Token': localStorage.getItem('token'),

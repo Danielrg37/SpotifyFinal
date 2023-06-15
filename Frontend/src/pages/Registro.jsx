@@ -17,7 +17,7 @@ function Registro() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch("http://localhost:5120/usuarios/usuarios/crear", {
+    fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios/crear", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

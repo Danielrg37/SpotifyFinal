@@ -88,7 +88,7 @@ function VistaAdminArtista() {
 
   useEffect(() => {
     if (token && id !== undefined) {  
-      fetch(`http://localhost:5120/Cancion/${id}`, {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Cancion/${id}`, {
         method: "GET",
         headers: {
           'X-Access-Token': localStorage.getItem('token'),
@@ -136,7 +136,7 @@ function VistaAdminArtista() {
 
   useEffect(() => {
     if (cancion.name) {
-      fetch(`http://localhost:5120/letras/${encodeURIComponent(cancion.name)}`, {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/letras/${encodeURIComponent(cancion.name)}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

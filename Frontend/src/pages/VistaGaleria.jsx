@@ -16,7 +16,7 @@ function GalleryComponent() {
 
     useEffect(() => {
         if (token) {
-                    fetch(`http://localhost:5120/artista/${id}?si=c14fd7cce6ec4d59`, {
+                    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/artista/${id}?si=c14fd7cce6ec4d59`, {
                         method: 'GET',
                         headers: {
                             'X-Access-Token': localStorage.getItem('token'),
@@ -32,7 +32,7 @@ function GalleryComponent() {
 
             useEffect(() => {
                 if(artista.name){
-                    fetch(`http://localhost:5120/galeria/${artista.name}`, {
+                    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/galeria/${artista.name}`, {
                         method: 'GET',
                         headers: {
                             'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port

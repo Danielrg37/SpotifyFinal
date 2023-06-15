@@ -80,7 +80,7 @@ function VistaAdminDisco() {
 
   useEffect(() => {
     if (token && id !== undefined) {
-      fetch(`http://localhost:5120/Disco/${id}`, {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Disco/${id}`, {
         method: 'GET',
         headers: {
           'X-Access-Token': localStorage.getItem('token'),

@@ -50,7 +50,7 @@ function VistaCancionP() {
 
   useEffect(() => {
     if (token && cancion.id) {
-      fetch(`http://localhost:5120/recomendaciones/${cancion.id}`, {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/recomendaciones/${cancion.id}`, {
         method: 'GET',
         headers: {
           'X-Access-Token': localStorage.getItem('token'),
