@@ -12,9 +12,10 @@ function VistaAdminUsuario() {
   const [usuarios, setUsuarios] = useState([]);
   const [playlists, setPlaylists] = useState([]);
   const [acciones, setAcciones] = useState([]);
+  
 
   useEffect(() => {
-    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios', {
+    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
       method: 'GET',
       headers: {
         Origin: 'http://localhost:5173',
@@ -77,8 +78,8 @@ function VistaAdminUsuario() {
         console.log('Error al borrar el usuario:', error);
       });
   };
-  
-  
+
+
   const editar = (id) => {
     fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/editar/${id}`, {
       method: 'PUT',
@@ -95,69 +96,72 @@ function VistaAdminUsuario() {
 
   console.log(acciones);
 
+
   return (
     <div className="container">
       <BarraNav />
       <div className="row mt-3">
         <div className="col-12 text-center" id="datos">
           <div className="grafico-container">
-            <h4>Tabla de usuarios</h4>
-            <div className="col-12">
-            <button className="btn btn-outline-success rounded-pill w-100">Crear</button>
-              <table className="table table-responsive mt-4">
-             
-                <thead>
-                  <tr>
-                    <th>IdUsuario</th>
-                    <th>Nombre de Usuario</th>
-                    <th>Email</th>
-                    <th>Creado en</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {usuarios.map((usuario, index) => (
-                    <tr key={index}>
-                      <td>{usuario.id}</td>
-                      <td>{usuario.nombreUsuario}</td>
-                      <td>{usuario.email}</td>
-                      <td>{usuario.createdAt}</td>
-                      <td>
-      <button className="btn btn-outline-success rounded-pill" onClick={() => borrar(usuario.id)}>Borrar</button>
-    </td>
-    <td>
-      <button className="btn btn-outline-success rounded-pill" onClick={() => editar(usuario.id)}>Modificar</button>
-    </td>
+            <div className="grafico-container">
+              <h4>Tabla de usuarios</h4>
+              <div className="col-12">
+                <button className="btn btn-outline-success rounded-pill w-100">Crear</button>
+                <table className="table table-responsive mt-4">
+                  <thead>
+                    <tr>
+                      <th>IdUsuario</th>
+                      <th>Nombre de Usuario</th>
+                      <th>Email</th>
+                      <th>Creado en</th>
+                      <th>Acciones</th>
                     </tr>
-                  
-                ))}
-                 
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {usuarios.map((usuario, index) => (
+                      <tr key={index}>
+                        <td>{usuario.id}</td>
+                        <td>{usuario.nombreUsuario}</td>
+                        <td>{usuario.email}</td>
+                        <td>{usuario.createdAt}</td>
+                        <td>
+                          <button className="btn btn-outline-success rounded-pill" onClick={() => deleteUser(usuario.id)}>
+                            Borrar
+                          </button>
+                        </td>
+                        <td>
+                          <button className="btn btn-outline-success rounded-pill">Modificar</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       <div className="row mt-5">
-  <div className="col-6 text-center" id="datos">
-    <div className="playlists-container">
-      <h4>Playlist creadas recientemente</h4>
-      <div className="row">
-        {playlists.map((playlist, index) => (
-          <div className="col-6" key={index}>
-            <iframe
-              id={`spotify-iframe-${index}`}
-              src={`https://open.spotify.com/embed/playlist/${playlist.idPlaylist}`}
-              frameBorder="0"
-              style={{ width: '100%', height: '100%', maxWidth: '90vw' }}
-              allowtransparency="true"
-              allow="encrypted-media"
-            />
+        <div className="col-6 text-center" id="datos">
+          <div className="playlists-container">
+            <h4>Playlist creadas recientemente</h4>
+            <div className="row">
+              {playlists.map((playlist, index) => (
+                <div className="col-6" key={index}>
+                  <iframe
+                    id={`spotify-iframe-${index}`}
+                    src={`https://open.spotify.com/embed/playlist/${playlist.idPlaylist}`}
+                    frameBorder="0"
+                    style={{ width: '100%', height: '100%', maxWidth: '90vw' }}
+                    allowtransparency="true"
+                    allow="encrypted-media"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-    </div>
-  </div>
+        </div>
 
 
         <div className="col-6 text-center" id="datos">
@@ -177,29 +181,29 @@ function VistaAdminUsuario() {
                     </tr>
                   </thead>
                   <tbody>
-  {acciones.map((accion, index) => (
-  <tr key={index}>
-    <td>{accion.cancionID ? accion.cancionID : '-'}</td>
-    <td>{accion.artistaID ? accion.artistaID : '-'}</td>
-    <td>{accion.discoID ? accion.discoID : '-'}</td>
-    <td>{accion.nombreUsuario ? accion.nombreUsuario : '-'}</td>
-    <td>
-      {accion.cancionID ? (
-        <a href={`http://ec2-3-230-86-196.compute-1.amazonaws.com:5173/cancion/${accion.cancionID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
-      ) : (
-        accion.artistaID ? (
-          <a href={`http://ec2-3-230-86-196.compute-1.amazonaws.com:5173/artista/${accion.artistaID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
-        ) : (
-          accion.discoID ? (
-            <a href={`http://ec2-3-230-86-196.compute-1.amazonaws.com:5173/disco/${accion.discoID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
-          ) : (
-            <span>-</span>
-          )
-        )
-      )}
-    </td>
-  </tr>
-))}
+                    {acciones.map((accion, index) => (
+                      <tr key={index}>
+                        <td>{accion.cancionID ? accion.cancionID : '-'}</td>
+                        <td>{accion.artistaID ? accion.artistaID : '-'}</td>
+                        <td>{accion.discoID ? accion.discoID : '-'}</td>
+                        <td>{accion.nombreUsuario ? accion.nombreUsuario : '-'}</td>
+                        <td>
+                          {accion.cancionID ? (
+                            <a href={`http://ec2-3-230-86-196.compute-1.amazonaws.com:5173/cancion/${accion.cancionID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
+                          ) : (
+                            accion.artistaID ? (
+                              <a href={`http://ec2-3-230-86-196.compute-1.amazonaws.com:5173/artista/${accion.artistaID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
+                            ) : (
+                              accion.discoID ? (
+                                <a href={`http://ec2-3-230-86-196.compute-1.amazonaws.com:5173/disco/${accion.discoID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
+                              ) : (
+                                <span>-</span>
+                              )
+                            )
+                          )}
+                        </td>
+                      </tr>
+                    ))}
 
 
                   </tbody>

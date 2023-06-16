@@ -102,6 +102,46 @@ namespace Backend.Controllers
             }
         }
 
+        [HttpPost("crearComentarios")]
+
+        public IActionResult CrearComentarios([FromBody] Comentario comentario)
+        {
+            using (SqlConnection conexion4 = ObtenerConexion())
+            {
+                try
+                {
+                    // Abrir la conexión
+                    conexion4.Open();
+
+                    // Consulta SQL para insertar un usuario
+                    string sql = "INSERT INTO Comentarios (id_usuario, id_cancion, texto, fecha) VALUES (@id_usuario, @id_cancion, @texto, @fecha)";
+
+                    // Crear el comando SQL
+                    SqlCommand comando = new SqlCommand(sql, conexion4);
+
+                    // Asignar valor a los parámetros
+                    comando.Parameters.AddWithValue("@id_usuario", comentario.IdUsuario);
+                    comando.Parameters.AddWithValue("@id_cancion", comentario.IdCancion);
+                    comando.Parameters.AddWithValue("@texto", comentario.Texto);
+                    comando.Parameters.AddWithValue("@fecha", comentario.Fecha);
+
+                    // Ejecutar el comando
+                    comando.ExecuteNonQuery();
+
+                    // Cerrar la conexión
+                    conexion4.Close();
+
+                    // Retornar un mensaje de éxito
+                    return Ok("Comentario creado correctamente");
+                }
+                catch (Exception ex)
+                {
+                    // Error al crear el usuario
+                    return BadRequest("Error al crear el usuario: " + ex.Message);
+                }
+            }
+        }
+
     }
 
 }

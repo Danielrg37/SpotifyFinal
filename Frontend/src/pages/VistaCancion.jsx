@@ -408,7 +408,8 @@ useEffect(() => {
               </div>
             </div>
             <div class="col-12 mt-4">
-                  <CommentSection></CommentSection>
+            <CommentSection idCancion={id} />
+
                   </div>
           </div>
 

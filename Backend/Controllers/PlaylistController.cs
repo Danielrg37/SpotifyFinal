@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 namespace Backend.Controllers
 {
     [ApiController]
-    [Route("playlist")]
+    [Route("[controller]")]
     public class PlaylistController : ControllerBase
     {
         private readonly string conexion;
@@ -15,7 +15,8 @@ namespace Backend.Controllers
         public PlaylistController()
         {
             // Cadena de conexión
-            conexion = "Data Source=EC2AMAZ-HD3BM03\\MSSQLSERVER01;Initial Catalog=Spotify;User ID=EC2AMAZ-HD3BM03\\Administrator;Integrated Security=True";
+            conexion = "Data Source=EC2AMAZ-HD3BM03\\MSSQLSERVER01;Initial Catalog=Spotify;User ID=Administrator;Integrated Security=True";
+
         }
 
         private SqlConnection ObtenerConexion()
@@ -52,10 +53,10 @@ namespace Backend.Controllers
                 try
                 {
                     // Abrir la conexión
-                    conexion3.Open();   
+                    conexion3.Open();
 
                     // Crear el comando SQL
-                    string sqlQuery = "SELECT idUsuario, nombrePlaylist, createdAt, idPlaylist FROM Playlists";
+                    string sqlQuery = "SELECT idUsuario, nombrePlaylist, createdAt, idPlaylist FROM Playlist";
                     SqlCommand comando = new SqlCommand(sqlQuery, conexion3);
 
                     // Ejecutar la consulta y obtener los resultados
@@ -65,10 +66,10 @@ namespace Backend.Controllers
                     while (reader.Read())
                     {
                         Playlist playlist = new Playlist();
-                        playlist.IdUsuario = reader.GetInt32(0);
+                        playlist.idUsuario = reader.GetInt32(0);
                         playlist.Nombre = reader.GetString(1);
                         playlist.createdAt = reader.GetDateTime(2);
-                        playlist.IdPlaylist = reader.GetString(3);
+                        playlist.idPlaylist = reader.GetString(3);
                         listaPlaylist.Add(playlist);
                     }
 
@@ -76,8 +77,8 @@ namespace Backend.Controllers
                     reader.Close();
 
                     // Retornar la lista de usuarios
-                    return Ok(listaPlaylist);          
-        }
+                    return Ok(listaPlaylist);
+                }
                 catch (Exception ex)
                 {
                     // Error al obtener los usuarios
@@ -85,22 +86,62 @@ namespace Backend.Controllers
                 }
             }
         }
-        
+
+        [HttpPost("crearPlaylist")]
+
+        public IActionResult CrearPlaylist([FromBody] Playlist playlist)
+        {
+            using (SqlConnection conexion4 = ObtenerConexion())
+            {
+                try
+                {
+                    // Abrir la conexión
+                    conexion4.Open();
+
+                    // Crear el comando SQL
+                   string sqlQuery = "INSERT INTO Playlist (idUsuario, nombrePlaylist, createdAt, idPlaylist) VALUES (@idUsuario, @nombrePlaylist, @createdAt, @idPlaylist)";
+SqlCommand comando = new SqlCommand(sqlQuery, conexion4);
+
+DateTime currentDateTime = DateTime.UtcNow;
+
+
+
+// Asignar parámetros in the correct order
+comando.Parameters.AddWithValue("@idUsuario", playlist.idUsuario);
+comando.Parameters.AddWithValue("@nombrePlaylist", playlist.Nombre);
+comando.Parameters.AddWithValue("@createdAt", currentDateTime);
+comando.Parameters.AddWithValue("@idPlaylist", playlist.idPlaylist);
+
+
+
+                    // Ejecutar el comando
+                    comando.ExecuteNonQuery();
+
+                    // Retornar un mensaje de éxito
+                    return Ok("Playlist creada correctamente");
+                }
+                catch (Exception ex)
+                {
+                    // Error al crear el usuario
+                    return BadRequest("Error al crear la playlist: " + ex.Message);
+                }
+            }
+        }
 
 
 
 
 
-public class Playlist
-{
-    public int IdUsuario { get; set; }
-    public string Nombre { get; set; }
- 
-    public DateTime createdAt { get; set; }
+        public class Playlist
+        {
+            public int idUsuario { get; set; }
+            public string Nombre { get; set; }
 
-    public string IdPlaylist { get; set; }
+            public DateTime createdAt { get; set; }
 
-}
+            public string idPlaylist { get; set; }
+
+        }
 
     }
 }

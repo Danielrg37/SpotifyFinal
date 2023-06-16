@@ -4,8 +4,10 @@ import React from 'react';
 import ben from "./../img/ben.png";
 import fernando from "./../img/fernando.png";
 import "./css/comentarios/comentarios.css";
+import axios from 'axios';
 
-const CommentSection = () => {
+const CommentSection = (props) => {
+  const { idCancion } = props;
   const [respuesta, setRespuesta] = useState('');
   const [mostrarForm, setMostrarForm] = useState(false);
   const [comentarios, setComentarios] = useState([]);
@@ -18,17 +20,39 @@ const CommentSection = () => {
     event.preventDefault();
     // Create a new comment object
     const nuevoComentario = {
-      Escritor: 'Nombre', // Set the author of the comment here
-      Momento: new Date().toLocaleString(), // Set the timestamp of the comment
-      Comentario: respuesta, // Get the reply text from the state
+      id_usuario: 1, // Set the ID of the user who posted the comment
+      id_cancion: idCancion, // Set the ID of the song
+      texto: respuesta, // Get the reply text from the state
+      fecha: new Date().toISOString(), // Set the timestamp of the comment
     };
 
-    // Update the comments state with the new comment
-    setComentarios([...comentarios, nuevoComentario]);
+    // Send the new comment to the backend
+   fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/crearComentarios', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Origin': 'http://localhost:5173'
+      },
+      body: JSON.stringify(nuevoComentario),
+    })
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
 
-    // Reset the reply text and hide the reply form
-    setRespuesta('');
-    setMostrarForm(false);
+      
+        // Update the comments state with the new comment
+        setComentarios([...comentarios, nuevoComentario]);
+
+        // Reset the reply text and hide the reply form
+        setRespuesta('');
+        setMostrarForm(false);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   const BotonResponder = () => {
@@ -49,7 +73,6 @@ const CommentSection = () => {
       });
   }, []);
 
-  
 
   const comentariosFiltrados = comentarios.filter((comentario) => comentario.idCancion === idCancion);
 
