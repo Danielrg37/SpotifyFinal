@@ -55,6 +55,44 @@ function VistaAdminUsuario() {
       });
   }, []);
 
+  const borrar = (id) => {
+    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/Uborrar`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Origin: 'http://localhost:5173',
+      },
+      body: JSON.stringify({ id: id }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          console.log('Usuario borrado exitosamente');
+          // Actualizar la lista de usuarios después de la eliminación
+          // setUsuarios(data);
+        } else {
+          console.log('No se pudo borrar el usuario');
+        }
+      })
+      .catch((error) => {
+        console.log('Error al borrar el usuario:', error);
+      });
+  };
+  
+  
+  const editar = (id) => {
+    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/editar/${id}`, {
+      method: 'PUT',
+      headers: {
+        Origin: 'http://localhost:5173',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setUsuarios(data);
+      });
+  };
+
   console.log(acciones);
 
   return (
@@ -84,8 +122,12 @@ function VistaAdminUsuario() {
                       <td>{usuario.nombreUsuario}</td>
                       <td>{usuario.email}</td>
                       <td>{usuario.createdAt}</td>
-                      <td><button className="btn btn-outline-success rounded-pill">Borrar</button></td>
-                      <td><button className="btn btn-outline-success rounded-pill">Modificar</button></td>
+                      <td>
+      <button className="btn btn-outline-success rounded-pill" onClick={() => borrar(usuario.id)}>Borrar</button>
+    </td>
+    <td>
+      <button className="btn btn-outline-success rounded-pill" onClick={() => editar(usuario.id)}>Modificar</button>
+    </td>
                     </tr>
                   
                 ))}

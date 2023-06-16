@@ -90,42 +90,43 @@ namespace Backend.Controllers
             }
         }
 
-        [HttpPost("usuarios/borrar")]
-        public IActionResult BorrarUsuario([FromBody] BorrarUsuarioRequest request)
+   [HttpDelete("Uborrar")]
+public IActionResult BorrarUsuario([FromBody] BorrarUsuarioRequest request)
+{
+    using (SqlConnection conexion4 = ObtenerConexion())
+    {
+        try
         {
-            using (SqlConnection conexion4 = ObtenerConexion())
+            // Abrir la conexión
+            conexion4.Open();
+
+            // Crear el comando SQL para borrar el usuario
+            string sqlQuery = "DELETE FROM Usuarios WHERE idUsuario = @Id";
+            SqlCommand comando2 = new SqlCommand(sqlQuery, conexion4);
+            comando2.Parameters.AddWithValue("@Id", request.Id);
+
+            // Ejecutar el comando
+            int rowsAffected = comando2.ExecuteNonQuery();
+
+            if (rowsAffected > 0)
             {
-                try
-                {
-                    // Abrir la conexión
-                    conexion4.Open();
-
-                    // Crear el comando SQL para borrar el usuario
-                    string sqlQuery = "DELETE FROM Usuarios WHERE id = @Id";
-                    SqlCommand comando2 = new SqlCommand(sqlQuery, conexion4);
-                    comando2.Parameters.AddWithValue("@Id", request.Id);
-
-                    // Ejecutar el comando
-                    int rowsAffected = comando2.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        // El usuario se borró exitosamente
-                        return Ok("Usuario borrado exitosamente");
-                    }
-                    else
-                    {
-                        // No se encontró el usuario o no se pudo borrar
-                        return NotFound("No se encontró el usuario o no se pudo borrar");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Error al borrar el usuario
-                    return BadRequest("Error al borrar el usuario: " + ex.Message);
-                }
+                // El usuario se borró exitosamente
+                return Ok("Usuario borrado exitosamente");
+            }
+            else
+            {
+                // No se encontró el usuario o no se pudo borrar
+                return NotFound("No se encontró el usuario o no se pudo borrar");
             }
         }
+        catch (Exception ex)
+        {
+            // Error al borrar el usuario
+            return BadRequest("Error al borrar el usuario: " + ex.Message);
+        }
+    }
+}
+
 
         [HttpPost("usuarios/editar")]
         public IActionResult EditarUsuario([FromBody] EditarUsuarioRequest request)
