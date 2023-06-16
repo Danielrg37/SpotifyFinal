@@ -10,6 +10,7 @@ import Footer from './Footer';
 import usuario from './../img/usuario.png';
 import img_zona2 from './../img/300x300.png';
 import BarraNav from './BarraNav';
+import admin_artistadisco from './../img/adminAD.jpg';
 
 function VistaArtista() {
 
@@ -43,7 +44,7 @@ function VistaArtista() {
                         <Link to={`/adminMenu2`} className="custom-underline">
                             <p style={{ fontSize: '30px' }}>Consultar artistas/canciones...</p>
 
-                            <img src={img_zona2} alt="grafica-usuario" border="0" width="80%" height="400"></img>
+                            <img src={admin_artistadisco} alt="grafica-usuario" border="0" width="80%" height="400"></img>
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>
                                     Acceder

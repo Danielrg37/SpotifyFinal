@@ -14,7 +14,7 @@ import BarraNav from './BarraNav';
 function VistaTotalArtistas() {
 
     const [topArtistas, setTopArtistas] = useState([]);
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     let [tiempo, setTiempo] = useState('short_term');
     const handleTiempoChange = (nuevoTiempo) => { setTiempo(nuevoTiempo); };
 
@@ -24,7 +24,7 @@ function VistaTotalArtistas() {
                 {
                     method: "GET",
                         headers: {
-                            'X-Access-Token': localStorage.getItem('token'),
+                            'X-Access-Token': sessionStorage.getItem('token'),
                             'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
                         }
                     }

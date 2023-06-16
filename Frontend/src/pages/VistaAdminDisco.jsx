@@ -47,7 +47,7 @@ function VistaAdminDisco() {
   const [url, setUrl] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     setToken(token);
 
   }, []);
@@ -83,7 +83,7 @@ function VistaAdminDisco() {
       fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Disco/${id}`, {
         method: 'GET',
         headers: {
-          'X-Access-Token': localStorage.getItem('token'),
+          'X-Access-Token': sessionStorage.getItem('token'),
           Origin: 'http://localhost:5173', // Replace with your front-end application's URL and port
         },
       })

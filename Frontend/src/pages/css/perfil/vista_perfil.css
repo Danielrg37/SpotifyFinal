@@ -77,4 +77,10 @@ h2{
   }
   
 
+  .tabla-historial tr,
+  .tabla-historial th,
+  .tabla-historial td {
+      color: white;
+  }
+  
   

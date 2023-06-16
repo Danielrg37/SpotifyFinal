@@ -25,7 +25,7 @@ function VistaPerfil() {
 
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         setToken(token);
     }, []);
 
@@ -36,7 +36,7 @@ function VistaPerfil() {
                 {
                     method: "GET", headers:
                 {
-                    'X-Access-Token': localStorage.getItem('token'),
+                    'X-Access-Token': sessionStorage.getItem('token'),
                     'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
                 }
             }).then(response => response.json())
@@ -62,7 +62,7 @@ function VistaPerfil() {
           fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/TopC?tiempo=${tiempo}`, {
             method: "GET",
             headers: {
-              'X-Access-Token': localStorage.getItem('token'),
+              'X-Access-Token': sessionStorage.getItem('token'),
               'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
             }
           })
@@ -84,7 +84,7 @@ function VistaPerfil() {
           fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/TopArtista?tiempo=${tiempo}`, {
             method: "GET",
             headers: {
-              'X-Access-Token': localStorage.getItem('token'),
+              'X-Access-Token': sessionStorage.getItem('token'),
               'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
             }
           })
@@ -102,7 +102,7 @@ function VistaPerfil() {
             fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/HistorialR", {
                 method: "GET",
                 headers: {
-                    'X-Access-Token': localStorage.getItem('token'),
+                    'X-Access-Token': sessionStorage.getItem('token'),
                     "Origin": "http://localhost:5173"
                 }
             })
@@ -261,7 +261,7 @@ function VistaPerfil() {
                 <div id="tabla">
                     <div className="col-12 ml-2">
                         <h2>Mi historial de reproducciones</h2>
-                        <table className="table table-responsive">
+                        <table id="historial" className="table table-responsive tabla-historial">
                             <thead>
                                 <tr>
                                     <th>Imagen</th>

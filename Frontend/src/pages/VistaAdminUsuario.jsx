@@ -63,15 +63,18 @@ function VistaAdminUsuario() {
       <div className="row mt-3">
         <div className="col-12 text-center" id="datos">
           <div className="grafico-container">
-            <h4>Gráficas de usuarios</h4>
-            <div className="col-8">
-              <table className="table">
+            <h4>Tabla de usuarios</h4>
+            <div className="col-12">
+            <button className="btn btn-outline-success rounded-pill w-100">Crear</button>
+              <table className="table table-responsive mt-4">
+             
                 <thead>
                   <tr>
                     <th>IdUsuario</th>
                     <th>Nombre de Usuario</th>
                     <th>Email</th>
                     <th>Creado en</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -81,8 +84,12 @@ function VistaAdminUsuario() {
                       <td>{usuario.nombreUsuario}</td>
                       <td>{usuario.email}</td>
                       <td>{usuario.createdAt}</td>
+                      <td><button className="btn btn-outline-success rounded-pill">Borrar</button></td>
+                      <td><button className="btn btn-outline-success rounded-pill">Modificar</button></td>
                     </tr>
-                  ))}
+                  
+                ))}
+                 
                 </tbody>
               </table>
             </div>
@@ -90,26 +97,27 @@ function VistaAdminUsuario() {
         </div>
       </div>
       <div className="row mt-5">
-        <div className="col-6 text-center" id="datos">
-          <div className="playlists-container">
-            <h4>Playlist creadas recientemente</h4>
-            <div className="row">
-              {playlists.map((playlist, index) => (
-                <div className="col-6" key={index}>
-                  <iframe
-                    id={`spotify-iframe-${index}`}
-                    src={`https://open.spotify.com/embed/playlist/${playlist.idPlaylist}`}
-                    frameBorder="0"
-                    width="290"
-                    height="370"
-                    allowtransparency="true"
-                    allow="encrypted-media"
-                  />
-                </div>
-              ))}
-            </div>
+  <div className="col-6 text-center" id="datos">
+    <div className="playlists-container">
+      <h4>Playlist creadas recientemente</h4>
+      <div className="row">
+        {playlists.map((playlist, index) => (
+          <div className="col-6" key={index}>
+            <iframe
+              id={`spotify-iframe-${index}`}
+              src={`https://open.spotify.com/embed/playlist/${playlist.idPlaylist}`}
+              frameBorder="0"
+              style={{ width: '100%', height: '100%', maxWidth: '90vw' }}
+              allowtransparency="true"
+              allow="encrypted-media"
+            />
           </div>
-        </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+
         <div className="col-6 text-center" id="datos">
           <div className="acciones-container">
             <h4>Historial de acciones</h4>
@@ -127,27 +135,31 @@ function VistaAdminUsuario() {
                     </tr>
                   </thead>
                   <tbody>
-                    {acciones.map((accion, index) => (
-                      <tr key={index}>
-                        <td>{accion.cancionID ? accion.cancionID : '-'}</td>
-                        <td>{accion.artistaID ? accion.artistaID : '-'}</td>
-                        <td>{accion.discoID ? accion.discoID : '-'}</td>
+  {acciones.map((accion, index) => (
+  <tr key={index}>
+    <td>{accion.cancionID ? accion.cancionID : '-'}</td>
+    <td>{accion.artistaID ? accion.artistaID : '-'}</td>
+    <td>{accion.discoID ? accion.discoID : '-'}</td>
+    <td>{accion.nombreUsuario ? accion.nombreUsuario : '-'}</td>
+    <td>
+      {accion.cancionID ? (
+        <a href={`http://ec2-3-230-86-196.compute-1.amazonaws.com:5173/cancion/${accion.cancionID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
+      ) : (
+        accion.artistaID ? (
+          <a href={`http://ec2-3-230-86-196.compute-1.amazonaws.com:5173/artista/${accion.artistaID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
+        ) : (
+          accion.discoID ? (
+            <a href={`http://ec2-3-230-86-196.compute-1.amazonaws.com:5173/disco/${accion.discoID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
+          ) : (
+            <span>-</span>
+          )
+        )
+      )}
+    </td>
+  </tr>
+))}
 
-                        <td>{accion.nombreUsuario ? accion.nombreUsuario : '-'}</td>
-                        <td>
-                          {accion.cancionID ? (
-                            <a href={`http://localhost:5173/cancion/${accion.cancionID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
-                          ) : accion.artistaID ? (
-                            <a href={`http://localhost:5173/artista/${accion.artistaID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
-                          ) : accion.discoID ? (
-                            <a href={`http://localhost:5173/disco/${accion.discoID}`} target="_blank" rel="noopener noreferrer">Ver más</a>
-                          ) : (
-                            '-'
-                          )}
-                        </td>
 
-                      </tr>
-                    ))}
                   </tbody>
                 </table>
               </div>

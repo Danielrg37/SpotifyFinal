@@ -19,11 +19,11 @@ function VistaMenu() {
 
             <div className="row mt-5">
             <div class="col-6 text-center" id="datos">
-                    <div className="grafico-container" style={{ height: '60vh' }}>
-                        <Link to={`/adminUsuario`} className="custom-underline">
-                            <p style={{ fontSize: '30px' }}>Consultar usuarios e historial</p>
+                    <div className="grafico-container" style={{ height: '45vw' }}>
+                        <Link to={`/playlistA`} className="custom-underline">
+                            <p style={{ fontSize: '30px' }}>Crear playlist basada en artista</p>
 
-                            <img src={img_artistas} alt="grafica-usuario" border="0" width="80%" height="400"></img>
+                            <img src={img_artistas} alt="grafica-usuario" border="0" width="80%" height="80%"></img>
 
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>
@@ -36,11 +36,11 @@ function VistaMenu() {
                 </div>
 
                 <div class="col-6 text-center" id="datos">
-                    <div className="grafico-container" style={{ height: '60vh' }}>
-                        <Link to={`/adminUsuario`} className="custom-underline">
-                            <p style={{ fontSize: '30px' }}>Consultar usuarios e historial</p>
+                    <div className="grafico-container" style={{ height: '45vw' }}>
+                        <Link to={`/playlistC`} className="custom-underline">
+                            <p style={{ fontSize: '30px' }}>Crear playlist basada en canción</p>
 
-                            <img src={img_canciones} alt="grafica-usuario" border="0" width="80%" height="400"></img>
+                            <img src={img_canciones} alt="grafica-usuario" border="0" width="80%" height="80%"></img>
 
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>

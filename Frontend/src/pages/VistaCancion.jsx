@@ -35,7 +35,7 @@ function VistaCancion() {
   const [noLetras, setNoLetras] = useState(false);
 
 
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   const { id } = useParams();
   const embedUrl = `https://open.spotify.com/embed/track/${id}`;
 
@@ -55,7 +55,7 @@ function VistaCancion() {
       fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Cancion/${id}`, {
         method: "GET",
         headers: {
-          'X-Access-Token': localStorage.getItem('token'),
+          'X-Access-Token': sessionStorage.getItem('token'),
           'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
         }
       })
@@ -87,7 +87,7 @@ useEffect(() => {
       fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Features/${id}`, {
         method: "GET",
         headers: {
-          'X-Access-Token': localStorage.getItem('token'),
+          'X-Access-Token': sessionStorage.getItem('token'),
           'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
         }
       })
@@ -145,7 +145,7 @@ useEffect(() => {
 }, [cancion.name]);
 
 useEffect(() => {
-  if (localStorage.getItem('nombreUsuario')) {
+  if (sessionStorage.getItem('nombreUsuario')) {
     fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
       method: "GET",
       headers: {
@@ -155,7 +155,7 @@ useEffect(() => {
     })
     .then(response => response.json())
     .then(data => {
-      const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
+      const usuario = data.find(user => user.nombreUsuario === sessionStorage.getItem('nombreUsuario'));
       if (usuario) {
         const usuarioID = usuario.Id;
         console.log(usuarioID);
@@ -170,7 +170,7 @@ useEffect(() => {
 
 
 useEffect(() => {
-  if (localStorage.getItem('nombreUsuario') && UsuarioID != undefined && cancion.id != undefined) {
+  if (sessionStorage.getItem('nombreUsuario') && UsuarioID != undefined && cancion.id != undefined) {
     fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones_anadir", {
       method: "POST",
       headers: {
@@ -182,7 +182,7 @@ useEffect(() => {
         ArtistaID: "-",
         DiscoID: "-",
         UsuarioID: UsuarioID,
-        NombreUsuario: localStorage.getItem('nombreUsuario')
+        NombreUsuario: sessionStorage.getItem('nombreUsuario')
       }),
     })
     .then(response => response.json())

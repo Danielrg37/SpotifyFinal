@@ -23,7 +23,7 @@ function BarraNav() {
   };
 
   const checkTokenExpiration = () => {
-    const expirationTime = localStorage.getItem('tokenExpiration');
+    const expirationTime = sessionStorage.getItem('tokenExpiration');
     if (expirationTime && Date.now() >= Number(expirationTime)) {
       // Token has expired
       refreshAccessToken();
@@ -31,7 +31,7 @@ function BarraNav() {
   };
 
   const refreshAccessToken = () => {
-    const refreshToken = localStorage.getItem('refreshToken');
+    const refreshToken = sessionStorage.getItem('refreshToken');
     if (!refreshToken) {
       // No refresh token available, user needs to log in again
       handleLogout();
@@ -51,9 +51,9 @@ function BarraNav() {
         if (data.access_token) {
           // Refresh successful, update the token and expiration time
           setToken(data.access_token);
-          localStorage.setItem('token', data.access_token);
+          sessionStorage.setItem('token', data.access_token);
           const expirationTime = Date.now() + data.expires_in * 1000;
-          localStorage.setItem('tokenExpiration', expirationTime);
+          sessionStorage.setItem('tokenExpiration', expirationTime);
         } else {
           // Refresh failed, user needs to log in again
           handleLogout();
@@ -67,9 +67,9 @@ function BarraNav() {
 
   const handleLogout = () => {
     // Clear the token and related data from local storage
-    localStorage.removeItem('token');
-    localStorage.removeItem('tokenExpiration');
-    localStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('tokenExpiration');
+    sessionStorage.removeItem('refreshToken');
     setToken(null);
   };
 
@@ -78,8 +78,8 @@ function BarraNav() {
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const expirationTime = localStorage.getItem('tokenExpiration');
+    const token = sessionStorage.getItem('token');
+    const expirationTime = sessionStorage.getItem('tokenExpiration');
     setToken(token);
     if (token && expirationTime) {
       setToken(token);
@@ -113,9 +113,9 @@ function BarraNav() {
   ];
 
   const handleLoginWithSpotify = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('tokenExpiration');
-    localStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('tokenExpiration');
+    sessionStorage.removeItem('refreshToken');
     window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPES.join(
       '%20'
     )}`;
@@ -140,7 +140,7 @@ function BarraNav() {
   }, [token]);
 
   useEffect(() => {
-    const nombreUsuario = localStorage.getItem('nombreUsuario');
+    const nombreUsuario = sessionStorage.getItem('nombreUsuario');
     setNombreUsuario(nombreUsuario);
   }, []);
 

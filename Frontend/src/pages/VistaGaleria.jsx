@@ -10,7 +10,7 @@ function GalleryComponent() {
     const [imagenes, setImagenes] = useState([]);
     const [artista, setArtista] = useState({});
 
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     const { id } = useParams();
 
@@ -19,7 +19,7 @@ function GalleryComponent() {
                     fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/artista/${id}?si=c14fd7cce6ec4d59`, {
                         method: 'GET',
                         headers: {
-                            'X-Access-Token': localStorage.getItem('token'),
+                            'X-Access-Token': sessionStorage.getItem('token'),
                             'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
                         }
                     })

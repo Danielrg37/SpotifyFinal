@@ -17,7 +17,7 @@ function VistaDisco() {
     const [cancionesDisco, setCancionesDisco] = useState([]);
     const [url, setUrl] = useState(``);
 
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
     const { id } = useParams();
 
@@ -26,7 +26,7 @@ function VistaDisco() {
           fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Disco/${id}`, {
             method: "GET",
             headers: {
-              'X-Access-Token': localStorage.getItem('token'),
+              'X-Access-Token': sessionStorage.getItem('token'),
               'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
             }
           })
@@ -38,7 +38,9 @@ function VistaDisco() {
               setDisco(album);
               setCancionesDisco(tracks.items);
               const baseUrl = "https://www.amazon.es/s?k=";
-              const searchQuery = `${album.artists[0].name}+${album.name}`;
+              if(album.artists.length > 0) {
+              var searchQuery = `${album.artists[0].name}+${album.name}`;
+              }
               const url = baseUrl + searchQuery;
               setUrl(url);
             })
@@ -59,7 +61,7 @@ function VistaDisco() {
 
 
       useEffect(() => {
-        if (localStorage.getItem('nombreUsuario')) {
+        if (sessionStorage.getItem('nombreUsuario')) {
           fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
             method: "GET",
             headers: {
@@ -69,7 +71,7 @@ function VistaDisco() {
           })
           .then(response => response.json())
           .then(data => {
-            const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
+            const usuario = data.find(user => user.nombreUsuario === sessionStorage.getItem('nombreUsuario'));
             if (usuario) {
               const usuarioID = usuario.Id;
               console.log(usuarioID);
@@ -82,7 +84,7 @@ function VistaDisco() {
   
       
       useEffect(() => {
-        if (localStorage.getItem('nombreUsuario')) {
+        if (sessionStorage.getItem('nombreUsuario')) {
           fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones_anadir", {
             method: "POST",
             headers: {
@@ -94,7 +96,7 @@ function VistaDisco() {
               ArtistaID: "-",
               DiscoID: id,
               UsuarioID: UsuarioID,
-              NombreUsuario: localStorage.getItem('nombreUsuario')
+              NombreUsuario: sessionStorage.getItem('nombreUsuario')
             }),
           })
           .then(response => response.json())

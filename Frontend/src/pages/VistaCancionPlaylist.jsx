@@ -26,7 +26,7 @@ function VistaCancionP() {
 
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     setToken(token);
   }, []);
 
@@ -53,7 +53,7 @@ function VistaCancionP() {
       fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/recomendaciones/${cancion.id}`, {
         method: 'GET',
         headers: {
-          'X-Access-Token': localStorage.getItem('token'),
+          'X-Access-Token': sessionStorage.getItem('token'),
           'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
         }
       })
@@ -187,6 +187,7 @@ function VistaCancionP() {
             Crear playlist
           </Button>
         </InputGroup>
+        {searchInput != null && (
         <div className="row mt-3">
           <div className='cancion-container'>
             <div className="row">
@@ -221,9 +222,11 @@ function VistaCancionP() {
             </div>
           </div>
         </div>
+  )}
       </Container>
     </div>
-  );
+    
+  )
 }
 
 export default VistaCancionP;

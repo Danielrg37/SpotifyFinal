@@ -37,7 +37,7 @@ function Login() {
           // Las credenciales son válidas
           console.log("¡Inicio de sesión exitoso!");
 
-          localStorage.setItem("nombreUsuario", nombreUsuario);
+          sessionStorage.setItem("nombreUsuario", nombreUsuario);
           setShowModal(true); // Mostrar el modal
           setTimeout(() => {
             setShowModal(false); // Ocultar el modal después de 2 segundos
