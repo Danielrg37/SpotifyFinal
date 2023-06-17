@@ -115,6 +115,7 @@ useEffect(() => {
     })
       .then(response => response.text()) // Convertir la respuesta a texto
       .then(data => {
+        console.log(data);
        
         const lyrics = data.replace(/&quot;/g, '"').replace(/{"descripcion":"|"}/g, '').replace(/\\u0026quot;/g, '"'); // Replace HTML entity &quot; with "
         const decodedLyrics = decodeURIComponent(lyrics);
@@ -138,7 +139,9 @@ useEffect(() => {
       .catch(error => {
         setError(true);
         console.error(error);
-      
+        if (error.response && error.response.status === 404) {
+          setLetras('No hay letra disponible');
+        }
         
       });
   }
@@ -265,7 +268,6 @@ useEffect(() => {
     return minutos + ":" + (segundos < 10 ? '0' : '') + segundos;
   }
 
-  
 
   
 
@@ -378,7 +380,7 @@ useEffect(() => {
               </div>
             </div>
             <div class="col-12 mt-4">
-            <CommentSection idCancion={[id, UsuarioID]} />
+            <CommentSection idPagina={id} />
 
 
                   </div>

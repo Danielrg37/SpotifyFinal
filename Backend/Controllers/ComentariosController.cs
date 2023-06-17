@@ -24,8 +24,6 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-
-
         [HttpGet("verificar_conexion")]
         public IActionResult VerificarConexion()
         {
@@ -46,10 +44,8 @@ namespace Backend.Controllers
                 }
             }
         }
-    
-    
-        [HttpGet("comentarios")]    
 
+        [HttpGet("comentarios")]
         public IActionResult ObtenerComentarios()
         {
             using (SqlConnection conexion3 = ObtenerConexion())
@@ -57,9 +53,9 @@ namespace Backend.Controllers
                 try
                 {
                     // Abrir la conexión
-                    conexion3.Open();   
+                    conexion3.Open();
 
-                    // Consulta SQL para obtener los usuarios
+                    // Consulta SQL para obtener los comentarios
                     string sql = "SELECT * FROM Comentarios";
 
                     // Crear el comando SQL
@@ -68,7 +64,7 @@ namespace Backend.Controllers
                     // Ejecutar el comando y obtener los datos
                     SqlDataReader datos = comando.ExecuteReader();
 
-                    // Lista para almacenar los usuarios
+                    // Lista para almacenar los comentarios
                     List<Comentario> comentarios = new List<Comentario>();
 
                     // Verificar si hay datos para leer
@@ -78,80 +74,72 @@ namespace Backend.Controllers
                         Comentario comentario = new Comentario();
 
                         // Obtener los datos de la fila actual
-                        comentario.PaginaID = Convert.ToInt32(datos["PaginaID"]);
+                        comentario.IDPagina = Convert.ToString(datos["IDPagina"]);
                         comentario.UsuarioID = Convert.ToInt32(datos["UsuarioID"]);
-                        comentario.FechaCreacion = Convert.ToDateTime(datos["fechaCreacion"]);
                         comentario.Texto = Convert.ToString(datos["Texto"]);
 
-                        // Agregar el usuario a la lista
+                        // Agregar el comentario a la lista
                         comentarios.Add(comentario);
                     }
 
                     // Cerrar la conexión
                     conexion3.Close();
 
-                    // Retornar la lista de usuarios
+                    // Retornar la lista de comentarios
                     return Ok(comentarios);
                 }
                 catch (Exception ex)
                 {
-                    // Error al obtener los usuarios
-                    return BadRequest("Error al obtener los usuarios: " + ex.Message);
+                    // Error al obtener los comentarios
+                    return BadRequest("Error al obtener los comentarios: " + ex.Message);
                 }
             }
         }
 
         [HttpPost("crearComentarios")]
-
-  
-public IActionResult CrearComentarios([FromBody] Comentario comentario)
-{
-    using (SqlConnection conexion4 = ObtenerConexion())
-    {
-        try
+        public IActionResult CrearComentarios([FromBody] Comentario comentario)
         {
-            // Abrir la conexión
-            conexion4.Open();
+            using (SqlConnection conexion4 = ObtenerConexion())
+            {
+                try
+                {
+                    // Abrir la conexión
+                    conexion4.Open();
 
-            // Consulta SQL para insertar un comentario
-            string sql = "INSERT INTO Comentarios (PaginaID, UsuarioID, Texto) VALUES (@PaginaID, @UsuarioID, @Texto)";
+                    // Consulta SQL para insertar un comentario
+                    string sql = "INSERT INTO Comentarios (IDPagina, UsuarioID, Texto) VALUES (@IDPagina, @UsuarioID, @Texto)";
 
-            // Crear el comando SQL
-            SqlCommand comando = new SqlCommand(sql, conexion4);
+                    // Crear el comando SQL
+                    SqlCommand comando = new SqlCommand(sql, conexion4);
 
-          
-            // Asignar valor a los parámetros
-            comando.Parameters.AddWithValue("@PaginaID", comentario.PaginaID);
-            comando.Parameters.AddWithValue("@UsuarioID", comentario.UsuarioID);
-         
-            comando.Parameters.AddWithValue("@Texto", comentario.Texto);
+                    // Asignar valor a los parámetros
+                    comando.Parameters.AddWithValue("@IDPagina", comentario.IDPagina);
+                    comando.Parameters.AddWithValue("@UsuarioID", comentario.UsuarioID);
+                    comando.Parameters.AddWithValue("@Texto", comentario.Texto);
 
-            // Ejecutar el comando
-            comando.ExecuteNonQuery();
+                    // Ejecutar el comando
+                    comando.ExecuteNonQuery();
 
-            // Cerrar la conexión
-            conexion4.Close();
+                    // Cerrar la conexión
+                    conexion4.Close();
 
-            // Retornar un mensaje de éxito
-            return Ok("Comentario creado correctamente");
+                    // Retornar un mensaje de éxito
+                    return Ok("Comentario creado correctamente");
+                }
+                catch (Exception ex)
+                {
+                    // Error al crear el comentario
+                    return BadRequest("Error al crear el comentario: " + ex.Message);
+                }
+            }
         }
-        catch (Exception ex)
-        {
-            // Error al crear el comentario
-            return BadRequest("Error al crear el comentario: " + ex.Message);
-        }
-    }
-}
 
     }
-
 }
 
 public class Comentario
 {
-    public int PaginaID { get; set; }
+    public string IDPagina { get; set; }
     public int UsuarioID { get; set; }
-    public DateTime FechaCreacion { get; set; }
-
     public string Texto { get; set; }
 }

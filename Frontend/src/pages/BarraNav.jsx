@@ -80,6 +80,7 @@ function BarraNav() {
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     const expirationTime = sessionStorage.getItem('tokenExpiration');
+    const refreshToken = sessionStorage.getItem('refreshToken');
     setToken(token);
     if (token && expirationTime) {
       setToken(token);

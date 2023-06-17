@@ -7,61 +7,77 @@ import "./css/comentarios/comentarios.css";
 import axios from 'axios';
 
 const CommentSection = (props) => {
-  const { idCancion } = props;
+  const { idPagina } = props;
   const [respuesta, setRespuesta] = useState('');
   const [mostrarForm, setMostrarForm] = useState(false);
   const [comentarios, setComentarios] = useState([]);
+  const [user_id, setUser_id] = useState('');
 
   const ManejarRespuesta = (event) => {
     setRespuesta(event.target.value);
   };
 
+  useEffect(() => {
+    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
+      method: 'GET',
+      headers: {
+        Origin: 'http://localhost:5173',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const usuarioLogueado = data.find(usuario => usuario.nombreUsuario === localStorage.getItem('nombreUsuario'));
+        setUser_id(usuarioLogueado.id);
+      });
+  }, []);
+
   const AñadirRespuesta = (event) => {
     event.preventDefault();
     // Create a new comment object
-    const nuevoComentario = {
-      id_usuario: 1, // Set the ID of the user who posted the comment
-      id_cancion: idCancion, // Set the ID of the song
-      texto: respuesta, // Get the reply text from the state
-      fecha: new Date().toISOString(), // Set the timestamp of the comment
-    };
-
+    console.log(idPagina, user_id, new Date().toISOString(), respuesta);
     // Send the new comment to the backend
-   fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/crearComentarios', {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/crearComentarios', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Origin': 'http://localhost:5173'
       },
-      body: JSON.stringify(nuevoComentario)
-    })
-      .then(response => {
-        console.log(response);
-        return response.json();
+      body: JSON.stringify({
+        IDPagina: idPagina,
+        UsuarioID: user_id,
+        Texto: respuesta
       })
-      .then(data => {
+    })
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data);
-
-      
-        // Update the comments state with the new comment
-        setComentarios([...comentarios, nuevoComentario]);
-
-        // Reset the reply text and hide the reply form
         setRespuesta('');
         setMostrarForm(false);
-      })
-      .catch(error => {
-        console.error(error);
       });
   };
+
 
   const BotonResponder = () => {
     setMostrarForm(true);
   };
 
+  useEffect(() => {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/comentarios', {
+      method: 'GET',
+      headers: {
+        Origin: 'http://localhost:5173',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+       setComentarios(data);
+      });
+  }, []);
   
 
-  const comentariosFiltrados = comentarios.filter((comentario) => comentario.idCancion === idCancion);
+
+  
 
   return (
     <div className='comentarios-container'>
@@ -73,7 +89,9 @@ const CommentSection = (props) => {
       <Card className='comentarios-container'>
         <Card.Body>
           {/* Nested comment */}
-          {comentariosFiltrados.map((comentario, index) => (
+          {comentarios
+          .filter((comentario) => comentario.idPagina === idPagina)
+          .map((comentario, index) => (
             <div className="d-flex flex-start mt-4 comentarios-container" key={index}>
               <Image
                 className="rounded-circle shadow-1-strong me-3"

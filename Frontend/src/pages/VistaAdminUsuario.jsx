@@ -41,20 +41,23 @@ function VistaAdminUsuario() {
         setPlaylists(data);
       });
   }, []);
-
+  
   useEffect(() => {
-    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones', {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones?limit=10', {
       method: 'GET',
       headers: {
         Origin: 'http://localhost:5173',
       },
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setAcciones(data);
-      });
+     
+        .then((data) => {
+          console.log(data);
+          const firstTenRecords = data.slice(0, 10);
+          setAcciones(firstTenRecords);
+        });
   }, []);
+
 
   const borrar = (id) => {
     fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/Uborrar`, {
@@ -125,7 +128,7 @@ function VistaAdminUsuario() {
                         <td>{usuario.email}</td>
                         <td>{usuario.createdAt}</td>
                         <td>
-                          <button className="btn btn-outline-success rounded-pill" onClick={() => deleteUser(usuario.id)}>
+                          <button className="btn btn-outline-success rounded-pill" onClick={() => borrar(usuario.id)}>
                             Borrar
                           </button>
                         </td>
