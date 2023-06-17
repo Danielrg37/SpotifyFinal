@@ -33,12 +33,9 @@ function VistaArtista() {
     const token = sessionStorage.getItem('token');
     const { id } = useParams();
 
-    if (usuarioTipo === "user") {
-      return <Error404 />;
-    } else if (usuarioTipo === "") {
-      return <Loader />;
-    }
-
+    if(!localStorage.getItem('nombreUsuario')){
+        return <Error404 />;
+      }
 
 useEffect(() => {
   if (token) {    

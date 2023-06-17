@@ -102,12 +102,11 @@ function Login() {
      
       {/* Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Inicio de sesión exitoso</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>¡Usuario logueado correctamente!</p>
-        </Modal.Body>
+      <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '5px', textAlign: 'center' }}>
+            <h3>Usuario logueado correctamente</h3>
+          </div>
+        </div>
       </Modal>
     </div>
   

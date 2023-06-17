@@ -269,10 +269,8 @@ function VistaCancion() {
     return minutos + ":" + (segundos < 10 ? '0' : '') + segundos;
   }
 
-  if (usuarioTipo === "user") {
+  if(!localStorage.getItem('nombreUsuario')){
     return <Error404 />;
-  } else if (usuarioTipo === "") {
-    return <Loader />;
   }
 
 

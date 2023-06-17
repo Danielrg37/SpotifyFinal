@@ -23,10 +23,8 @@ function VistaDisco() {
 
     const { id } = useParams();
 
-    if (usuarioTipo === "user") {
+    if(!localStorage.getItem('nombreUsuario')){
       return <Error404 />;
-    } else if (usuarioTipo === "") {
-      return <Loader />;
     }
 
 

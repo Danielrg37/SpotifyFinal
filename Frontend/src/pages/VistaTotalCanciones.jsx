@@ -16,12 +16,9 @@ import Loader from './Loader';
 
 function VistaTotalCanciones() {
 
-    if (usuarioTipo === "user") {
+    if(!localStorage.getItem('nombreUsuario')){
         return <Error404 />;
-      } else if (usuarioTipo === "") {
-        return <Loader />;
       }
-
 
 
     const [topCanciones, setTopCanciones] = useState([]);

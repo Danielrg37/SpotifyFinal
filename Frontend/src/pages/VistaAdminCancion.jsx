@@ -40,6 +40,7 @@ function VistaAdminArtista() {
   const [token, setToken] = useState(null);
   const [searchInput, setSearchInput] = useState('');
   const [cancion, setCancion] = useState({});
+  
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
@@ -69,11 +70,7 @@ function VistaAdminArtista() {
       }
     }, []);
 
-    if (usuarioTipo === "user") {
-      return <Error404 />;
-    } else if (usuarioTipo === "") {
-      return <Loader />;
-    }
+    
 
 
   useEffect(() => {
@@ -119,7 +116,7 @@ function VistaAdminArtista() {
 
 
   useEffect(() => {
-    if (token && id !== undefined) {  
+    if (token) {
       fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Cancion/${id}`, {
         method: "GET",
         headers: {
@@ -130,29 +127,33 @@ function VistaAdminArtista() {
         .then(response => response.json())
         .then(data => {
           console.log(data);
+          setCancion(data);
+          setArtista(data.artists[0].name);
           return fetch(data.album.href, {
-              headers: {
-                'Authorization': `Bearer ${token}`
-              }
-            }); 
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
         })
         .then(response => response.json())
         .then(data => {
           console.log(data);
           if (data.album_type === "album" || (data.album_type === "single" && data.tracks.total > 1)) {
             setAlbums([data]);
+
           }
         })
         .catch(error => console.error(error));
     }
   }, [token]);
 
-
   useEffect(() => {
-    if (token && id !== undefined) {  
-      fetch(`https://api.spotify.com/v1/audio-features/${id}?si=c14fd7cce6ec4d59`, {
+    if (token) {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Features/${id}`, {
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`
+          'X-Access-Token': sessionStorage.getItem('token'),
+          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
         }
       })
         .then(response => response.json())
@@ -166,69 +167,179 @@ function VistaAdminArtista() {
 
   console.log(stats);
 
+
+
+
   useEffect(() => {
     if (cancion.name) {
-      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/letras/${encodeURIComponent(cancion.name)}`, {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/letras/${artista}-${cancion.name}`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          'Origin': 'http://localhost:5173'  // Reemplaza con la URL y el puerto de tu aplicación frontend
+        }
+      })
+        .then(response => response.text()) // Convertir la respuesta a texto
+        .then(data => {
+          console.log(data);
+
+          const lyrics = data.replace(/&quot;/g, '"').replace(/{"descripcion":"|"}/g, '').replace(/\\u0026quot;/g, '"'); // Replace HTML entity &quot; with "
+          const decodedLyrics = decodeURIComponent(lyrics);
+
+
+
+          // Split the lyrics into lines
+          const lines = decodedLyrics.split('\n');
+
+          // Render the lyrics with line breaks
+          const lyricsMarkup = lines.map((line, index) => (
+            <div key={index}>{line}<br /></div>
+          ));
+
+
+
+          // Set the lyrics in your state
+          setLetras(lyricsMarkup);
+
+        })
+        .catch(error => {
+          setError(true);
+          console.error(error);
+          if (error.response && error.response.status === 404) {
+            setLetras('No hay letra disponible');
+          }
+
+        });
+    }
+  }, [cancion.name]);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('nombreUsuario')) {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Origin": "http://localhost:5173",
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          const usuario = data.find(user => user.nombreUsuario === sessionStorage.getItem('nombreUsuario'));
+          if (usuario) {
+            const usuarioID = usuario.Id;
+            console.log(usuarioID);
+            setUsuarioID(usuarioID);
+          }
+        })
+        .catch(error => console.error(error));
+    }
+  }, []);
+
+
+
+
+  useEffect(() => {
+    if (sessionStorage.getItem('nombreUsuario') && UsuarioID != undefined && cancion.id != undefined) {
+      fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones_anadir", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Origin": "http://localhost:5173",
         },
+        body: JSON.stringify({
+          CancionID: cancion.id,
+          ArtistaID: "-",
+          DiscoID: "-",
+          UsuarioID: UsuarioID,
+          NombreUsuario: sessionStorage.getItem('nombreUsuario')
+        }),
       })
         .then(response => response.json())
         .then(data => {
           console.log(data);
-          setLetras(data);
         })
         .catch(error => console.error(error));
     }
-  }, [token, cancion.name]);
- 
+  }, [cancion.name]);
 
-/* 
-  const songTitle = cancion.name;
-  const GENIUS_KEY = '-ImT2ynhgjGOA_ktoe31opdJw0huxaFal8txUqK5Vjui_hgwES2ceLIlFDSNdAGP';
+
+
+
+
+
+  console.log(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/letras/${artista}-${cancion.name}`);
+
+
 
   useEffect(() => {
-    axios.get(`https://cors-anywhere.herokuapp.com/https://api.genius.com/search?q=${songTitle}`, {
-      headers: {
-        Authorization: `Bearer ${GENIUS_KEY}`
+
+    const data = {
+      labels: ['Bailabilidad', 'Energía', 'Positividad', 'Acusticidad'],
+      datasets: [
+        {
+          data: [
+            stats[0]?.danceability * 100,
+            stats[0]?.energy * 100,
+            stats[0]?.speechiness * 100,
+            stats[0]?.acousticness * 100
+          ],
+          backgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#4BC0C0'
+          ]
+        }
+      ]
+    };
+
+    const ctx = document.getElementById('grafico').getContext('2d');
+    let chartInstance = null;
+
+    if (ctx) {
+      if (chartInstance) {
+        chartInstance.destroy(); // Destruir gráfico existente
       }
-    })
-      .then(response => {
-        const song = response.data.response.hits[0].result;
-        console.log(song);
-        axios.get(song.url)
-          .then(response => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const lyrics = $('.lyrics').text().trim();
-            setLetras(lyrics);
-          })
-      })
-  }, [songTitle]);
 
-  console.log(letras); */
+      chartInstance = new Chart(ctx, {
+        type: 'polarArea',
+        data: data,
+        options: {
+          plugins: {
+            datalabels: {
+              color: '#000',
+              font: {
+                size: 12,
+                weight: 'bold'
+              },
+              formatter: (value, context) => {
+                return value.toString(); // Formato del valor, puedes personalizarlo según tus necesidades
+              }
+            }
+          }
+        }
+      });
+    }
 
-
+    return () => {
+      if (chartInstance) {
+        chartInstance.destroy(); // Destruir gráfico al desmontar el componente
+      }
+    };
+  }, [stats]);
 
   function milisegundosAMinutosSegundos(milisegundos) {
     let minutos = Math.floor(milisegundos / 60000);
     let segundos = ((milisegundos % 60000) / 1000).toFixed(0);
     return minutos + ":" + (segundos < 10 ? '0' : '') + segundos;
   }
-
-  console.log(cancion);
-
-
-
-  console.log(letras);
-
-
-
-
-
  
 
+
+  if (usuarioTipo === "user") {
+    return <Error404 />;
+  } else if (usuarioTipo === "") {
+    return <Loader />;
+  }
 
 
   return (
@@ -365,44 +476,10 @@ function VistaAdminArtista() {
             <div className='letra-container h-80'>
               <h2>Letra</h2>
               <div class="lyrics-container">
-  <div class="lyrics-column">
-    <p>[Intro: María Escarmiento]<br></br>
-    Ah-ah-ah-ah, ah-ah-ah-ah-ah<br></br>
-    Ah, ah, ah-ah<br></br>
-    Ah, ah-ah-ah</p>
+              <div class="lyrics-column">
 
-    <p>[Estribillo: María Escarmiento]<br></br>
-    Ni yo misma sabía cómo lloraba tanto<br></br>
-    Ese día que te llamé (Eah)<br></br>
-    Llevaba ya horas sentada en un banco<br></br>
-    Sola, sin poderme mover (Ahj-ah)<br></br>
-    Te la suda todo, y esto va para largo<br></br>
-    Esta vez no voy a poder (Poder)<br></br>
-    Me ganaste y salté (Uh, uh, uh, uh, uh)</p>
-
- 
-
-    <p>[Estribillo: María Escarmiento]<br></br>
-    Ni yo misma sé cómo lloraba tanto<br></br>
-    Ese día que te llamé (Ah-ah)<br></br>
-    Llevaba ya horas sentada en un banco (Oh)<br></br>
-    Sola, sin poderme mover<br></br>
-    Te la suda todo, y esto va para largo<br></br>
-  Esta vez no voy a poder (Poder)<br></br>
-    Me ganaste y salté (Salté)</p>
-
-  
-
-    <p>[Estribillo: María Escarmiento]<br></br>
-    Ni yo misma sé cómo lloraba tanto<br></br>
-    Ese día que te llamé<br></br>
-    Llevaba ya horas sentada en un banco<br></br>
-  Sola, sin poderme mover<br></br>
-    Ya yo misma sé cómo lloraba tanto<br></br>
-    Ese día que te llamé<br></br>
-    Ni yo misma sé cómo lloraba tanto<br></br>
-    Tanto, tan-tan-tan-tan-tanto</p>
-  </div>
+<p>{letras}</p>
+</div>
 
 
               </div>

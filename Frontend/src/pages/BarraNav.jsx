@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from './../img/logo.png';
 import { useContext } from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import Loader from './Loader';
 
 
 function BarraNav() {
@@ -13,6 +14,13 @@ function BarraNav() {
   const [token, setToken] = useState(null);
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [showModal, setShowModal] = useState(false);
+
+  
+
+ 
+   
+
+ 
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -30,40 +38,9 @@ function BarraNav() {
     }
   };
 
-  const refreshAccessToken = () => {
-    const refreshToken = sessionStorage.getItem('refreshToken');
-    if (!refreshToken) {
-      // No refresh token available, user needs to log in again
-      handleLogout();
-      return;
-    }
 
-    // Make a request to your server to refresh the access token
-    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/refresh-token', {
-      method: 'POST',
-      body: JSON.stringify({ refreshToken }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.access_token) {
-          // Refresh successful, update the token and expiration time
-          setToken(data.access_token);
-          sessionStorage.setItem('token', data.access_token);
-          const expirationTime = Date.now() + data.expires_in * 1000;
-          sessionStorage.setItem('tokenExpiration', expirationTime);
-        } else {
-          // Refresh failed, user needs to log in again
-          handleLogout();
-        }
-      })
-      .catch(error => {
-        console.error('Error refreshing access token:', error);
-        handleLogout();
-      });
-  };
+
+
 
   const handleLogout = () => {
     // Clear the token and related data from local storage
@@ -123,14 +100,14 @@ function BarraNav() {
   };
 
   // Establecer el tiempo de caducidad en una hora (3600000 milisegundos)
-const expirationTime = 3600000;
+  const expirationTime = 3600000;
 
-// Programar la eliminación del token después de una hora
-setTimeout(function() {
-  // Eliminar el token del sessionStorage
-  sessionStorage.removeItem('token');
-  console.log('El token ha sido eliminado después de una hora.');
-}, expirationTime);
+  // Programar la eliminación del token después de una hora
+  setTimeout(function () {
+    // Eliminar el token del sessionStorage
+    sessionStorage.removeItem('token');
+    console.log('El token ha sido eliminado después de una hora.');
+  }, expirationTime);
 
   useEffect(() => {
     if (token) {
@@ -165,7 +142,8 @@ setTimeout(function() {
     sessionStorage.removeItem('tokenExpiration');
     sessionStorage.removeItem('refreshToken');
     location.reload(); // Recargar la página actual
-};
+    navigate('/');
+  };
 
 
   useEffect(() => {
@@ -179,8 +157,38 @@ setTimeout(function() {
   const handleLoginWithModal = () => {
     handleLoginWithSpotify();
     setShowModal(true); // Mostrar el modal
-  };
+  }
 
+  const [usuarioTipo, setUsuarioTipo] = useState("");
+
+  useEffect(() => {
+      if (localStorage.getItem('nombreUsuario')) {
+        fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Origin": "http://localhost:5173",
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
+          if (usuario) {
+            setUsuarioTipo(usuario.tipo);
+            console.log(usuarioTipo);
+          }
+        })
+        .catch(error => console.error(error));
+      }
+    }, []);
+
+    if (usuarioTipo === "user") {
+      return <Error404 />;
+    } else if (usuarioTipo === "") {
+      return <Loader />;
+    }
+
+  
   return (
     <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
@@ -192,7 +200,7 @@ setTimeout(function() {
         <li className="nav-item">
           <div>{nombreUsuario}</div>
         </li>
-       
+
         <div className="dropdown" onMouseLeave={handleDropdownClose}>
           {token && userData && (
             <img
@@ -215,44 +223,48 @@ setTimeout(function() {
           )}
 
 
-   {isDropdownOpen && (
-  <div className="dropdown-content">
-    {!localStorage.getItem('nombreUsuario') && (
-      <>
-        <Link to="/registro">Registro</Link>
-        <Link to="/login">Login</Link>
-      </>
-    )}
+          {isDropdownOpen && (
+            <div className="dropdown-content">
+              {!localStorage.getItem('nombreUsuario') && (
+                <>
+                  <Link to="/registro">Registro</Link>
+                  <Link to="/login">Login</Link>
+                </>
+              )}
 
-    {localStorage.getItem('nombreUsuario') && !sessionStorage.getItem('token') && (
-      <>
-        <a href="#" onClick={handleLoginWithModal}>
-          Login con Spotify
-        </a>
-        <Link to="/#" onClick={logout}>
-          Logout
-        </Link>
-      </>
-    )}
+              {localStorage.getItem('nombreUsuario') && !sessionStorage.getItem('token') && (
+                <>
+                  <a href="#" onClick={handleLoginWithModal}>
+                    Login con Spotify
+                  </a>
+                  <Link to="/#" onClick={logout}>
+                    Logout
+                  </Link>
+                </>
+              )}
 
-    {localStorage.getItem('nombreUsuario') && sessionStorage.getItem('token') && (
-      <>
-        <Link to="/perfil">Perfil</Link>
-        <Link to="/menuPlaylist">Crear Playlist</Link>
-        <Link to="/admin">Admin</Link>
-        <Link to="/#" onClick={logout}>
-          Logout
-        </Link>
-      </>
-    )}
-  </div>
-)}
+              {localStorage.getItem('nombreUsuario') && sessionStorage.getItem('token') && (
+                <>
+                  <Link to="/perfil">Perfil</Link>
+                  <Link to="/menuPlaylist">Crear Playlist</Link>
+                  {usuarioTipo === "admin" && (
+                    <Link to="/admin">Admin</Link>
+                  )}
+                  <Link to="/#" onClick={logout}>
+                    Logout
+                  </Link>
+                </>
+              )}
+            </div>
+
+
+          )}
 
         </div>
       </ul>
-      
 
-       
+
+
 
       {/* Modal */}
       {showModal && (

@@ -23,10 +23,8 @@ function VistaPerfil() {
     const [topArtistas, setTopArtistas] = useState([]);
     const [historial, setHistorial] = useState([]);
 
-    if (usuarioTipo === "user") {
-      return <Error404 />;
-    } else if (usuarioTipo === "") {
-      return <Loader />;
+   if(!localStorage.getItem('nombreUsuario')){
+        return <Error404 />;
     }
 
 

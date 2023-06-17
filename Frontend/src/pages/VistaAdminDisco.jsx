@@ -77,13 +77,10 @@ function VistaAdminDisco() {
         })
         .catch(error => console.error(error));
       }
+      
+    
     }, []);
 
-    if (usuarioTipo === "user") {
-      return <Error404 />;
-    } else if (usuarioTipo === "") {
-      return <Loader />;
-    }
 
 
   useEffect(() => {
@@ -111,31 +108,105 @@ function VistaAdminDisco() {
   }, [searchInput, token]);
 
   useEffect(() => {
-    if (token && id !== undefined) {
+    if (token) {
       fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Disco/${id}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
           'X-Access-Token': sessionStorage.getItem('token'),
-          Origin: 'http://localhost:5173', // Replace with your front-end application's URL and port
-        },
+          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+        }
       })
-        .then((response) => response.json())
-        .then((data) => {
+        .then(response => response.json())
+        .then(data => {
           console.log(data);
           const album = JSON.parse(data.album); // Parse the album JSON string into an object
           const tracks = JSON.parse(data.tracks); // Parse the tracks JSON string into an object
           setDisco(album);
           setCancionesDisco(tracks.items);
-          const baseUrl = 'https://www.amazon.es/s?k=';
-          const searchQuery = `${album.artists[0].name}+${album.name}`;
+          const baseUrl = "https://www.amazon.es/s?k=";
+          if(album.artists.length > 0) {
+          var searchQuery = `${album.artists[0].name}+${album.name}`;
+          }
           const url = baseUrl + searchQuery;
           setUrl(url);
         })
-        .catch((error) => console.error(error));
+        .catch(error => console.error(error));
     }
-  }, [token, id]);
+  }, [token]);
 
-  const embedUrl = `https://open.spotify.com/embed/album/${id}`;
+    const [UsuarioID, setUsuarioID] = useState("");
+    const [CancionID, setCancionID] = useState("");
+    const [ArtistaID, setArtistaID] = useState("");
+    const [DiscoID, setDiscoID] = useState("");
+
+    useEffect(() => {
+        setCancionID("-");
+        setArtistaID("-");
+        setDiscoID(id);
+      }, [id]);
+
+
+  useEffect(() => {
+    if (sessionStorage.getItem('nombreUsuario')) {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Origin": "http://localhost:5173",
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        const usuario = data.find(user => user.nombreUsuario === sessionStorage.getItem('nombreUsuario'));
+        if (usuario) {
+          const usuarioID = usuario.Id;
+          console.log(usuarioID);
+          setUsuarioID(usuarioID);
+        }
+      })
+      .catch(error => console.error(error));
+    }
+  }, []);
+
+  
+  useEffect(() => {
+    if (sessionStorage.getItem('nombreUsuario')) {
+      fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones_anadir", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Origin": "http://localhost:5173",
+        },
+        body: JSON.stringify({
+          CancionID: "-",
+          ArtistaID: "-",
+          DiscoID: id,
+          UsuarioID: UsuarioID,
+          NombreUsuario: sessionStorage.getItem('nombreUsuario')
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => console.error(error));
+    }
+  }, [disco]);
+  
+  
+     
+console.log(disco);
+const embedUrl = `https://open.spotify.com/embed/album/${id}`;
+console.log(url);
+
+console.log(cancionesDisco);
+
+
+  if (usuarioTipo === "user") {
+    return <Error404 />;
+  } else if (usuarioTipo === "") {
+    return <Loader />;
+  }
 
   return (
     <div className="container">

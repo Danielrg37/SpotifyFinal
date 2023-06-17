@@ -72,6 +72,7 @@ function Registro() {
               className="form-control"
               id="email"
               value={correo}
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
               onChange={(event) => setCorreo(event.target.value)}
               required
             />

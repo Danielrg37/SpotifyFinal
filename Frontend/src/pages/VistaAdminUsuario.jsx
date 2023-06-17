@@ -223,23 +223,23 @@ const [usuarioAux, setUsuarioAux] = useState('');
         </Modal.Header>
         <Modal.Body>
           <FormControl
-            placeholder="Nombre de la playlist"
-            aria-label="Nombre de la playlist"
+            placeholder="Nombre"
+            aria-label="Nombre"
             type="input"
             value={usuarioNombre}
             onChange={event => setNombreUsuario(event.target.value)}
           />
           <FormControl
-            placeholder="Descripción de la playlist"
-            aria-label="Descripción de la playlist"
+            placeholder="Contraseña"
+            aria-label="Contraseña"
             type="input"
             className='mt-3'
             value={usuarioContraseña}
             onChange={event => setContraseña(event.target.value)}
           />
           <FormControl
-            placeholder="Descripción de la playlist"
-            aria-label="Descripción de la playlist"
+            placeholder="Email"
+            aria-label="Email"
             type="input"
             className='mt-3'
             value={email}
@@ -263,26 +263,27 @@ const [usuarioAux, setUsuarioAux] = useState('');
         </Modal.Header>
         <Modal.Body>
           <FormControl
-            placeholder="Nombre de la playlist"
-            aria-label="Nombre de la playlist"
+            placeholder="Nombre"
+            aria-label="Nombre"
             type="input"
             value={usuarioNombre}
             onChange={event => setNombreUsuario(event.target.value)}
           />
           <FormControl
-            placeholder="Descripción de la playlist"
-            aria-label="Descripción de la playlist"
+            placeholder="Contraseña"
+            aria-label="Contraseña"
             type="input"
             className='mt-3'
             value={usuarioContraseña}
             onChange={event => setContraseña(event.target.value)}
           />
           <FormControl
-            placeholder="Descripción de la playlist"
-            aria-label="Descripción de la playlist"
+            placeholder="Email"
+            aria-label="Email"
             type="input"
             className='mt-3'
             value={email}
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             onChange={event => setEmail(event.target.value)}
           />
 

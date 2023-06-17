@@ -59,11 +59,7 @@ function VistaAdminArtista() {
       }
     }, []);
 
-    if (usuarioTipo === "user") {
-      return <Error404 />;
-    } else if (usuarioTipo === "") {
-      return <Loader />;
-    }
+    
 
 
   const [searchResults, setSearchResults] = useState([]);
@@ -127,9 +123,8 @@ function VistaAdminArtista() {
 
 
   useEffect(() => {
-    if (token && id !== undefined) {
-
-      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Artistadiscos/${id}`, {
+    if (token) {    
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/ADiscos/${id}`, {
         method: 'GET',
         headers: {
           'X-Access-Token': sessionStorage.getItem('token'),
@@ -138,147 +133,209 @@ function VistaAdminArtista() {
       })
         .then(response => response.json())
         .then(data => {
-          setAlbums(data.items);
-        });
-
-    }
-  }, [token]);
-
-
-
-  useEffect(() => {
-    if (token && id !== undefined) {
-      fetch(`https://api.spotify.com/v1/artists/${id}/top-tracks?market=ES`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          setCanciones(data.tracks);
-        });
-    }
-  }, [token]);
-
-
-
-
-  useEffect(() => {
-    if (token && id !== undefined) {
-
-      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/artista/${id}?si=c14fd7cce6ec4d59`, {
-        method: 'GET',
-        headers: {
-          'X-Access-Token': sessionStorage.getItem('token'),
-          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          setArtista(data);
-        });
-    }
-  }, [token]);
-
-  console.log(artista.name)
-
-  /*   useEffect(() => {
-      async function fetchImages() {
-          if (artista && artista.name) {
-              const url = `https://www.last.fm/music/${encodeURIComponent(
-                  artista.name
-              )}/+images?${new Date().getTime()}`;
-              console.log(url);
+          // Filter albums and EPs where the artist is the primary artist and not part of "appear on" list
+          const filteredAlbums = data.items.filter(item => {
+            const primaryArtists = item.artists.filter(artist => artist.type === 'artist' && artist.id === id);
+            const appearOnArtists = item.artists.filter(artist => artist.type === 'artist' && artist.id !== id);
+            return (
+              (item.album_type === 'album' || item.album_type === 'ep') &&
+              primaryArtists.length > 0 &&
+              appearOnArtists.length === 0
+            );
+          });
   
-              //send HTTP request using fetch
-              const response = await fetch(url, {
+          setAlbums(filteredAlbums);
+        });
+    }
+  }, [token]);
+  
+  console.log(albums);
+  
+        
+        
+        console.log(albums);
+        
+  
+      useEffect(() => {
+          if (token) {
+              fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/ACanciones/${id}`, {
+                  method: 'GET',
                   headers: {
-                      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-                      'Accept-Language': 'en-US,en;q=0.9',
+                      'X-Access-Token': sessionStorage.getItem('token'),
+                      'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
                   }
-              });
-  
-              //parse HTML response using Cheerio
-              const html = await response.text();
-              const $ = cheerio.load(html);
-  
-              //get all image URLs and add them to an array
-              const images = [];
-              $('.image-list-item img').each((i, element) => {
-                  const imageUrl = $(element).attr('src');
-  
-                  images.push(imageUrl.replace('avatar170s', 'avatar1920s')); // actualizar la url de la imagen
-              });
-  
-              //set state with array of image URLs
-              setImagenes(images);
+              })
+                  .then(response => response.json())
+                  .then(data => { 
+                      setCanciones(data.tracks);
+                  });
           }
-      }
+      }, [token]);
   
-      //invoke async function to fetch images
-      fetchImages();
-  }, [artista.name]);
-  */
-
-
-  useEffect(() => {
-    if (artista.name) {
-      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/eventos/${artista.name}`, {
-        method: 'GET',
-        headers: {
-          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          setEventos(data);
-        }
-        )
-    }
-  }, [artista.name]);
-
-
+     
   
-  useEffect(() => {
-    async function fetchDescripcion() {
-      if (artista && artista.name) {
-        const url = `http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/descripcion/${encodeURIComponent(
-          artista.name
-        )}`;
-        console.log(url);
   
-        const response = await fetch(url, {
-          headers: {
-            'User-Agent':
-              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-            'Accept-Language': 'en-US,en;q=0.9',
-          },
-        });
+      useEffect(() => {
+          if (token) {
+              fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/artista/${id}?si=c14fd7cce6ec4d59`, {
+                  method: 'GET',
+                  headers: {
+                      'X-Access-Token': sessionStorage.getItem('token'),
+                      'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                  }
+              })
+                  .then(response => response.json())
+                  .then(data => {
+                      setArtista(data);
+                  });
+          }
+      }, [token]);
   
-        const textResponse = await response.text(); // Get the plain text response
-        let unicodeReplacedText = textResponse.replace(/\\\\u([\d\w]{4})/gi, function (match, grp) {
-          return String.fromCharCode(parseInt(grp, 16));
-        });
+      console.log(artista.name)
+  
+      useEffect(() => {
+          if(artista.name){
+              fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/galeria/${artista.name}`, {
+                  method: 'GET',
+                  headers: {
+                      'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+                  }
+              })
+                  .then(response => response.json())
+                  .then(data => {
+                      setImagenes(data);
+                  }
+                  )
+          }
+      }, [artista.name]);
+  
+      useEffect(() => {
+          if (artista.name) {
+            fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/eventos/${artista.name}`, {
+              method: 'GET',
+              headers: {
+                'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+              }
+            })
+            .then(response => response.json())
+            .then(data => {
+          
+          
+              setEventos(data);
+            });
+          }
+        }, [artista.name]);
         
-        let replacedText = unicodeReplacedText.replace(/{"descripcion":"|"}/g, '').replace(/\\u0026quot;/g, '"').replace(/\\u0026#x27;/g, "'");
-        setDescripcion(replacedText);
-        
-        
-
-        // Update the state with the plain text response
-
-      }
-    }
   
-    // Invoke async function to fetch the description
-    fetchDescripcion();
-  }, [artista.name]);
-
-
-
-
-
-  //Ending 
+      useEffect(() => {
+          async function fetchDescripcion() {
+            if (artista && artista.name) {
+              const url = `http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/descripcion/${encodeURIComponent(
+                artista.name
+              )}`;
+              console.log(url);
+        
+              const response = await fetch(url, {
+                headers: {
+                  'User-Agent':
+                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+                  'Accept-Language': 'en-US,en;q=0.9',
+                },
+              });
+        
+              const textResponse = await response.text(); // Get the plain text response
+              setDescripcion(textResponse.replace(/{"descripcion":"|"}/g, '').replace(/\\u0026quot;/g, '"'));
+              // Update the state with the plain text response
+  
+            }
+          }
+        
+          // Invoke async function to fetch the description
+          fetchDescripcion();
+        }, [artista.name]);
+  
+       
+        const formatEvent = (evento) => {
+          const [fecha, detalles, lugar, pais] = evento.split('./').map(item => item.trim());
+          const [nombre, ...artistas] = detalles.split(', ');
+          const formattedNombre = nombre.trim();
+          return {
+            fecha,
+            nombre: formattedNombre,
+            artistas: artistas.join(', '),
+            lugar,
+            pais
+          };
+        };
+        
+        
+  
+        const [UsuarioID, setUsuarioID] = useState("");
+          const [CancionID, setCancionID] = useState("");
+          const [ArtistaID, setArtistaID] = useState("");
+          const [DiscoID, setDiscoID] = useState("");
+  
+          useEffect(() => {
+              setCancionID("-");
+              setArtistaID(id);
+              setDiscoID("-");
+            }, [id]);
+  
+  
+        useEffect(() => {
+          if (sessionStorage.getItem('nombreUsuario')) {
+            fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                "Origin": "http://localhost:5173",
+              }
+            })
+            .then(response => response.json())
+            .then(data => {
+              const usuario = data.find(user => user.nombreUsuario === sessionStorage.getItem('nombreUsuario'));
+              if (usuario) {
+                const usuarioID = usuario.Id;
+                console.log(usuarioID);
+                setUsuarioID(usuarioID);
+              }
+            })
+            .catch(error => console.error(error));
+          }
+        }, []);
+    
+        
+        useEffect(() => {
+          if (sessionStorage.getItem('nombreUsuario')) {
+            fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones_anadir", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Origin": "http://localhost:5173",
+              },
+              body: JSON.stringify({
+                CancionID: "-",
+                ArtistaID: id,
+                DiscoID: "-",
+                UsuarioID: UsuarioID,
+                NombreUsuario: sessionStorage.getItem('nombreUsuario')
+              }),
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+            })
+            .catch(error => console.error(error));
+          }
+        }, [artista]);
+  
+      
+        
+  if (usuarioTipo === "user") {
+    return <Error404 />;
+  } else if (usuarioTipo === "") {
+    return <Loader />;
+  }
 
 
 

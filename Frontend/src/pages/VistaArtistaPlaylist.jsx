@@ -30,12 +30,9 @@ function VistaArtistaP() {
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
 
-  if (usuarioTipo === "user") {
+  if(!localStorage.getItem('nombreUsuario')){
     return <Error404 />;
-  } else if (usuarioTipo === "") {
-    return <Loader />;
   }
-
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');

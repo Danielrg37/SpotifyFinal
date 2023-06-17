@@ -39,10 +39,8 @@ function VistaTotalArtistas() {
 
     console.log(topArtistas);
 
-    if (usuarioTipo === "user") {
+    if(!localStorage.getItem('nombreUsuario')){
         return <Error404 />;
-      } else if (usuarioTipo === "") {
-        return <Loader />;
       }
 
 
