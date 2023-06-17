@@ -42,19 +42,20 @@ function VistaAdminUsuario() {
       });
   }, []);
 
-  useEffect(() => {
-    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones', {
-      method: 'GET',
-      headers: {
-        Origin: 'http://localhost:5173',
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setAcciones(data);
-      });
-  }, []);
+useEffect(() => {
+  fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones?limit=10', {
+    method: 'GET',
+    headers: {
+      Origin: 'http://localhost:5173',
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      setAcciones(data);
+    });
+}, []);
+
 
   const borrar = (id) => {
     fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/Uborrar`, {
