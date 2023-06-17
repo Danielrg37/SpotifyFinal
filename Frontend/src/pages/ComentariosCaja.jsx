@@ -45,6 +45,7 @@ const CommentSection = (props) => {
       body: JSON.stringify({
         IDPagina: idPagina,
         UsuarioID: user_id,
+        FechaCreacion: new Date().toISOString(),
         Texto: respuesta
       })
     })
@@ -53,6 +54,7 @@ const CommentSection = (props) => {
         console.log(data);
         setRespuesta('');
         setMostrarForm(false);
+        location.reload();
       });
   };
 
@@ -62,7 +64,7 @@ const CommentSection = (props) => {
   };
 
   useEffect(() => {
-    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/comentarios', {
+    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/comentarios`, {
       method: 'GET',
       headers: {
         Origin: 'http://localhost:5173',
@@ -71,9 +73,10 @@ const CommentSection = (props) => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-       setComentarios(data);
+        setComentarios(data);
       });
-  }, []);
+  }, [idPagina]);
+  
   
 
 
@@ -92,29 +95,30 @@ const CommentSection = (props) => {
           {comentarios
           .filter((comentario) => comentario.idPagina === idPagina)
           .map((comentario, index) => (
-            <div className="d-flex flex-start mt-4 comentarios-container" key={index}>
-              <Image
-                className="rounded-circle shadow-1-strong me-3"
-                src={fernando}
-                alt="avatar"
-                width="65"
-                height="65"
-              />
+  <div className="d-flex flex-start mt-4 comentarios-container" key={index}>
+    <Image
+      className="rounded-circle shadow-1-strong me-3"
+      src={fernando}
+      alt="avatar"
+      width="65"
+      height="65"
+    />
 
-              <div className="flex-grow-1 flex-shrink-1">
-                <div>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <p className="mb-1" style={{ color: 'black' }}>
-                      {comentario.Escritor} <span className="small">- {comentario.Momento}</span>
-                    </p>
-                  </div>
-                  <p className="small mb-0" style={{ color: 'black' }}>
-                    {comentario.Comentario}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+    <div className="flex-grow-1 flex-shrink-1">
+      <div>
+        <div className="d-flex justify-content-between align-items-center">
+          <p className="mb-1" style={{ color: 'black' }}>
+            {comentario.usuarioID} - {comentario.fecha}
+          </p>
+        </div>
+        <p className="small mb-0" style={{ color: 'black' }}>
+          {comentario.texto}
+        </p>
+      </div>
+    </div>
+  </div>
+))}
+
           {/* End of nested comment */}
 
           {/* Reply form */}

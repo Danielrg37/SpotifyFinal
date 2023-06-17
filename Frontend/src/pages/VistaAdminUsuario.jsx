@@ -7,12 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import BarraNav from './BarraNav';
 import img_zona2 from './../img/300x300.png';
 import Footer from './Footer';
+import { Modal } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
+
 
 function VistaAdminUsuario() {
   const [usuarios, setUsuarios] = useState([]);
   const [playlists, setPlaylists] = useState([]);
   const [acciones, setAcciones] = useState([]);
-  
+
 
   useEffect(() => {
     fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
@@ -38,24 +41,25 @@ function VistaAdminUsuario() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setPlaylists(data);
+        const firstTenRecords = data.slice(0, 10);
+        setPlaylists(firstTenRecords);
       });
   }, []);
 
-useEffect(() => {
-  fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones?limit=10', {
-    method: 'GET',
-    headers: {
-      Origin: 'http://localhost:5173',
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      setAcciones(data);
-    });
-}, []);
-
+  useEffect(() => {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones', {
+      method: 'GET',
+      headers: {
+        Origin: 'http://localhost:5173',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        const firstTenRecords = data.slice(0, 10);
+        setAcciones(firstTenRecords);
+      });
+  }, []);
 
 
 
@@ -100,8 +104,168 @@ useEffect(() => {
   console.log(acciones);
 
 
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
+  const [showModal, setShowModal] = useState(false);
+  const [usuarioNombre, setNombreUsuario] = useState('');
+  const [usuarioContraseña, setContraseña] = useState('');
+  const [email, setEmail] = useState('');
+
+  const handleCloseModal2 = () => setShowModal2(false);
+  const handleShowModal2 = () => setShowModal2(true);
+
+  const [showModal2, setShowModal2] = useState(false);
+
+
+  const nuevoUsuario = () => {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios/crear', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Origin: 'http://localhost:5173',
+      },
+      body: JSON.stringify({
+        nombreUsuario: usuarioNombre,
+        contraseña: usuarioContraseña,
+        email: email,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+      });
+    location.reload(); // Recargar la página actual
+  };
+
+
+
+
+const [usuarioAux, setUsuarioAux] = useState('');
+
+
+  const guardarUsuarioModificado  = () => {
+    
+
+    
+
+    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios/editar`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Origin': 'http://localhost:5173',
+      },
+      body: JSON.stringify({
+        id: usuarioAux,
+        nombreUsuario: usuarioNombre,
+        contraseña: usuarioContraseña,
+        email: email,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        handleCloseModal2();
+      })
+      .catch((error) => {
+        console.log('Error al modificar el usuario:', error);
+      });
+  };
+
+
+
+
+
+
+
+
+
   return (
+
+
     <div className="container">
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title style={{ color: 'black' }}>Crear usuario</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <FormControl
+            placeholder="Nombre de la playlist"
+            aria-label="Nombre de la playlist"
+            type="input"
+            value={usuarioNombre}
+            onChange={event => setNombreUsuario(event.target.value)}
+          />
+          <FormControl
+            placeholder="Descripción de la playlist"
+            aria-label="Descripción de la playlist"
+            type="input"
+            className='mt-3'
+            value={usuarioContraseña}
+            onChange={event => setContraseña(event.target.value)}
+          />
+          <FormControl
+            placeholder="Descripción de la playlist"
+            aria-label="Descripción de la playlist"
+            type="input"
+            className='mt-3'
+            value={email}
+            onChange={event => setEmail(event.target.value)}
+          />
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className='color-verde' onClick={nuevoUsuario}>
+            Crear
+          </Button>
+          <Button className='color-verde' onClick={handleCloseModal}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showModal2} onHide={handleCloseModal2}>
+        <Modal.Header closeButton>
+          <Modal.Title style={{ color: 'black' }}>Modificar usuario</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <FormControl
+            placeholder="Nombre de la playlist"
+            aria-label="Nombre de la playlist"
+            type="input"
+            value={usuarioNombre}
+            onChange={event => setNombreUsuario(event.target.value)}
+          />
+          <FormControl
+            placeholder="Descripción de la playlist"
+            aria-label="Descripción de la playlist"
+            type="input"
+            className='mt-3'
+            value={usuarioContraseña}
+            onChange={event => setContraseña(event.target.value)}
+          />
+          <FormControl
+            placeholder="Descripción de la playlist"
+            aria-label="Descripción de la playlist"
+            type="input"
+            className='mt-3'
+            value={email}
+            onChange={event => setEmail(event.target.value)}
+          />
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className='color-verde' onClick={guardarUsuarioModificado}>
+            Modificar usuario
+          </Button>
+          <Button className='color-verde' onClick={handleCloseModal2}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
       <BarraNav />
       <div className="row mt-3">
         <div className="col-12 text-center" id="datos">
@@ -109,7 +273,7 @@ useEffect(() => {
             <div className="grafico-container">
               <h4>Tabla de usuarios</h4>
               <div className="col-12">
-                <button className="btn btn-outline-success rounded-pill w-100">Crear</button>
+                <button className="btn btn-outline-success rounded-pill w-100" onClick={() => handleShowModal()}>Crear</button>
                 <table className="table table-responsive mt-4">
                   <thead>
                     <tr>
@@ -133,7 +297,17 @@ useEffect(() => {
                           </button>
                         </td>
                         <td>
-                          <button className="btn btn-outline-success rounded-pill">Modificar</button>
+                          <button
+                            className="btn btn-outline-success rounded-pill"
+                            onClick={() => {
+                              handleShowModal2();
+                              setUsuarioAux(usuario.id);
+                            }}
+                          >
+                            Modificar
+                          </button>
+
+
                         </td>
                       </tr>
                     ))}
@@ -222,5 +396,6 @@ useEffect(() => {
     </div>
   );
 }
+
 
 export default VistaAdminUsuario;

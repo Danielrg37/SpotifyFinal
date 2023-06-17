@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/cancion/vista_cancion.css';
@@ -13,7 +13,7 @@ import Loader from './Loader';
 import CommentSection from './ComentariosCaja';
 import Chart from 'chart.js/auto';
 import Footer from './Footer';
-import BarraNav from './BarraNav';  
+import BarraNav from './BarraNav';
 import 'chartjs-plugin-datalabels';
 
 
@@ -49,9 +49,9 @@ function VistaCancion() {
 
 
 
- 
+
   useEffect(() => {
-    if (token) {  
+    if (token) {
       fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Cancion/${id}`, {
         method: "GET",
         headers: {
@@ -65,10 +65,10 @@ function VistaCancion() {
           setCancion(data);
           setArtista(data.artists[0].name);
           return fetch(data.album.href, {
-              headers: {
-                'Authorization': `Bearer ${token}`
-              }
-            }); 
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
         })
         .then(response => response.json())
         .then(data => {
@@ -82,7 +82,7 @@ function VistaCancion() {
     }
   }, [token]);
 
-useEffect(() => {
+  useEffect(() => {
     if (token) {
       fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Features/${id}`, {
         method: "GET",
@@ -104,163 +104,163 @@ useEffect(() => {
 
 
 
- 
- useEffect(() => {
-  if (cancion.name) {
-    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/letras/${artista}-${cancion.name}`, {
-      method: 'GET',
-      headers: {
-        'Origin': 'http://localhost:5173'  // Reemplaza con la URL y el puerto de tu aplicación frontend
-      }
-    })
-      .then(response => response.text()) // Convertir la respuesta a texto
-      .then(data => {
-        console.log(data);
-       
-        const lyrics = data.replace(/&quot;/g, '"').replace(/{"descripcion":"|"}/g, '').replace(/\\u0026quot;/g, '"'); // Replace HTML entity &quot; with "
-        const decodedLyrics = decodeURIComponent(lyrics);
 
-      
-
-        // Split the lyrics into lines
-        const lines = decodedLyrics.split('\n');
-
-        // Render the lyrics with line breaks
-        const lyricsMarkup = lines.map((line, index) => (
-          <div key={index}>{line}<br/></div>
-        ));
-
-     
-
-        // Set the lyrics in your state
-        setLetras(lyricsMarkup);
-
-      })
-      .catch(error => {
-        setError(true);
-        console.error(error);
-        if (error.response && error.response.status === 404) {
-          setLetras('No hay letra disponible');
+  useEffect(() => {
+    if (cancion.name) {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/letras/${artista}-${cancion.name}`, {
+        method: 'GET',
+        headers: {
+          'Origin': 'http://localhost:5173'  // Reemplaza con la URL y el puerto de tu aplicación frontend
         }
-        
-      });
-  }
-}, [cancion.name]);
+      })
+        .then(response => response.text()) // Convertir la respuesta a texto
+        .then(data => {
+          console.log(data);
 
-useEffect(() => {
-  if (sessionStorage.getItem('nombreUsuario')) {
-    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Origin": "http://localhost:5173",
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      const usuario = data.find(user => user.nombreUsuario === sessionStorage.getItem('nombreUsuario'));
-      if (usuario) {
-        const usuarioID = usuario.Id;
-        console.log(usuarioID);
-        setUsuarioID(usuarioID);
-      }
-    })
-    .catch(error => console.error(error));
-  }
-}, []);
+          const lyrics = data.replace(/&quot;/g, '"').replace(/{"descripcion":"|"}/g, '').replace(/\\u0026quot;/g, '"'); // Replace HTML entity &quot; with "
+          const decodedLyrics = decodeURIComponent(lyrics);
 
 
 
+          // Split the lyrics into lines
+          const lines = decodedLyrics.split('\n');
 
-useEffect(() => {
-  if (sessionStorage.getItem('nombreUsuario') && UsuarioID != undefined && cancion.id != undefined) {
-    fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones_anadir", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Origin": "http://localhost:5173",
-      },
-      body: JSON.stringify({
-        CancionID: cancion.id,
-        ArtistaID: "-",
-        DiscoID: "-",
-        UsuarioID: UsuarioID,
-        NombreUsuario: sessionStorage.getItem('nombreUsuario')
-      }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => console.error(error));
-  }
-}, [cancion.name]);
+          // Render the lyrics with line breaks
+          const lyricsMarkup = lines.map((line, index) => (
+            <div key={index}>{line}<br /></div>
+          ));
 
 
 
+          // Set the lyrics in your state
+          setLetras(lyricsMarkup);
 
+        })
+        .catch(error => {
+          setError(true);
+          console.error(error);
+          if (error.response && error.response.status === 404) {
+            setLetras('No hay letra disponible');
+          }
 
-  
-console.log(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/letras/${artista}-${cancion.name}`);
-
-
-
-useEffect(() => {
-  
-  const data = {
-    labels: ['Bailabilidad', 'Energía', 'Positividad', 'Acusticidad'],
-    datasets: [
-      {
-        data: [
-          stats[0]?.danceability * 100,
-          stats[0]?.energy * 100,
-          stats[0]?.speechiness * 100,
-          stats[0]?.acousticness * 100
-        ],
-        backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56',
-          '#4BC0C0'
-        ]
-      }
-    ]
-  };
-
-  const ctx = document.getElementById('grafico').getContext('2d');
-  let chartInstance = null;
-
-  if (ctx) {
-    if (chartInstance) {
-      chartInstance.destroy(); // Destruir gráfico existente
+        });
     }
+  }, [cancion.name]);
 
-    chartInstance = new Chart(ctx, {
-      type: 'polarArea',
-      data: data,
-      options: {
-        plugins: {
-          datalabels: {
-            color: '#000',
-            font: {
-              size: 12,
-              weight: 'bold'
-            },
-            formatter: (value, context) => {
-              return value.toString(); // Formato del valor, puedes personalizarlo según tus necesidades
+  useEffect(() => {
+    if (sessionStorage.getItem('nombreUsuario')) {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Origin": "http://localhost:5173",
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          const usuario = data.find(user => user.nombreUsuario === sessionStorage.getItem('nombreUsuario'));
+          if (usuario) {
+            const usuarioID = usuario.Id;
+            console.log(usuarioID);
+            setUsuarioID(usuarioID);
+          }
+        })
+        .catch(error => console.error(error));
+    }
+  }, []);
+
+
+
+
+  useEffect(() => {
+    if (sessionStorage.getItem('nombreUsuario') && UsuarioID != undefined && cancion.id != undefined) {
+      fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones_anadir", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Origin": "http://localhost:5173",
+        },
+        body: JSON.stringify({
+          CancionID: cancion.id,
+          ArtistaID: "-",
+          DiscoID: "-",
+          UsuarioID: UsuarioID,
+          NombreUsuario: sessionStorage.getItem('nombreUsuario')
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => console.error(error));
+    }
+  }, [cancion.name]);
+
+
+
+
+
+
+  console.log(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/letras/${artista}-${cancion.name}`);
+
+
+
+  useEffect(() => {
+
+    const data = {
+      labels: ['Bailabilidad', 'Energía', 'Positividad', 'Acusticidad'],
+      datasets: [
+        {
+          data: [
+            stats[0]?.danceability * 100,
+            stats[0]?.energy * 100,
+            stats[0]?.speechiness * 100,
+            stats[0]?.acousticness * 100
+          ],
+          backgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#4BC0C0'
+          ]
+        }
+      ]
+    };
+
+    const ctx = document.getElementById('grafico').getContext('2d');
+    let chartInstance = null;
+
+    if (ctx) {
+      if (chartInstance) {
+        chartInstance.destroy(); // Destruir gráfico existente
+      }
+
+      chartInstance = new Chart(ctx, {
+        type: 'polarArea',
+        data: data,
+        options: {
+          plugins: {
+            datalabels: {
+              color: '#000',
+              font: {
+                size: 12,
+                weight: 'bold'
+              },
+              formatter: (value, context) => {
+                return value.toString(); // Formato del valor, puedes personalizarlo según tus necesidades
+              }
             }
           }
         }
-      }
-    });
-  }
-
-  return () => {
-    if (chartInstance) {
-      chartInstance.destroy(); // Destruir gráfico al desmontar el componente
+      });
     }
-  };
-}, [stats]);
+
+    return () => {
+      if (chartInstance) {
+        chartInstance.destroy(); // Destruir gráfico al desmontar el componente
+      }
+    };
+  }, [stats]);
 
   function milisegundosAMinutosSegundos(milisegundos) {
     let minutos = Math.floor(milisegundos / 60000);
@@ -269,7 +269,7 @@ useEffect(() => {
   }
 
 
-  
+
 
   return (
     !cancion && !cancion.album && !cancion.album.images ? (
@@ -309,7 +309,7 @@ useEffect(() => {
               </div>
             </div>
           </div>
-          <h4 style={{textAlign: 'center'}}>Duración: {milisegundosAMinutosSegundos(stats[0]?.duration_ms)}</h4>
+          <h4 style={{ textAlign: 'center' }}>Duración: {milisegundosAMinutosSegundos(stats[0]?.duration_ms)}</h4>
         </div>
 
         <div className="row mt-3">
@@ -371,29 +371,29 @@ useEffect(() => {
                   </div>
 
                   <div class="col-6">
-                  <div className="op-container">
-  <canvas id="grafico" width="400" height="400"></canvas>
-</div>
+                    <div className="op-container">
+                      <canvas id="grafico" width="400" height="400"></canvas>
+                    </div>
 
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-12 mt-4">
-            <CommentSection idPagina={id} />
+              <CommentSection idPagina={id} />
 
 
-                  </div>
+            </div>
           </div>
 
           <div class="col-4">
             <div className='letra-container h-80'>
               <h2>Letra</h2>
               <div class="lyrics-container">
-  <div class="lyrics-column">
-    
-  <p>{letras}</p>
-  </div>
+                <div class="lyrics-column">
+
+                  <p>{letras}</p>
+                </div>
 
 
               </div>
@@ -402,10 +402,10 @@ useEffect(() => {
 
         </div>
 
-     
+
 
         <div className="row mt-5">
-            <Footer />
+          <Footer />
         </div>
       </div>
     ));

@@ -1,15 +1,15 @@
-
-
+(Opcional)
+Borrar comentarios
+Cambiar fetches en creación de playlist
 
 (Lo díficil)
-Arreglar comentarios y revisar login
+Revisar login
 
 
-(Una vez los comentarios, un momento)
-Configurar opciones menú
+
 
 (50 mins max)
-Cambiar fetches en creación de playlist
+
 
 (poco, es meterle el modal y que no chifle luego el crearUsuario)
 Modificar usuario

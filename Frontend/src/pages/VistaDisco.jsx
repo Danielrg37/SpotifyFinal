@@ -168,7 +168,7 @@ function VistaDisco() {
             </div>
             <div class="row mt-5 mb-3">
                 <div class="col-6 canciones-container mr-1">
-                   <CommentSection />
+                   <CommentSection idPagina = {id}/>
                 </div>
 
                 <div class="col-6 cancion-container">

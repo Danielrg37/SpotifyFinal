@@ -204,22 +204,45 @@ function BarraNav() {
             />
           )}
 
-          {isDropdownOpen && (
-            <div className="dropdown-content">
-              <Link to="/perfil">Perfil</Link>
-              {!token && (
-                <a href="#" onClick={handleLoginWithModal}>
-                  Login con Spotify
-                </a>
-              )}
-              <Link to ="/login">Login</Link>
-              <Link to ="/#" onClick={logout} >Logout</Link>
-              <Link to="/admin">Admin</Link>
-              <Link to="/menuPlaylist">Crear Playlist</Link>
-            </div>
-          )}
+
+   {isDropdownOpen && (
+  <div className="dropdown-content">
+    {!localStorage.getItem('nombreUsuario') && (
+      <>
+        <Link to="/registro">Registro</Link>
+        <Link to="/login">Login</Link>
+      </>
+    )}
+
+    {localStorage.getItem('nombreUsuario') && !sessionStorage.getItem('token') && (
+      <>
+        <a href="#" onClick={handleLoginWithModal}>
+          Login con Spotify
+        </a>
+        <Link to="/#" onClick={logout}>
+          Logout
+        </Link>
+      </>
+    )}
+
+    {localStorage.getItem('nombreUsuario') && sessionStorage.getItem('token') && (
+      <>
+        <Link to="/perfil">Perfil</Link>
+        <Link to="/menuPlaylist">Crear Playlist</Link>
+        <Link to="/admin">Admin</Link>
+        <Link to="/#" onClick={logout}>
+          Logout
+        </Link>
+      </>
+    )}
+  </div>
+)}
+
         </div>
       </ul>
+      
+
+       
 
       {/* Modal */}
       {showModal && (

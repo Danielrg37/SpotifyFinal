@@ -21,7 +21,7 @@ function VistaArtistaP() {
   const [showModal, setShowModal] = useState(false);
   const [playlistName, setPlaylistName] = useState('');
   const [playlistDescription, setPlaylistDescription] = useState('');
-  const [playlistImage, setPlaylistImage] = useState(null);
+  const [embedUrl2, setEmbedUrl2] = useState('');
 
   const [user_id, setUser_id] = useState('');
 
@@ -158,13 +158,12 @@ function VistaArtistaP() {
             }),
           });
           const crearPlaylistData = await crearPlaylistResponse.json();
-           }
+        setEmbedUrl2(`https://open.spotify.com/embed/playlist/${playlist_id}`);        }
       }
     } catch (error) {
       console.log(error);
     }
   };
-
 
   return (
     <div className='container'>

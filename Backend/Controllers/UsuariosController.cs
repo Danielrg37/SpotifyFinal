@@ -139,9 +139,9 @@ public IActionResult BorrarUsuario([FromBody] BorrarUsuarioRequest request)
                     conexion5.Open();
 
                     // Crear el comando SQL para editar el usuario
-                    string sqlQuery = "UPDATE Usuarios SET nombreUsuario = @NombreUsuario, email = @Email WHERE id = @Id";
+                    string sqlQuery = "UPDATE Usuarios SET nombreUsuario = @NombreUsuario, correo = @Email WHERE idUsuario = @IdUsuario";
                     SqlCommand comando3 = new SqlCommand(sqlQuery, conexion5);
-                    comando3.Parameters.AddWithValue("@Id", request.Id);
+                    comando3.Parameters.AddWithValue("@IdUsuario", request.Id);
                     comando3.Parameters.AddWithValue("@NombreUsuario", request.NombreUsuario);
                     comando3.Parameters.AddWithValue("@Email", request.Email);
                     comando3.Parameters.AddWithValue("@CreatedAt",  DateTime.Now);
