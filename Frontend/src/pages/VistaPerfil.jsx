@@ -12,6 +12,7 @@ import axios from 'axios';
 import { useRef } from 'react';
 import BarraNav from './BarraNav';
 import Footer from './Footer';
+import Error404 from './Error404';
 
 
 function VistaPerfil() {
@@ -21,6 +22,12 @@ function VistaPerfil() {
     const navigate = useNavigate();
     const [topArtistas, setTopArtistas] = useState([]);
     const [historial, setHistorial] = useState([]);
+
+    if (usuarioTipo === "user") {
+      return <Error404 />;
+    } else if (usuarioTipo === "") {
+      return <Loader />;
+    }
 
 
 

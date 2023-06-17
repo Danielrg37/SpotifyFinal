@@ -10,9 +10,19 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import BarraNav from './BarraNav';
 import Footer from './Footer';
+import Error404 from './Error404';
+import Loader from './Loader';
 
 
 function VistaTotalCanciones() {
+
+    if (usuarioTipo === "user") {
+        return <Error404 />;
+      } else if (usuarioTipo === "") {
+        return <Loader />;
+      }
+
+
 
     const [topCanciones, setTopCanciones] = useState([]);
 

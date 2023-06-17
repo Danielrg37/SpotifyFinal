@@ -15,6 +15,7 @@ import Chart from 'chart.js/auto';
 import Footer from './Footer';
 import BarraNav from './BarraNav';
 import 'chartjs-plugin-datalabels';
+import Error404 from './Error404';
 
 
 
@@ -268,6 +269,11 @@ function VistaCancion() {
     return minutos + ":" + (segundos < 10 ? '0' : '') + segundos;
   }
 
+  if (usuarioTipo === "user") {
+    return <Error404 />;
+  } else if (usuarioTipo === "") {
+    return <Loader />;
+  }
 
 
 

@@ -15,6 +15,7 @@ import cheerio from 'cheerio';
 import Loader from './Loader';
 import Footer from './Footer';
 import BarraNav from './BarraNav';
+import Error404 from './Error404';
 
 
 function VistaArtista() {
@@ -31,6 +32,13 @@ function VistaArtista() {
 
     const token = sessionStorage.getItem('token');
     const { id } = useParams();
+
+    if (usuarioTipo === "user") {
+      return <Error404 />;
+    } else if (usuarioTipo === "") {
+      return <Loader />;
+    }
+
 
 useEffect(() => {
   if (token) {    

@@ -13,6 +13,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import BarraNav from './BarraNav';
 import Footer from './Footer';
 import CommentSection from './ComentariosCaja';
+import Error404 from './Error404';
+import Loader from './Loader';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -53,6 +55,36 @@ function VistaAdminDisco() {
   }, []);
 
   const id = disco.id;
+
+  const [usuarioTipo, setUsuarioTipo] = useState("");
+
+  useEffect(() => {
+      if (localStorage.getItem('nombreUsuario')) {
+        fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Origin": "http://localhost:5173",
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
+          if (usuario) {
+            setUsuarioTipo(usuario.tipo);
+            console.log(usuarioTipo);
+          }
+        })
+        .catch(error => console.error(error));
+      }
+    }, []);
+
+    if (usuarioTipo === "user") {
+      return <Error404 />;
+    } else if (usuarioTipo === "") {
+      return <Loader />;
+    }
+
 
   useEffect(() => {
     const fetchData = async () => {

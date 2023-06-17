@@ -10,8 +10,18 @@ import  img_artistas  from './../img/admin_artistas.jpg';
 import img_canciones  from './../img/admin_canciones.jpg';
 import img_discos from './../img/admin_discos.png';
 import BarraNav from './BarraNav';
+import Error404 from './Error404';
+import Loader from './Loader';
 
 function VistaMenu() {
+
+    if (usuarioTipo === "user") {
+        return <Error404 />;
+      } else if (usuarioTipo === "") {
+        return <Loader />;
+      }
+
+
 
     return (
         <div className="container">

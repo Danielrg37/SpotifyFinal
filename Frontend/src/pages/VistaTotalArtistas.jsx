@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Footer from './Footer';
 import BarraNav from './BarraNav';
+import Error404 from './Error404';
+import Loader from './Loader';
 
 
 function VistaTotalArtistas() {
@@ -36,6 +38,13 @@ function VistaTotalArtistas() {
         }, [token, tiempo]);
 
     console.log(topArtistas);
+
+    if (usuarioTipo === "user") {
+        return <Error404 />;
+      } else if (usuarioTipo === "") {
+        return <Loader />;
+      }
+
 
     return (
 

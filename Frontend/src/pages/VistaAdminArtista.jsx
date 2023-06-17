@@ -12,6 +12,8 @@ import { InputGroup, FormControl } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import BarraNav from './BarraNav';
 import Footer from './Footer';
+import Error404 from './Error404';
+import Loader from './Loader';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -33,6 +35,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function VistaAdminArtista() {
+
+  const [usuarioTipo, setUsuarioTipo] = useState("");
+
+  useEffect(() => {
+      if (localStorage.getItem('nombreUsuario')) {
+        fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Origin": "http://localhost:5173",
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
+          if (usuario) {
+            setUsuarioTipo(usuario.tipo);
+            console.log(usuarioTipo);
+          }
+        })
+        .catch(error => console.error(error));
+      }
+    }, []);
+
+    if (usuarioTipo === "user") {
+      return <Error404 />;
+    } else if (usuarioTipo === "") {
+      return <Loader />;
+    }
+
 
   const [searchResults, setSearchResults] = useState([]);
   const [token, setToken] = useState(null);

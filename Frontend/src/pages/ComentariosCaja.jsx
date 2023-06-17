@@ -12,6 +12,7 @@ const CommentSection = (props) => {
   const [mostrarForm, setMostrarForm] = useState(false);
   const [comentarios, setComentarios] = useState([]);
   const [user_id, setUser_id] = useState('');
+  const [nombre, setNombre] = useState('');
 
   const ManejarRespuesta = (event) => {
     setRespuesta(event.target.value);
@@ -28,6 +29,7 @@ const CommentSection = (props) => {
       .then((data) => {
         const usuarioLogueado = data.find(usuario => usuario.nombreUsuario === localStorage.getItem('nombreUsuario'));
         setUser_id(usuarioLogueado.id);
+      
       });
   }, []);
 
@@ -54,28 +56,59 @@ const CommentSection = (props) => {
         console.log(data);
         setRespuesta('');
         setMostrarForm(false);
-        location.reload();
+          window.location.reload(); // Recargar la página
+     
       });
+   
   };
 
 
   const BotonResponder = () => {
     setMostrarForm(true);
+  
   };
 
-  useEffect(() => {
-    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/comentarios`, {
-      method: 'GET',
-      headers: {
-        Origin: 'http://localhost:5173',
-      },
+  // ...
+
+useEffect(() => {
+  fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/comentarios`, {
+    method: 'GET',
+    headers: {
+      Origin: 'http://localhost:5173',
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      setComentarios(data);
+      const usuarioIds = data.map((comentario) => comentario.idUsuario);
+
+      // Fetch para obtener los nombres de usuario correspondientes a los ids
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
+        method: 'GET',
+        headers: {
+          Origin: 'http://localhost:5173',
+        },
+      })
+        .then((res) => res.json())
+        .then((usuarios) => {
+          const comentariosConNombres = data.map((comentario) => {
+            const usuario = usuarios.find((user) => user.idUsuario === comentario.idUsuario);
+            const nombreUsuario = usuario ? usuario.nombreUsuario : 'Usuario desconocido';
+            return { ...comentario, nombreUsuario };
+          });
+          setComentarios(comentariosConNombres);
+
+         
+        })
+        .catch((error) => console.error(error));
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setComentarios(data);
-      });
-  }, [idPagina]);
+    .catch((error) => console.error(error));
+}, [idPagina]);
+
+// ...
+
+
   
   
 
@@ -93,34 +126,34 @@ const CommentSection = (props) => {
         <Card.Body>
           {/* Nested comment */}
           {comentarios
-          .filter((comentario) => comentario.idPagina === idPagina)
-          .map((comentario, index) => (
-  <div className="d-flex flex-start mt-4 comentarios-container" key={index}>
-    <Image
-      className="rounded-circle shadow-1-strong me-3"
-      src={fernando}
-      alt="avatar"
-      width="65"
-      height="65"
-    />
-
-    <div className="flex-grow-1 flex-shrink-1">
-      <div>
-        <div className="d-flex justify-content-between align-items-center">
-          <p className="mb-1" style={{ color: 'black' }}>
-            {comentario.usuarioID} - {comentario.fecha}
-          </p>
-        </div>
-        <p className="small mb-0" style={{ color: 'black' }}>
-          {comentario.texto}
-        </p>
-      </div>
-    </div>
-  </div>
-))}
-
+            .filter((comentario) => comentario.idPagina === idPagina)
+            .map((comentario, index) => (
+              <div className="d-flex flex-start mt-4 comentarios-container" key={index}>
+                <Image
+                  className="rounded-circle shadow-1-strong me-3"
+                  src={fernando}
+                  alt="avatar"
+                  width="65"
+                  height="65"
+                />
+  
+                <div className="flex-grow-1 flex-shrink-1">
+                  <div>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <p className="mb-1" style={{ color: 'black' }}>
+                        {comentario.nombreUsuario} - {comentario.fechaCreacion}
+                      </p>
+                    </div>
+                    <p className="small mb-0" style={{ color: 'black' }}>
+                      {comentario.texto}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+  
           {/* End of nested comment */}
-
+  
           {/* Reply form */}
           {mostrarForm && (
             <Form onSubmit={AñadirRespuesta}>

@@ -9,6 +9,8 @@ import Footer from './Footer';
 import { useParams } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import './css/artista/vista_artista.css';
+import Error404 from './Error404';
+import Loader from './Loader';
 
 function VistaArtistaP() {
   const [searchInput, setSearchInput] = useState('');
@@ -27,6 +29,13 @@ function VistaArtistaP() {
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
+
+  if (usuarioTipo === "user") {
+    return <Error404 />;
+  } else if (usuarioTipo === "") {
+    return <Loader />;
+  }
+
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');

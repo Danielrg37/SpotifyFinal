@@ -122,6 +122,16 @@ function BarraNav() {
     )}`;
   };
 
+  // Establecer el tiempo de caducidad en una hora (3600000 milisegundos)
+const expirationTime = 3600000;
+
+// Programar la eliminación del token después de una hora
+setTimeout(function() {
+  // Eliminar el token del sessionStorage
+  sessionStorage.removeItem('token');
+  console.log('El token ha sido eliminado después de una hora.');
+}, expirationTime);
+
   useEffect(() => {
     if (token) {
       fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Perfil`, {

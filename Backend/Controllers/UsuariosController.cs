@@ -59,7 +59,7 @@ namespace Backend.Controllers
                     conexion3.Open();   
 
                     // Crear el comando SQL
-                    string sqlQuery = "SELECT idUsuario, nombreUsuario, contrasena, correo FROM Usuarios";
+                    string sqlQuery = "SELECT idUsuario, nombreUsuario, contrasena, correo, tipo FROM Usuarios";
                     SqlCommand comando = new SqlCommand(sqlQuery, conexion3);
 
                     // Ejecutar la consulta y obtener los resultados
@@ -73,7 +73,9 @@ namespace Backend.Controllers
                                 Id = Convert.ToInt32(lector["idUsuario"]),
                                 NombreUsuario = lector["nombreUsuario"].ToString(),
                                 Contraseña = lector["contrasena"].ToString(),
-                                Email = lector["correo"].ToString()
+                                Email = lector["correo"].ToString(),
+                                Tipo = lector["tipo"].ToString()
+
                             };
                             usuarios.Add(usuario);
                         }
@@ -219,6 +221,8 @@ public IActionResult BorrarUsuario([FromBody] BorrarUsuarioRequest request)
         public string Email { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public string Tipo { get; set; }
     }
 
     public class BorrarUsuarioRequest
@@ -231,6 +235,7 @@ public IActionResult BorrarUsuario([FromBody] BorrarUsuarioRequest request)
         public int Id { get; set; }
         public string NombreUsuario { get; set; }
         public string Email { get; set; }
+
 
 
     }

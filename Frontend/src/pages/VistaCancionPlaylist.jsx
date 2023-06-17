@@ -6,6 +6,8 @@ import "./css/busqueda/busqueda.css";
 import BarraNav from './BarraNav';
 import { Modal } from 'react-bootstrap';
 import Footer from './Footer';
+import Error404 from './Error404';
+import Loader from './Loader';
 
 function VistaCancionP() {
   const [searchInput, setSearchInput] = useState('');
@@ -33,6 +35,13 @@ function VistaCancionP() {
     const token = sessionStorage.getItem('token');
     setToken(token);
   }, []);
+
+  if (usuarioTipo === "user") {
+    return <Error404 />;
+  } else if (usuarioTipo === "") {
+    return <Loader />;
+  }
+
 
   useEffect(() => {
     if (token) {

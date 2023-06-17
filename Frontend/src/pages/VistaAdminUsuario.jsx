@@ -9,12 +9,44 @@ import img_zona2 from './../img/300x300.png';
 import Footer from './Footer';
 import { Modal } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
+import Error404 from './Error404';
+import Loader from './Loader';
+
 
 
 function VistaAdminUsuario() {
   const [usuarios, setUsuarios] = useState([]);
   const [playlists, setPlaylists] = useState([]);
   const [acciones, setAcciones] = useState([]);
+
+  const [usuarioTipo, setUsuarioTipo] = useState("");
+
+  useEffect(() => {
+      if (localStorage.getItem('nombreUsuario')) {
+        fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Origin": "http://localhost:5173",
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
+          if (usuario) {
+            setUsuarioTipo(usuario.tipo);
+            console.log(usuarioTipo);
+          }
+        })
+        .catch(error => console.error(error));
+      }
+    }, []);
+
+    if (usuarioTipo === "user") {
+      return <Error404 />;
+    } else if (usuarioTipo === "") {
+      return <Loader />;
+    }
 
 
   useEffect(() => {

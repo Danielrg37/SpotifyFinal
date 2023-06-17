@@ -5,6 +5,8 @@ import { Button } from "react-bootstrap";
 import "./css/galeria/vista_galeria.css";
 import BarraNav from "./BarraNav";
 import Footer from "./Footer";
+import Error404 from "./Error404";
+import Loader from "./Loader";
 
 function GalleryComponent() {
     const [imagenes, setImagenes] = useState([]);
@@ -13,6 +15,14 @@ function GalleryComponent() {
     const token = sessionStorage.getItem("token");
 
     const { id } = useParams();
+
+
+    if (usuarioTipo === "user") {
+        return <Error404 />;
+      } else if (usuarioTipo === "") {
+        return <Loader />;
+      }
+
 
     useEffect(() => {
         if (token) {
