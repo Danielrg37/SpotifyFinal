@@ -78,11 +78,10 @@ namespace Backend.Controllers
                         Comentario comentario = new Comentario();
 
                         // Obtener los datos de la fila actual
-                        comentario.Id = Convert.ToInt32(datos["id"]);
-                        comentario.IdUsuario = Convert.ToInt32(datos["id_usuario"]);
-                        comentario.IdCancion = Convert.ToInt32(datos["id_cancion"]);
-                        comentario.Texto = datos["texto"].ToString();
-                        comentario.Fecha = Convert.ToDateTime(datos["fecha"]);
+                        comentario.PaginaID = Convert.ToInt32(datos["PaginaID"]);
+                        comentario.UsuarioID = Convert.ToInt32(datos["UsuarioID"]);
+                        comentario.FechaCreacion = Convert.ToDateTime(datos["fechaCreacion"]);
+                        comentario.Texto = Convert.ToString(datos["Texto"]);
 
                         // Agregar el usuario a la lista
                         comentarios.Add(comentario);
@@ -104,43 +103,45 @@ namespace Backend.Controllers
 
         [HttpPost("crearComentarios")]
 
-        public IActionResult CrearComentarios([FromBody] Comentario comentario)
+  
+public IActionResult CrearComentarios([FromBody] Comentario comentario)
+{
+    using (SqlConnection conexion4 = ObtenerConexion())
+    {
+        try
         {
-            using (SqlConnection conexion4 = ObtenerConexion())
-            {
-                try
-                {
-                    // Abrir la conexión
-                    conexion4.Open();
+            // Abrir la conexión
+            conexion4.Open();
 
-                    // Consulta SQL para insertar un usuario
-                    string sql = "INSERT INTO Comentarios (id_usuario, id_cancion, texto, fecha) VALUES (@id_usuario, @id_cancion, @texto, @fecha)";
+            // Consulta SQL para insertar un comentario
+            string sql = "INSERT INTO Comentarios (PaginaID, UsuarioID, Texto) VALUES (@PaginaID, @UsuarioID, @Texto)";
 
-                    // Crear el comando SQL
-                    SqlCommand comando = new SqlCommand(sql, conexion4);
+            // Crear el comando SQL
+            SqlCommand comando = new SqlCommand(sql, conexion4);
 
-                    // Asignar valor a los parámetros
-                    comando.Parameters.AddWithValue("@id_usuario", comentario.IdUsuario);
-                    comando.Parameters.AddWithValue("@id_cancion", comentario.IdCancion);
-                    comando.Parameters.AddWithValue("@texto", comentario.Texto);
-                    comando.Parameters.AddWithValue("@fecha", comentario.Fecha);
+          
+            // Asignar valor a los parámetros
+            comando.Parameters.AddWithValue("@PaginaID", comentario.PaginaID);
+            comando.Parameters.AddWithValue("@UsuarioID", comentario.UsuarioID);
+         
+            comando.Parameters.AddWithValue("@Texto", comentario.Texto);
 
-                    // Ejecutar el comando
-                    comando.ExecuteNonQuery();
+            // Ejecutar el comando
+            comando.ExecuteNonQuery();
 
-                    // Cerrar la conexión
-                    conexion4.Close();
+            // Cerrar la conexión
+            conexion4.Close();
 
-                    // Retornar un mensaje de éxito
-                    return Ok("Comentario creado correctamente");
-                }
-                catch (Exception ex)
-                {
-                    // Error al crear el usuario
-                    return BadRequest("Error al crear el usuario: " + ex.Message);
-                }
-            }
+            // Retornar un mensaje de éxito
+            return Ok("Comentario creado correctamente");
         }
+        catch (Exception ex)
+        {
+            // Error al crear el comentario
+            return BadRequest("Error al crear el comentario: " + ex.Message);
+        }
+    }
+}
 
     }
 
@@ -148,9 +149,9 @@ namespace Backend.Controllers
 
 public class Comentario
 {
-    public int Id { get; set; }
-    public int IdUsuario { get; set; }
-    public int IdCancion { get; set; }
+    public int PaginaID { get; set; }
+    public int UsuarioID { get; set; }
+    public DateTime FechaCreacion { get; set; }
+
     public string Texto { get; set; }
-    public DateTime Fecha { get; set; }
 }

@@ -140,13 +140,22 @@ function BarraNav() {
   }, [token]);
 
   useEffect(() => {
-    const nombreUsuario = sessionStorage.getItem('nombreUsuario');
+    const nombreUsuario = localStorage.getItem('nombreUsuario');
     setNombreUsuario(nombreUsuario);
   }, []);
 
   const handleLoginRedirect = () => {
     handleLoginWithSpotify();
   };
+
+  const logout = () => {
+    localStorage.removeItem('nombreUsuario');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('tokenExpiration');
+    sessionStorage.removeItem('refreshToken');
+    location.reload(); // Recargar la página actual
+};
+
 
   useEffect(() => {
     if (showModal) {
@@ -202,6 +211,8 @@ function BarraNav() {
                   Login con Spotify
                 </a>
               )}
+              <Link to ="/login">Login</Link>
+              <Link to ="/#" onClick={logout} >Logout</Link>
               <Link to="/admin">Admin</Link>
               <Link to="/menuPlaylist">Crear Playlist</Link>
             </div>

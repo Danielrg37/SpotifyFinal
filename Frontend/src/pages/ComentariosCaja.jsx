@@ -33,7 +33,7 @@ const CommentSection = (props) => {
         'Content-Type': 'application/json',
         'Origin': 'http://localhost:5173'
       },
-      body: JSON.stringify(nuevoComentario),
+      body: JSON.stringify(nuevoComentario)
     })
       .then(response => {
         console.log(response);
@@ -59,20 +59,7 @@ const CommentSection = (props) => {
     setMostrarForm(true);
   };
 
-  useEffect(() => {
-    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/comentarios', {
-      method: 'GET',
-      headers: {
-        Origin: 'http://localhost:5173',
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setComentarios(data);
-      });
-  }, []);
-
+  
 
   const comentariosFiltrados = comentarios.filter((comentario) => comentario.idCancion === idCancion);
 
