@@ -41,22 +41,21 @@ function VistaAdminUsuario() {
         setPlaylists(data);
       });
   }, []);
-  
-  useEffect(() => {
-    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones?limit=10', {
-      method: 'GET',
-      headers: {
-        Origin: 'http://localhost:5173',
-      },
-    })
-      .then((res) => res.json())
-     
-        .then((data) => {
-          console.log(data);
-          const firstTenRecords = data.slice(0, 10);
-          setAcciones(firstTenRecords);
-        });
-  }, []);
+
+useEffect(() => {
+  fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones?limit=10', {
+    method: 'GET',
+    headers: {
+      Origin: 'http://localhost:5173',
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      setAcciones(data);
+    });
+}, []);
+
 
 
 
