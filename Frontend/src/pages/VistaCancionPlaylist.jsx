@@ -81,7 +81,7 @@ function VistaCancionP() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const usuarioLogueado = data.find(usuario => usuario.nombreUsuario === sessionStorage.getItem('nombreUsuario'));
+        const usuarioLogueado = data.find(usuario => usuario.nombreUsuario === localStorage.getItem('nombreUsuario'));
         setUser_id(usuarioLogueado.id);
       });
   }, []);

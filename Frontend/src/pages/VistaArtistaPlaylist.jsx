@@ -74,65 +74,97 @@ function VistaArtistaP() {
   console.log(recomendaciones);
   console.log(user_id);
 
-  const nuevaPlaylist = () => {
-    if (token) {
-      fetch(`https://api.spotify.com/v1/me`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          const userId = data.id;
+  useEffect(() => {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios', {
+      method: 'GET',
+      headers: {
+        Origin: 'http://localhost:5173',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const usuarioLogueado = data.find(usuario => usuario.nombreUsuario === localStorage.getItem('nombreUsuario'));
+        setUser_id(usuarioLogueado.id);
+      });
+  }, []);
 
-          fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+  useEffect(() => {
+    if (playlist_id !== '') {
+      setEmbedUrl2(`https://open.spotify.com/embed/playlist/${playlist_id}`);
+    }
+  }, [playlist_id]);
+
+  const nuevaPlaylist = async () => {
+    try {
+      if (token) {
+        const userResponse = await fetch('https://api.spotify.com/v1/me', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        const userData = await userResponse.json();
+        console.log(userData);
+        const userId = userData.id;
+
+        const playlistResponse = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: playlistName,
+            description: playlistDescription,
+            public: true,
+          }),
+        });
+        const playlistData = await playlistResponse.json();
+        console.log(playlistData);
+        setPlaylist_id(playlistData.id);
+
+        const uris = recomendaciones.tracks.map(track => track.uri);
+
+        const playlistTracksResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uris: uris,
+          }),
+        });
+        const playlistTracksData = await playlistTracksResponse.json();
+        console.log(playlistTracksData);
+
+        if (playlist_id !== '') {
+          console.log(user_id);
+          console.log(playlist_id);
+          console.log(playlistName);
+          console.log(new Date());
+
+          const crearPlaylistResponse = await fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/playlist/crearPlaylist', {
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json',
+              Origin: 'http://localhost:5173',
             },
             body: JSON.stringify({
-              name: playlistName,
-              description: playlistDescription,
-              public: true,
+              idUsuario: user_id,
+              idPlaylist: playlist_id,
+              nombre: playlistName,
             }),
-          })
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-              setPlaylist_id(data.id);
-              const uris = recomendaciones.tracks.map(track => track.uri);
-
-              fetch(`https://api.spotify.com/v1/playlists/${data.id}/tracks`, {
-                method: 'POST',
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  uris: uris,
-                }),
-              })
-                .then(response => response.json())
-                .then(data => {
-                  console.log(data);
-                })
-                .catch(error => {
-                  console.log(error);
-                });
-            })
-            .catch(error => {
-              console.log(error);
-            });
-        })
-        .catch(error => {
-          console.log(error);
-        });
+          });
+          const crearPlaylistData = await crearPlaylistResponse.json();
+           }
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+
 
   return (
     <div className='container'>
