@@ -59,6 +59,7 @@ function VistaAdminUsuario() {
   }, []);
 
 
+
   const borrar = (id) => {
     fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/Uborrar`, {
       method: 'DELETE',
