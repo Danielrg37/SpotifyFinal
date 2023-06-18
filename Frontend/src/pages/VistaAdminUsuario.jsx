@@ -21,32 +21,14 @@ function VistaAdminUsuario() {
 
   const [usuarioTipo, setUsuarioTipo] = useState("");
 
-  useEffect(() => {
-      if (localStorage.getItem('nombreUsuario')) {
-        fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Origin": "http://localhost:5173",
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
-          const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
-          if (usuario) {
-            setUsuarioTipo(usuario.tipo);
-            console.log(usuarioTipo);
-          }
-        })
-        .catch(error => console.error(error));
-      }
-    }, []);
+  if (!localStorage.getItem('nombreUsuario')) {
+    return <Error404 />;
+  }
 
-    if (usuarioTipo === "user") {
-      return <Error404 />;
-    } else if (usuarioTipo === "") {
-      return <Loader />;
-    }
+  if (localStorage.getItem('nombreUsuario') != 'admin') {
+    return <Error404 />;
+  }
+
 
 
   useEffect(() => {
@@ -161,6 +143,7 @@ function VistaAdminUsuario() {
         nombreUsuario: usuarioNombre,
         contraseña: usuarioContraseña,
         email: email,
+        tipo: "user"
       }),
     })
       .then((res) => res.json())
@@ -168,19 +151,20 @@ function VistaAdminUsuario() {
         console.log(data);
 
       });
-    location.reload(); // Recargar la página actual
+
+    location.reload();
   };
 
 
 
 
-const [usuarioAux, setUsuarioAux] = useState('');
+  const [usuarioAux, setUsuarioAux] = useState('');
 
 
-  const guardarUsuarioModificado  = () => {
-    
+  const guardarUsuarioModificado = () => {
 
-    
+
+
 
     fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios/editar`, {
       method: 'POST',
@@ -248,10 +232,10 @@ const [usuarioAux, setUsuarioAux] = useState('');
 
         </Modal.Body>
         <Modal.Footer>
-          <button className='color-verde' onClick={nuevoUsuario}>
+          <button className="btn btn-outline-success rounded-pill" onClick={nuevoUsuario}>
             Crear
           </button>
-          <button className='color-verde' onClick={handleCloseModal}>
+          <button className="btn btn-outline-success rounded-pill" onClick={handleCloseModal}>
             Cerrar
           </button>
         </Modal.Footer>
@@ -289,10 +273,10 @@ const [usuarioAux, setUsuarioAux] = useState('');
 
         </Modal.Body>
         <Modal.Footer>
-          <button className='color-verde' onClick={guardarUsuarioModificado}>
+          <button className="btn btn-outline-success rounded-pill" onClick={guardarUsuarioModificado}>
             Modificar usuario
           </button>
-          <button className='color-verde' onClick={handleCloseModal2}>
+          <button className="btn btn-outline-success rounded-pill" onClick={handleCloseModal2}>
             Cerrar
           </button>
         </Modal.Footer>
@@ -313,7 +297,7 @@ const [usuarioAux, setUsuarioAux] = useState('');
                       <th>IdUsuario</th>
                       <th>Nombre de Usuario</th>
                       <th>Email</th>
-                      <th>Creado en</th>
+
                       <th>Acciones</th>
                     </tr>
                   </thead>
@@ -323,7 +307,7 @@ const [usuarioAux, setUsuarioAux] = useState('');
                         <td>{usuario.id}</td>
                         <td>{usuario.nombreUsuario}</td>
                         <td>{usuario.email}</td>
-                        <td>{usuario.createdAt}</td>
+
                         <td>
                           <button className="btn btn-outline-success rounded-pill" onClick={() => borrar(usuario.id)}>
                             Borrar

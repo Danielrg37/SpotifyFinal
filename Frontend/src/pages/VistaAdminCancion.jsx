@@ -85,7 +85,14 @@ function VistaAdminArtista() {
  
   const embedUrl = `https://open.spotify.com/embed/track/${id}`;
 
-
+  if (!localStorage.getItem('nombreUsuario')) {
+    return <Error404 />;
+  }
+  
+  if(localStorage.getItem('nombreUsuario') == 'admin'){
+    return <Error404 />;
+  }
+  
  
   // Otro código...
 

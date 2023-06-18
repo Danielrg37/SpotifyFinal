@@ -45,6 +45,11 @@ function VistaMenu() {
       }
 
 
+      
+      if(localStorage.getItem('nombreUsuario') == 'admin'){
+        return <Error404 />;
+      }
+      
 
     return (
         <div className="container">
