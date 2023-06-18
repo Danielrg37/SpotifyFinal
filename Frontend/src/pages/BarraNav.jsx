@@ -189,7 +189,7 @@ function BarraNav() {
     <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
         <img src={logo} alt="Logo" style={{ width: '72px', height: '72px', borderRadius: '50%', marginRight: '2em' }} />
-        <span className="fs-4">SpotiStats</span>
+        <span className="fs-4">SoundScape</span>
       </Link>
 
       <ul className="nav nav-pills">
