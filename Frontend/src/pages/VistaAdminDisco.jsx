@@ -57,6 +57,14 @@ function VistaAdminDisco() {
   const id = disco.id;
 
   const [loading, setLoading] = useState(true);
+
+  if (!localStorage.getItem('nombreUsuario')) {
+    return <Error404 />;
+  }
+  
+  if(localStorage.getItem('nombreUsuario') == 'admin'){
+    return <Error404 />;
+  }
   
 
   useEffect(() => {
