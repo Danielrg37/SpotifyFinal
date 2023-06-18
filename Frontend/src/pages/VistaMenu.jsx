@@ -38,16 +38,16 @@ function VistaMenu() {
         }
       }, []);
 
-      if (usuarioTipo === "user") {
+      if (!localStorage.getItem('nombreUsuario')) {
         return <Error404 />;
-      } else if (usuarioTipo === "") {
-        return <Loader />;
+      }
+    
+      if (localStorage.getItem('nombreUsuario') != 'admin') {
+        return <Error404 />;
       }
 
-
-      
-      if(localStorage.getItem('nombreUsuario') == 'admin'){
-        return <Error404 />;
+      if (usuarioTipo === "") {
+        return <Loader />;
       }
       
 

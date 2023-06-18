@@ -88,9 +88,13 @@ function VistaAdminArtista() {
   if (!localStorage.getItem('nombreUsuario')) {
     return <Error404 />;
   }
-  
-  if(localStorage.getItem('nombreUsuario') == 'admin'){
+
+  if (localStorage.getItem('nombreUsuario') != 'admin') {
     return <Error404 />;
+  }
+
+  if (usuarioTipo === "") {
+    return <Loader />;
   }
   
  

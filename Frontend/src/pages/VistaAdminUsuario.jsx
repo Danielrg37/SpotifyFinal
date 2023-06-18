@@ -29,6 +29,11 @@ function VistaAdminUsuario() {
     return <Error404 />;
   }
 
+  if (usuarioTipo === "") {
+    return <Loader />;
+  }
+  
+
 
 
   useEffect(() => {
