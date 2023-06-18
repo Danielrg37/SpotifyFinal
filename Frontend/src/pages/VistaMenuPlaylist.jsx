@@ -36,7 +36,7 @@ function VistaMenu() {
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>
                                     Acceder
-                                </button>
+                                    </button>
                             </div>
                         </Link>
 
@@ -53,7 +53,7 @@ function VistaMenu() {
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>
                                     Acceder
-                                </button>
+                                    </button>
                             </div>
                         </Link>
 

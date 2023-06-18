@@ -27,8 +27,16 @@ function Registro() {
         nombreUsuario: nombreUsuario,
         contraseña: contrasena,
         email: correo,
+        tipo: "user"
       }),
     })
+      .then((response) => response.json())
+      .then((data) => {
+       
+      })
+      .catch((error) => console.error(error));
+      localStorage.setItem("nombreUsuario", nombreUsuario);
+      navigate("/")
   };
 
   return (
@@ -73,15 +81,20 @@ function Registro() {
               id="email"
               value={correo}
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+
               onChange={(event) => setCorreo(event.target.value)}
               required
             />
           </div>
 
           <div style={{ textAlign: 'center' }}>
-            <Button className="green-color" style={{ width: '8rem', height: '3rem', justifyContent: 'center' }} type="submit">
-              Registro
-            </Button>
+          <button
+              className="btn btn-outline-success rounded-pill"
+              style={{ width: "25em", height: "3rem", justifyContent: "center", marginTop: "1rem" }}
+              type="submit"
+            >
+              Registrarse
+            </button>
           </div>
         </form>
       </div>

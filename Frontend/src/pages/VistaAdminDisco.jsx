@@ -56,32 +56,8 @@ function VistaAdminDisco() {
 
   const id = disco.id;
 
-  const [usuarioTipo, setUsuarioTipo] = useState("");
-
-  useEffect(() => {
-      if (localStorage.getItem('nombreUsuario')) {
-        fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Origin": "http://localhost:5173",
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
-          const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
-          if (usuario) {
-            setUsuarioTipo(usuario.tipo);
-            console.log(usuarioTipo);
-          }
-        })
-        .catch(error => console.error(error));
-      }
-      
-    
-    }, []);
-
-
+  const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -108,105 +84,31 @@ function VistaAdminDisco() {
   }, [searchInput, token]);
 
   useEffect(() => {
-    if (token) {
+    if (token && id !== undefined) {
       fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/Disco/${id}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
           'X-Access-Token': sessionStorage.getItem('token'),
-          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-        }
+          Origin: 'http://localhost:5173', // Replace with your front-end application's URL and port
+        },
       })
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           console.log(data);
           const album = JSON.parse(data.album); // Parse the album JSON string into an object
           const tracks = JSON.parse(data.tracks); // Parse the tracks JSON string into an object
           setDisco(album);
           setCancionesDisco(tracks.items);
-          const baseUrl = "https://www.amazon.es/s?k=";
-          if(album.artists.length > 0) {
-          var searchQuery = `${album.artists[0].name}+${album.name}`;
-          }
+          const baseUrl = 'https://www.amazon.es/s?k=';
+          const searchQuery = `${album.artists[0].name}+${album.name}`;
           const url = baseUrl + searchQuery;
           setUrl(url);
         })
-        .catch(error => console.error(error));
+        .catch((error) => console.error(error));
     }
-  }, [token]);
+  }, [token, id]);
 
-    const [UsuarioID, setUsuarioID] = useState("");
-    const [CancionID, setCancionID] = useState("");
-    const [ArtistaID, setArtistaID] = useState("");
-    const [DiscoID, setDiscoID] = useState("");
-
-    useEffect(() => {
-        setCancionID("-");
-        setArtistaID("-");
-        setDiscoID(id);
-      }, [id]);
-
-
-  useEffect(() => {
-    if (sessionStorage.getItem('nombreUsuario')) {
-      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Origin": "http://localhost:5173",
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        const usuario = data.find(user => user.nombreUsuario === sessionStorage.getItem('nombreUsuario'));
-        if (usuario) {
-          const usuarioID = usuario.Id;
-          console.log(usuarioID);
-          setUsuarioID(usuarioID);
-        }
-      })
-      .catch(error => console.error(error));
-    }
-  }, []);
-
-  
-  useEffect(() => {
-    if (sessionStorage.getItem('nombreUsuario')) {
-      fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones_anadir", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Origin": "http://localhost:5173",
-        },
-        body: JSON.stringify({
-          CancionID: "-",
-          ArtistaID: "-",
-          DiscoID: id,
-          UsuarioID: UsuarioID,
-          NombreUsuario: sessionStorage.getItem('nombreUsuario')
-        }),
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-      })
-      .catch(error => console.error(error));
-    }
-  }, [disco]);
-  
-  
-     
-console.log(disco);
-const embedUrl = `https://open.spotify.com/embed/album/${id}`;
-console.log(url);
-
-console.log(cancionesDisco);
-
-
-  if (usuarioTipo === "user") {
-    return <Error404 />;
-  } else if (usuarioTipo === "") {
-    return <Loader />;
-  }
+  const embedUrl = `https://open.spotify.com/embed/album/${id}`;
 
   return (
     <div className="container">
@@ -214,11 +116,13 @@ console.log(cancionesDisco);
 
       <div className="containers_info">
         <div className="row">
-          <h2>Consultar artistas via API</h2>
-          <InputGroup className="mb-3" size="lg">
+
+        <h2 style={{textAlign: 'center'}}>Consultar discos via API</h2>
+        <Link to={`/adminMenu2`}> <button className="btn btn-outline-success rounded-pill w-100" style={{height: '40px'}}> {'Volver atrás'} </button> </Link>
+          <InputGroup className="mb-3 mt-5" size="lg">
             <FormControl
-              placeholder="Busca tu artista favorito"
-              aria-label="Busca tu artista favorito"
+              placeholder="Busca tu disco favorito"
+              aria-label="Busca tu disco favorito"
               type="input"
               onKeyPress={(event) => {
                 if (event.key === 'Enter') {
@@ -229,9 +133,9 @@ console.log(cancionesDisco);
                 setSearchInput(event.target.value);
               }}
             />
-            <Button className="color-verde" onClick={() => { }}>
+            <button className="color-verde" onClick={() => { }}>
               Buscar
-            </Button>
+            </button>
           </InputGroup>
         </div>
         {searchResults.length > 0 && (
@@ -254,7 +158,7 @@ console.log(cancionesDisco);
                     }
                   </h2>
                   <h1>{disco.name}</h1>
-                  {url !== '' && <Button href={url} className="green-color mt-2">Compra en Amazon</Button>}
+                  {url !== '' && <button href={url} className="green-color mt-2">Compra en Amazon</button>}
                 </div>
               </div>
             </div>
@@ -274,10 +178,8 @@ console.log(cancionesDisco);
               </div>
             </div>
             <div className="row mt-5 mb-3">
-              <div className="col-6 canciones-container mr-1">
-                <CommentSection />
-              </div>
-              <div className="col-6 cancion-container">
+             
+              <div className="col-12 cancion-container">
                 <h1 style={{ textAlign: 'center' }}>Vista del disco</h1>
                 <iframe
                   id="spotify-iframe"

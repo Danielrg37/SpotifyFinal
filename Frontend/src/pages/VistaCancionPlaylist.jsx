@@ -197,12 +197,12 @@ function VistaCancionP() {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button className='color-verde' onClick={nuevaPlaylist}>
+          <button className='color-verde' onClick={nuevaPlaylist}>
             Crear
-          </Button>
-          <Button className='color-verde' onClick={handleCloseModal}>
+            </button>
+          <button className='color-verde' onClick={handleCloseModal}>
             Cerrar
-          </Button>
+            </button>
         </Modal.Footer>
       </Modal>
       <BarraNav />
@@ -222,9 +222,9 @@ function VistaCancionP() {
                 setSearchInput(event.target.value);
               }}
             />
-            <Button className="color-verde" onClick={() => handleShowModal()}>
+            <button className="color-verde" onClick={() => handleShowModal()}>
               Crear playlist
-            </Button>
+              </button>
           </InputGroup>
           {searchInput != null && (
             <div className="row mt-3">

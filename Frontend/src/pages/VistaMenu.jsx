@@ -52,42 +52,42 @@ function VistaMenu() {
 
             <div className="row mt-5">
                 <div className="col-4 text-center" id="datos">
-                    <div className="grafico-container" style={{ height: '95vh' }}>
+                    <div className="grafico-container" style={{ height: '60vh' }}>
                         <Link to={`/adminDisco`} className="custom-underline">
                             <p style={{ fontSize:  '30px' }}>Consultar discos</p>
                             <img src={img_discos} alt="grafica-usuario" border="0" width="100%" height="420"></img>
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>
                                     Acceder
-                                </button>
+                                    </button>
                             </div>
                         </Link>
                     </div>
                 </div>
 
                 <div className="col-4 text-center" id="datos">
-                    <div className="grafico-container" style={{ height: '95vh' }}>
+                    <div className="grafico-container" style={{ height: '60vh' }}>
                         <Link to={`/adminArtista`} className="custom-underline">
                             <p style={{ fontSize:  '30px'}}>Consultar artistas</p>
                             <img src={img_artistas} alt="grafica-usuario" border="0" width="100%" height="420"></img>
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>
                                     Acceder
-                                </button>
+                                    </button>
                             </div>
                         </Link>
                     </div>
                 </div>
 
                 <div className="col-4 text-center" id="datos">
-                    <div className="grafico-container" style={{ height: '95vh' }}>
+                    <div className="grafico-container" style={{ height: '60vh' }}>
                         <Link to={`/adminCancion`} className="custom-underline">
                             <p style={{ fontSize: '30px' }}>Consultar canciones</p>
                             <img src={img_canciones} alt="grafica-usuario" border="0" width="100%" height="420"></img>
                             <div className="row mt-3">
                                 <button className={`btn btn-outline-success rounded-pill w-100`}>
                                     Acceder
-                                </button>
+                                    </button>
                             </div>
                         </Link>
                     </div>

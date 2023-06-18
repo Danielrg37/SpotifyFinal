@@ -248,12 +248,12 @@ const [usuarioAux, setUsuarioAux] = useState('');
 
         </Modal.Body>
         <Modal.Footer>
-          <Button className='color-verde' onClick={nuevoUsuario}>
+          <button className='color-verde' onClick={nuevoUsuario}>
             Crear
-          </Button>
-          <Button className='color-verde' onClick={handleCloseModal}>
+          </button>
+          <button className='color-verde' onClick={handleCloseModal}>
             Cerrar
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
 
@@ -289,12 +289,12 @@ const [usuarioAux, setUsuarioAux] = useState('');
 
         </Modal.Body>
         <Modal.Footer>
-          <Button className='color-verde' onClick={guardarUsuarioModificado}>
+          <button className='color-verde' onClick={guardarUsuarioModificado}>
             Modificar usuario
-          </Button>
-          <Button className='color-verde' onClick={handleCloseModal2}>
+          </button>
+          <button className='color-verde' onClick={handleCloseModal2}>
             Cerrar
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
 

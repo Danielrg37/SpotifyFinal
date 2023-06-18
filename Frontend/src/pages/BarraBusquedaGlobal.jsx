@@ -83,7 +83,7 @@ function BarraBusquedaGlobal() {
               setSearchInput(event.target.value);
             }}
           />
-          <Button onClick={() => {}}>Buscar</Button>
+          <button onClick={() => {}}>Buscar</button>
         </InputGroup>
         </Container>
         </div>

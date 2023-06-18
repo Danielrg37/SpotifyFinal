@@ -182,11 +182,7 @@ function BarraNav() {
       }
     }, []);
 
-    if (usuarioTipo === "user") {
-      return <Error404 />;
-    } else if (usuarioTipo === "") {
-      return <Loader />;
-    }
+    
 
   
   return (

@@ -195,12 +195,12 @@ function VistaArtistaP() {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button className='color-verde' onClick={nuevaPlaylist}>
+          <button className='color-verde' onClick={nuevaPlaylist}>
             Crear
-          </Button>
-          <Button className='color-verde' onClick={handleCloseModal}>
+            </button>
+          <button className='color-verde' onClick={handleCloseModal}>
             Cerrar
-          </Button>
+            </button>
         </Modal.Footer>
       </Modal>
 
@@ -220,9 +220,9 @@ function VistaArtistaP() {
               setSearchInput(event.target.value);
             }}
           />
-          <Button className="color-verde" onClick={() => handleShowModal()}>
+          <button className="color-verde" onClick={() => handleShowModal()}>
             Crear playlist
-          </Button>
+            </button>
         </InputGroup>
         <div className="row mt-3">
           <div className='artista-container'>

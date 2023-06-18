@@ -36,31 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 function VistaAdminArtista() {
 
-  const [usuarioTipo, setUsuarioTipo] = useState("");
-
-  useEffect(() => {
-      if (localStorage.getItem('nombreUsuario')) {
-        fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Origin": "http://localhost:5173",
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
-          const usuario = data.find(user => user.nombreUsuario === localStorage.getItem('nombreUsuario'));
-          if (usuario) {
-            setUsuarioTipo(usuario.tipo);
-            console.log(usuarioTipo);
-          }
-        })
-        .catch(error => console.error(error));
-      }
-    }, []);
-
-    
-
+ 
 
   const [searchResults, setSearchResults] = useState([]);
   const [token, setToken] = useState(null);
@@ -75,10 +51,7 @@ function VistaAdminArtista() {
   const [textoCortado, setTextoCortado] = useState([]);
   const [eventos, setEventos] = useState([]);
 
-  console.log(artista);
-  var id = artista.id;
-  console.log(id);
-
+ 
 
 
   useEffect(() => {
@@ -121,9 +94,23 @@ function VistaAdminArtista() {
 
   // Socorro
 
+  
+
+  var id = artista.id;
+
+
+
+
+ 
+ console.log(id);
+    
+
+  
+
+  
 
   useEffect(() => {
-    if (token) {    
+    if (token && id) {    
       fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/ADiscos/${id}`, {
         method: 'GET',
         headers: {
@@ -148,194 +135,110 @@ function VistaAdminArtista() {
         });
     }
   }, [token]);
-  
-  console.log(albums);
-  
-        
-        
-        console.log(albums);
-        
-  
-      useEffect(() => {
-          if (token) {
-              fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/ACanciones/${id}`, {
-                  method: 'GET',
-                  headers: {
-                      'X-Access-Token': sessionStorage.getItem('token'),
-                      'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-                  }
-              })
-                  .then(response => response.json())
-                  .then(data => { 
-                      setCanciones(data.tracks);
-                  });
-          }
-      }, [token]);
-  
-     
-  
-  
-      useEffect(() => {
-          if (token) {
-              fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/artista/${id}?si=c14fd7cce6ec4d59`, {
-                  method: 'GET',
-                  headers: {
-                      'X-Access-Token': sessionStorage.getItem('token'),
-                      'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-                  }
-              })
-                  .then(response => response.json())
-                  .then(data => {
-                      setArtista(data);
-                  });
-          }
-      }, [token]);
-  
-      console.log(artista.name)
-  
-      useEffect(() => {
-          if(artista.name){
-              fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/galeria/${artista.name}`, {
-                  method: 'GET',
-                  headers: {
-                      'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-                  }
-              })
-                  .then(response => response.json())
-                  .then(data => {
-                      setImagenes(data);
-                  }
-                  )
-          }
-      }, [artista.name]);
-  
-      useEffect(() => {
-          if (artista.name) {
-            fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/eventos/${artista.name}`, {
-              method: 'GET',
-              headers: {
+
+
+
+  useEffect(() => {
+    if (token && id) {
+        fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/ACanciones/${id}`, {
+            method: 'GET',
+            headers: {
+                'X-Access-Token': sessionStorage.getItem('token'),
                 'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
-              }
-            })
-            .then(response => response.json())
-            .then(data => {
-          
-          
-              setEventos(data);
-            });
-          }
-        }, [artista.name]);
-        
-  
-      useEffect(() => {
-          async function fetchDescripcion() {
-            if (artista && artista.name) {
-              const url = `http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/descripcion/${encodeURIComponent(
-                artista.name
-              )}`;
-              console.log(url);
-        
-              const response = await fetch(url, {
-                headers: {
-                  'User-Agent':
-                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-                  'Accept-Language': 'en-US,en;q=0.9',
-                },
-              });
-        
-              const textResponse = await response.text(); // Get the plain text response
-              setDescripcion(textResponse.replace(/{"descripcion":"|"}/g, '').replace(/\\u0026quot;/g, '"'));
-              // Update the state with the plain text response
-  
             }
-          }
+        })
+            .then(response => response.json())
+            .then(data => { 
+                setCanciones(data.tracks);
+            });
+    }
+}, [token]);
+
+
+  useEffect(() => {
+    if (artista.name) {
+      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/eventos/${artista.name}`, {
+        method: 'GET',
+        headers: {
+          'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          setEventos(data);
+        }
+        )
+    }
+  }, [artista.name]);
+
+
+  
+  useEffect(() => {
+    async function fetchDescripcion() {
+      if (artista && artista.name) {
+        const url = `http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/descripcion/${encodeURIComponent(
+          artista.name
+        )}`;
+        console.log(url);
+  
+        const response = await fetch(url, {
+          headers: {
+            'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+            'Accept-Language': 'en-US,en;q=0.9',
+          },
+        });
+  
+        const textResponse = await response.text(); // Get the plain text response
+        let unicodeReplacedText = textResponse.replace(/\\\\u([\d\w]{4})/gi, function (match, grp) {
+          return String.fromCharCode(parseInt(grp, 16));
+        });
         
-          // Invoke async function to fetch the description
-          fetchDescripcion();
-        }, [artista.name]);
-  
-       
-        const formatEvent = (evento) => {
-          const [fecha, detalles, lugar, pais] = evento.split('./').map(item => item.trim());
-          const [nombre, ...artistas] = detalles.split(', ');
-          const formattedNombre = nombre.trim();
-          return {
-            fecha,
-            nombre: formattedNombre,
-            artistas: artistas.join(', '),
-            lugar,
-            pais
-          };
-        };
+        let replacedText = unicodeReplacedText.replace(/{"descripcion":"|"}/g, '').replace(/\\u0026quot;/g, '"').replace(/\\u0026#x27;/g, "'");
+        setDescripcion(replacedText);
         
         
+
+        // Update the state with the plain text response
+
+      }
+    }
   
-        const [UsuarioID, setUsuarioID] = useState("");
-          const [CancionID, setCancionID] = useState("");
-          const [ArtistaID, setArtistaID] = useState("");
-          const [DiscoID, setDiscoID] = useState("");
-  
-          useEffect(() => {
-              setCancionID("-");
-              setArtistaID(id);
-              setDiscoID("-");
-            }, [id]);
-  
-  
-        useEffect(() => {
-          if (sessionStorage.getItem('nombreUsuario')) {
-            fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                "Origin": "http://localhost:5173",
-              }
-            })
+    // Invoke async function to fetch the description
+    fetchDescripcion();
+  }, [artista.name]);
+
+
+  useEffect(() => {
+    if(artista.name){
+        fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/galeria/${artista.name}`, {
+            method: 'GET',
+            headers: {
+                'Origin': 'http://localhost:5173'  // Replace with your front-end application's URL and port
+            }
+        })
             .then(response => response.json())
             .then(data => {
-              const usuario = data.find(user => user.nombreUsuario === sessionStorage.getItem('nombreUsuario'));
-              if (usuario) {
-                const usuarioID = usuario.Id;
-                console.log(usuarioID);
-                setUsuarioID(usuarioID);
-              }
-            })
-            .catch(error => console.error(error));
-          }
-        }, []);
-    
-        
-        useEffect(() => {
-          if (sessionStorage.getItem('nombreUsuario')) {
-            fetch("http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/acciones/acciones_anadir", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Origin": "http://localhost:5173",
-              },
-              body: JSON.stringify({
-                CancionID: "-",
-                ArtistaID: id,
-                DiscoID: "-",
-                UsuarioID: UsuarioID,
-                NombreUsuario: sessionStorage.getItem('nombreUsuario')
-              }),
-            })
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-            })
-            .catch(error => console.error(error));
-          }
-        }, [artista]);
-  
-      
-        
-  if (usuarioTipo === "user") {
-    return <Error404 />;
-  } else if (usuarioTipo === "") {
-    return <Loader />;
-  }
+                setImagenes(data);
+            }
+            )
+    }
+}, [artista.name]);
+
+
+     
+  const formatEvent = (evento) => {
+    const [fecha, detalles, lugar, pais] = evento.split('./').map(item => item.trim());
+    const [nombre, ...artistas] = detalles.split(', ');
+    const formattedNombre = nombre.trim();
+    return {
+      fecha,
+      nombre: formattedNombre,
+      artistas: artistas.join(', '),
+      lugar,
+      pais
+    };
+  };
 
 
 
@@ -345,8 +248,9 @@ function VistaAdminArtista() {
 
       <div className="containers_info">
         <div className="row">
-          <h2>Consultar artistas via API</h2>
-          <InputGroup className="mb-3" size="lg">
+        <h2 style={{textAlign: 'center'}}>Consultar artistas via API</h2>
+          <Link to={`/adminMenu2`}> <button className="btn btn-outline-success rounded-pill w-100" style={{height: '40px'}}> {'Volver atrás'} </button> </Link>
+          <InputGroup className="mb-3 mt-4" size="lg">
             <FormControl
               placeholder="Busca tu artista favorito"
               aria-label="Busca tu artista favorito"
@@ -360,12 +264,12 @@ function VistaAdminArtista() {
                 setSearchInput(event.target.value);
               }}
             />
-            <Button className="color-verde" onClick={() => { }}>
+            <button className="color-verde" onClick={() => { }}>
               Buscar
-            </Button>
+            </button>
           </InputGroup>
         </div>
-        {searchResults.length > 0 && (
+        {searchResults.length > 0 || searchInput !== "" (
           <div className="container">
 
             <div className='artista-container'>
@@ -438,7 +342,7 @@ function VistaAdminArtista() {
             <div className="row mt-3">
               <div>
                 <div class="row">
-                  <div class="col-md-6 text-center">
+                  <div class="col-md-12 text-center">
                     <div className='fotos-container'>
                       <div class="col-12">
                         <Container>
@@ -465,20 +369,7 @@ function VistaAdminArtista() {
 
 
 
-                  <div class="col-md-6 text-center">
-                    <div className='noticias-container'>
-                      <h1 style={{ textAlign: "left" }}>Noticias</h1>
-
-                      <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 1</h4>
-                      <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                      <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 2</h4>
-                      <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                      <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 3</h4>
-                      <p style={{ borderBottom: '1px solid white', marginBottom: "40px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                      <h4 style={{ textAlign: "left", marginBottom: "10px" }}>Noticia 4</h4>
-                      <p style={{ borderBottom: '1px solid white', marginBottom: "20px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid cupiditate aperiam cum nesciunt officia distinctio neque fugit ipsa voluptas eveniet aut voluptates laborum temporibus, magnam facilis deleniti doloremque, voluptate ab?</p>
-                    </div>
-                  </div>
+               
                 </div>
               </div>
             </div>
@@ -488,7 +379,32 @@ function VistaAdminArtista() {
                 <div className="eventos-container">
 
                   <h1>Eventos</h1>
+                  <ul className="list-group">
+        {eventos.map((evento, index) => {
+          const { fecha, nombre, artistasInvitados, lugar, pais } = formatEvent(evento);
+          return (
 
+       
+            <li key={index} className="list-group-item">
+                <div className="row">
+                    <div className="col-4">
+                        <h3>{fecha}</h3>
+                        <p>{nombre}</p>
+                        
+                    </div>
+
+                    <div className="col-4">
+                        <h3>{lugar}</h3>
+                        <p>{pais}</p>
+                    </div>
+
+        </div>
+            </li>
+                    )
+          }
+        )}
+        
+      </ul>
 
                 </div>
 

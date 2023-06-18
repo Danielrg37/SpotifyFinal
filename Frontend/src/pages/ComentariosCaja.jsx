@@ -19,7 +19,7 @@ const CommentSection = (props) => {
   };
 
   useEffect(() => {
-    fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
+    fetch ('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios', {
       method: 'GET',
       headers: {
         Origin: 'http://localhost:5173',
@@ -29,15 +29,14 @@ const CommentSection = (props) => {
       .then((data) => {
         const usuarioLogueado = data.find(usuario => usuario.nombreUsuario === localStorage.getItem('nombreUsuario'));
         setUser_id(usuarioLogueado.id);
-      
       });
   }, []);
 
+
   const AñadirRespuesta = (event) => {
     event.preventDefault();
-    // Create a new comment object
     console.log(idPagina, user_id, new Date().toISOString(), respuesta);
-    // Send the new comment to the backend
+
     fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/crearComentarios', {
       method: 'POST',
       headers: {
@@ -48,7 +47,8 @@ const CommentSection = (props) => {
         IDPagina: idPagina,
         UsuarioID: user_id,
         FechaCreacion: new Date().toISOString(),
-        Texto: respuesta
+        Texto: respuesta,
+        NombreUsuario: localStorage.getItem('nombreUsuario')
       })
     })
       .then((res) => res.json())
@@ -56,64 +56,30 @@ const CommentSection = (props) => {
         console.log(data);
         setRespuesta('');
         setMostrarForm(false);
-          window.location.reload(); // Recargar la página
-     
+      
       });
-   
   };
-
 
   const BotonResponder = () => {
     setMostrarForm(true);
-  
+    console.log(localStorage.getItem('nombreUsuario'));
   };
 
-  // ...
-
-useEffect(() => {
-  fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/comentarios`, {
-    method: 'GET',
-    headers: {
-      Origin: 'http://localhost:5173',
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      setComentarios(data);
-      const usuarioIds = data.map((comentario) => comentario.idUsuario);
-
-      // Fetch para obtener los nombres de usuario correspondientes a los ids
-      fetch(`http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/usuarios/usuarios`, {
-        method: 'GET',
-        headers: {
-          Origin: 'http://localhost:5173',
-        },
-      })
-        .then((res) => res.json())
-        .then((usuarios) => {
-          const comentariosConNombres = data.map((comentario) => {
-            const usuario = usuarios.find((user) => user.idUsuario === comentario.idUsuario);
-            const nombreUsuario = usuario ? usuario.nombreUsuario : 'Usuario desconocido';
-            return { ...comentario, nombreUsuario };
-          });
-          setComentarios(comentariosConNombres);
-
-         
-        })
-        .catch((error) => console.error(error));
+  useEffect(() => {
+    fetch('http://ec2-3-230-86-196.compute-1.amazonaws.com:5120/comentarios/comentarios', {
+      method: 'GET',
+      headers: {
+        Origin: 'http://localhost:5173',
+      },
     })
-    .catch((error) => console.error(error));
-}, [idPagina]);
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setComentarios(data); // Update the state with the retrieved comments
+      });
+  }, [idPagina]);
 
-// ...
-
-
-  
-  
-
-
-  
+  console.log(comentarios);
 
   return (
     <div className='comentarios-container'>
@@ -125,35 +91,31 @@ useEffect(() => {
       <Card className='comentarios-container'>
         <Card.Body>
           {/* Nested comment */}
-          {comentarios
-            .filter((comentario) => comentario.idPagina === idPagina)
-            .map((comentario, index) => (
-              <div className="d-flex flex-start mt-4 comentarios-container" key={index}>
-                <Image
-                  className="rounded-circle shadow-1-strong me-3"
-                  src={fernando}
-                  alt="avatar"
-                  width="65"
-                  height="65"
-                />
-  
-                <div className="flex-grow-1 flex-shrink-1">
-                  <div>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <p className="mb-1" style={{ color: 'black' }}>
-                        {comentario.nombreUsuario} - {comentario.fechaCreacion}
-                      </p>
-                    </div>
-                    <p className="small mb-0" style={{ color: 'black' }}>
-                      {comentario.texto}
+          {comentarios.map((comentario, index) => (
+            <div className="d-flex flex-start mt-4 comentarios-container" key={index}>
+              <Image
+                className="rounded-circle shadow-1-strong me-3"
+                src="https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png"
+                alt="avatar"
+                width="65"
+                height="65"
+              />
+
+              <div className="flex-grow-1 flex-shrink-1">
+                <div>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p className="mb-1" style={{ color: 'black' }}>
+                     {comentario.nombreUsuario} - {comentario.fechaCreacion}
                     </p>
                   </div>
+                  <p className="small mb-0" style={{ color: 'black' }}>
+                    {comentario.texto}
+                  </p>
                 </div>
               </div>
-            ))}
-  
-          {/* End of nested comment */}
-  
+            </div>
+          ))}
+
           {/* Reply form */}
           {mostrarForm && (
             <Form onSubmit={AñadirRespuesta}>
@@ -166,9 +128,9 @@ useEffect(() => {
                   onChange={ManejarRespuesta}
                 />
               </Form.Group>
-              <Button className='btn btn-success rounded-pill w-43 mt-2 mb-2' type="submit">
+              <button className='btn btn-success rounded-pill w-43 mt-2 mb-2' type="submit">
                 Responder
-              </Button>
+              </button>
             </Form>
           )}
           {/* End of reply form */}

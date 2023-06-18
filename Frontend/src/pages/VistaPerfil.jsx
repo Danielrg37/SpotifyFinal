@@ -176,21 +176,21 @@ function VistaPerfil() {
                   <button className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'short_term' && 'active'}`}
                     onClick={() => handleTiempoChange('short_term')}>
                     Corto plazo
-                  </button>
+                    </button>
                 </div>
       
                 <div className="col-4">
                   <button className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'medium_term' && 'active'}`}
                     onClick={() => handleTiempoChange('medium_term')}>
                     Medio plazo
-                  </button>
+                    </button>
                 </div>
       
                 <div className="col-4">
                   <button className={`btn btn-outline-success rounded-pill w-100 ${tiempo === 'long_term' && 'active'}`}
                     onClick={() => handleTiempoChange('long_term')}>
                     Largo plazo
-                  </button>
+                    </button>
                 </div>
               </div>
             </div> {/* closing tag for perfil-container */}
@@ -208,10 +208,10 @@ function VistaPerfil() {
                     <ButtonGroup>
                         <button className="btn btn-outline-success rounded-pill" style={{height: '40px'}} onClick={() => moverIconos1('left')}>
                             {'>'}
-                        </button>
+                            </button>
                         <button className="btn btn-outline-success rounded-pill" style={{height: '40px'}} onClick={() => moverIconos1('right')}>
                             {'<'}
-                        </button>
+                            </button>
                     </ButtonGroup>
                 </div>
             </div>
@@ -240,10 +240,10 @@ function VistaPerfil() {
                     <ButtonGroup>
                         <button className="btn btn-outline-success rounded-pill" style={{height: '40px'}} onClick={() => moverIconos2('left')}>
                             {'>'}
-                        </button>
+                            </button>
                         <button className="btn btn-outline-success rounded-pill" style={{height: '40px'}} onClick={() => moverIconos2('right')}>
                             {'<'}
-                        </button>
+                            </button>
                     </ButtonGroup>
                 </div>
             </div>

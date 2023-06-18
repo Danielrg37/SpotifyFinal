@@ -57,19 +57,19 @@ function VistaTotalArtistas() {
                             onClick={() => handleTiempoChange('short_term')}
                         >
                             Corto plazo
-                        </button>
+                            </button>
                         <button
                             className={`btn btn-outline-success rounded-pill ${tiempo === 'medium_term' && 'active'}`}
                             onClick={() => handleTiempoChange('medium_term')}
                         >
                             Medio plazo
-                        </button>
+                            </button>
                         <button
                             className={`btn btn-outline-success rounded-pill ${tiempo === 'long_term' && 'active'}`}
                             onClick={() => handleTiempoChange('long_term')}
                         >
                             Largo plazo
-                        </button>
+                            </button>
                     </div>
                 </div>
             

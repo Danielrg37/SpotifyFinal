@@ -78,6 +78,7 @@ namespace Backend.Controllers
                         comentario.UsuarioID = Convert.ToInt32(datos["UsuarioID"]);
                       comentario.FechaCreacion = ((DateTime)datos["FechaCreacion"]).ToString("dd/MM/yyyy HH:mm:ss");
                         comentario.Texto = Convert.ToString(datos["Texto"]);
+                        comentario.NombreUsuario = Convert.ToString(datos["NombreUsuario"]);
 
                         // Agregar el comentario a la lista
                         comentarios.Add(comentario);
@@ -108,7 +109,7 @@ namespace Backend.Controllers
                     conexion4.Open();
 
                     // Consulta SQL para insertar un comentario
-                    string sql = "INSERT INTO Comentarios (IDPagina, UsuarioID, FechaCreacion, Texto) VALUES (@IDPagina, @UsuarioID, @FechaCreacion, @Texto)";
+                    string sql = "INSERT INTO Comentarios (IDPagina, UsuarioID, FechaCreacion, Texto, NombreUsuario) VALUES (@IDPagina, @UsuarioID, @FechaCreacion, @Texto, @NombreUsuario)";
 
                     // Crear el comando SQL
                     SqlCommand comando = new SqlCommand(sql, conexion4);
@@ -118,6 +119,7 @@ namespace Backend.Controllers
                     comando.Parameters.AddWithValue("@UsuarioID", comentario.UsuarioID);
                     comando.Parameters.AddWithValue("@FechaCreacion", comentario.FechaCreacion);
                     comando.Parameters.AddWithValue("@Texto", comentario.Texto);
+                    comando.Parameters.AddWithValue("@NombreUsuario", comentario.NombreUsuario);
 
                     // Ejecutar el comando
                     comando.ExecuteNonQuery();
@@ -146,4 +148,6 @@ public class Comentario
 
     public String FechaCreacion { get; set; }
     public string Texto { get; set; }
+
+    public string NombreUsuario { get; set; }
 }

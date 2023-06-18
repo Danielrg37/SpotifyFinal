@@ -151,7 +151,7 @@ function VistaDisco() {
 
                         <h1>{disco.name}</h1>
                         {/* // Añadir url */}
-                        {url !== null && <Button href={url} className="green-color mt-2">Compra en Amazon</Button>}
+                        {url !== null && <button href={url} className="green-color mt-2">Compra en Amazon</button>}
 
                     </div>
                 </div>
